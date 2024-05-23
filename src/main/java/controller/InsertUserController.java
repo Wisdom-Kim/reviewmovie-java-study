@@ -19,7 +19,7 @@ public class InsertUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String errorUrl = "views/errors/error.jsp";
+		String errorUrl = "/views/errors/error.jsp";
 		
 		String accountId = request.getParameter("accountId");
 		String passwd = request.getParameter("passwd");

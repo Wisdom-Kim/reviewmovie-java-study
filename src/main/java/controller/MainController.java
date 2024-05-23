@@ -12,18 +12,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/main.do")
 public class MainController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = "/views/errors/error.jsp";
-		
-		HttpSession session = request.getSession(false);
-		
-		if(session == null) {
-			url = "login.jsp";
-			response.sendRedirect(url);
-			return;
-		}
-		
-		url = "/getDeptList.do";
-		response.sendRedirect(url);
+		response.sendRedirect("/main.do");
 		
 	}
 }
