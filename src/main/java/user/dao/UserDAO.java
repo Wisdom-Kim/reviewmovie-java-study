@@ -4,7 +4,7 @@ import user.dto.UserDTO;
 
 public class UserDAO {
 	
-    public void insert(UserDTO userDTO) {
+    public static void insertUser(UserDTO userDTO) {
         // 회원 정보 삽입 코드 작성
     }
 
@@ -17,8 +17,5 @@ public class UserDAO {
     public void delete(int userId) {
         // 회원 정보 삭제 코드 작성
     }
-
-    
-    
 
 }
