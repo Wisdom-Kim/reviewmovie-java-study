@@ -1,13 +1,16 @@
-package user.dao;
+package service;
 
 import domain.User;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import util.JpaUtil;
 
-public class UserDAO {
+public class UserService {
+	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 	
-    public static boolean insertUser(EntityManagerFactory emf, User user) {
+	public static boolean insertUser(User user) {
     	boolean insertResult = true;
 		
 		EntityManager em = emf.createEntityManager();
@@ -28,5 +31,4 @@ public class UserDAO {
 				
 		return insertResult;
     }
-
 }
