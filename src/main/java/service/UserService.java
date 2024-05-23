@@ -31,4 +31,30 @@ public class UserService {
 				
 		return insertResult;
     }
+
+	public static User getUser(String accountId, String passwd) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+    	
+		User user = null;
+		
+    	tx.begin();
+		try {
+			// 회원 조회
+			String getUserJPQL = "SELECT u FROM User u WHERE u.user_account_id = :accountId AND u.user_passwd = :passwd";
+			
+			user = em.createQuery(getUserJPQL, User.class)
+					.setParameter("accountId", accountId)
+					.setParameter("passwd", passwd)
+					.getSingleResult();
+			
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+		} finally {
+			em.close();
+		}
+				
+		return user;
+	}
 }
