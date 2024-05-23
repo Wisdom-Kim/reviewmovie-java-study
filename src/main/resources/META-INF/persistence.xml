@@ -9,8 +9,7 @@
     <persistence-unit name="jpa_config">
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="{driver}"/>
-            <property name="jakarta.persistence.jdbc.url"
-                      value="${url}"/>
+            <property name="jakarta.persistence.jdbc.url" value="${url}"/>
             <property name="jakarta.persistence.jdbc.user" value="${username}"/>
             <property name="jakarta.persistence.jdbc.password" value="${password}"/>
 
@@ -23,13 +22,7 @@
    			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.use_sql_comments" value="true"/>
-			<property name="hibernate.hbm2ddl.auto" value="none" />
-			<!-- 
-				create		: DROP + CREATE
-				create-drop	: CREATE + 종료시 DROP
-				update		: DDL 변경시 반영
-				none		: 특이 설정 없음(기존 유지)
-			 -->
+			<property name="hibernate.hbm2ddl.auto" value="create" />
         </properties>
     </persistence-unit>
 </persistence>

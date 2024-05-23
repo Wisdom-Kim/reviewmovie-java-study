@@ -5,8 +5,8 @@
 <header>
 	<div align="right">
 		<c:if test="${empty sessionScope.userId}">
-			<span style="font-size:12pt;"><input type="button" value="로그인" onclick="location.href='/login.jsp'"></span>
-			<span style="font-size:12pt;"><input type="button" value="회원가입" onclick="location.href='/insertUser.jsp'"></span>
+			<span style="font-size:12pt;"><input type="button" value="로그인" onclick="location.href='/views/login.jsp'"></span>
+			<span style="font-size:12pt;"><input type="button" value="회원가입" onclick="location.href='/views/user/insertUser.jsp'"></span>
 	  	</c:if>
   		<c:if test="${not empty sessionScope.userId}">
   			<span> ${sessionScope.userName} 님 </span>
