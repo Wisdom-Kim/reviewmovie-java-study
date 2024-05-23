@@ -1,4 +1,4 @@
-package user.controller;
+package controller;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -7,13 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import domain.User;
-import user.service.UserService;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import service.UserService;
 
 @WebServlet("/insertUser.do")
 public class InsertUserController extends HttpServlet {
