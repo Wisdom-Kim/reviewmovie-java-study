@@ -1,0 +1,34 @@
+/* Style the body */ 
+body {
+  font-family: Arial;
+  margin: 0;
+}
+
+/* Header/Logo Title */
+header {
+  padding: 60px;
+  margin-bottom: 20px;
+  text-align: center;
+  background: #336699;
+  color: white;
+  font-size: 30px;
+}
+
+#container {
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 50px;
+}
+
+/* Style the footer */
+footer {
+  height: 50px;
+  background-color: #336699;
+  padding: 10px;
+  margin-top: 20px;
+  text-align: center;
+  color: white;
+  font-size: 10px;
+  position : relative;
+  transform : translateY(0%);
+}

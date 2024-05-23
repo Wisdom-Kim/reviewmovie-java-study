@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+                https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <persistence-unit name="jpa_QueryDSL">
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost/scott?characterEncoding=utf8"/>
+            <property name="jakarta.persistence.jdbc.user" value="scott"/>
+            <property name="jakarta.persistence.jdbc.password" value="scott"/>
+
+            <property name="hibernate.hikari.poolName" value="pool"/>
+            <property name="hibernate.hikari.maximumPoolSize" value="10"/>
+            <property name="hibernate.hikari.minimumIdle" value="10"/>
+            <property name="hibernate.hikari.connectionTimeout" value="1000"/>
+            
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+   			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.use_sql_comments" value="true"/>
+			<property name="hibernate.hbm2ddl.auto" value="none" />
+			<!-- 
+				create		: DROP + CREATE
+				create-drop	: CREATE + 종료시 DROP
+				update		: DDL 변경시 반영
+				none		: 특이 설정 없음(기존 유지)
+			 -->
+        </properties>
+    </persistence-unit>
+</persistence>
