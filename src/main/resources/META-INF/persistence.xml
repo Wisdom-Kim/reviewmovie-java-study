@@ -10,9 +10,9 @@
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost/scott?characterEncoding=utf8"/>
-            <property name="jakarta.persistence.jdbc.user" value="scott"/>
-            <property name="jakarta.persistence.jdbc.password" value="scott"/>
+                      value="${url}"/>
+            <property name="jakarta.persistence.jdbc.user" value="${username}"/>
+            <property name="jakarta.persistence.jdbc.password" value="${password}"/>
 
             <property name="hibernate.hikari.poolName" value="pool"/>
             <property name="hibernate.hikari.maximumPoolSize" value="10"/>
