@@ -22,16 +22,24 @@
 	td {
 		height: "20px";
 	}
+	
+	input[type="text"], input[type="password"] {
+		padding: 10px;
+		width: 300px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		font-size: 16px;
+	}
 </style>
 </head>
 <body>
-<%-- <%@ include file="../layout/header.jsp" %> --%>
+<%@ include file="/views/layout/header.jsp" %>
 
 <div id="container">
 	<form action="/login.do" method="POST" id="loginForm" onsubmit="checkData()">
 		<table>
 		    <tr>
-		        <td height="50" colspan="2" bgcolor="#336699" align="center">
+		        <td height="80" colspan="2" bgcolor="#336699" align="center">
 			    	<b><font color="white">로그인</font></b>
 		        </td>
 		    </tr>
@@ -60,7 +68,7 @@
 	</form>
 </div>
 
-<%-- <%@ include file="../layout/footer.jsp" %> --%>
+<%@ include file="/views/layout/footer.jsp" %>
 
 <script type="text/javascript">
 	// 회원 정보 입력 값 검증
