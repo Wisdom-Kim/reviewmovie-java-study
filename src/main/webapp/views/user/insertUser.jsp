@@ -7,7 +7,7 @@
 <title>회원가입</title>
 </head>
 <body>
-<%@ include file="../layout/header.jsp" %>
+<%-- <%@ include file="../layout/header.jsp" %> --%>
 
 <div id="container">
 	<form action="/insertUser.do" method="POST" id="insertForm" onsubmit="checkData()">
@@ -64,31 +64,44 @@
 		        <td width="450" height="20" align="center">
 		        	<b>
 		        		<span style="font-size:12pt;">
-		        			<input type="date" name="birthday" size="30" max="9999-12-31">
+		        			<input type="date" id="birthday" name="birthday" size="30" max="2024-12-31" value="0000-00-00">
 		        		</span>
 		        	</b>
 		        </td>
+		    </tr>
+		    <tr>
+		        <td width="150" height="20">
+		            <p><b><span style="font-size:12pt;">&nbsp;</span></b></p>
+		        </td>
+		        <td width="450" height="20" align="center">
+		        	<b>
+		        		<span style="font-size:12pt;">
+							<input type="submit" value="가입">
+						</span>
+					</b>
+				</td>
 		    </tr>
 		</table>
 	</form>
 </div>
 
-<%@ include file="../layout/footer.jsp" %>
+<%-- <%@ include file="../layout/footer.jsp" %> --%>
 
 <script type="text/javascript">
+	// 생년월일 오늘 날짜 이후로 지정 못하게 설정
 	window.onload = function() {
 		today = new Date();
 		today = today.toISOString().slice(0, 10);
-		bir = document.getElementByName("birthday");
-		bir.value = today;
+		birthday = document.getElementById("birthday");
+		birthday.max = today;
 	}
 	
+	// 회원 정보 입력 값 검증
 	function checkData() {
-		let insertForm = document.getElementById('insertForm');
+		let insertForm = document.getElementById("insertForm");
 		
 		if(insertForm.accountId.value == "") {
 			
-			return;
 		}
 	}	
 </script>
