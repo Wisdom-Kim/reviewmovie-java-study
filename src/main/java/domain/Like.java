@@ -34,7 +34,6 @@ public class Like {
     private User user;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "review_id")
     private Review review;
     
     @Column(name = "like_statement")

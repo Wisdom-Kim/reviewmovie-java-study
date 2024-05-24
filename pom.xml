@@ -75,6 +75,19 @@
         <version>RELEASE</version>
         <scope>test</scope>
     </dependency>
+
+<!--    테스트라이브러리-->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.25</version>
+    </dependency>
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>1.7.25</version>
+    </dependency>
+
 </dependencies>
   <build>
    <plugins>
@@ -83,6 +96,13 @@
        <version>3.8.1</version>
        <configuration>
          <release>17</release>
+           <annotationProcessorPaths>
+               <path>
+                   <groupId>org.projectlombok</groupId>
+                   <artifactId>lombok</artifactId>
+                   <version>1.16.12</version>
+               </path>
+           </annotationProcessorPaths>
        </configuration>
      </plugin>
      <plugin>

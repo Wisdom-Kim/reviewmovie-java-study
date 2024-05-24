@@ -86,8 +86,8 @@ public class ReviewService {
 
     private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
-    public static boolean insertReview(String content, Rating rating) {
-        boolean result = true;
+    public static Review insertReview(String content, Rating rating) {
+        Review result = null;
 
         EntityManager em = JpaUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -132,7 +132,6 @@ public class ReviewService {
             reviewRepository.save(review);
             tx.commit();
         }catch (Exception e){
-            result = false;
             tx.rollback();
         }finally {
             em.close();
