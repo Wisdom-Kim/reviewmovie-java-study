@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Like;
+import domain.Likes;
 import domain.Review;
 import domain.User;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class LikeDTO {
+public class LikesDTO {
 
 	private int likeId;
 	private boolean isLike;
@@ -23,19 +23,19 @@ public class LikeDTO {
 	private Review review;
 
 	@Builder
-	public LikeDTO(int likeId, boolean isLike,User user,Review review) {
+	public LikesDTO(int likeId, boolean isLike, User user, Review review) {
 		this.likeId = likeId;
 		this.isLike = isLike;
 		this.user = user;
 		this.review = review;
 	}
 
-	public static Like toEntity(LikeDTO likeDTO) {
-		return Like.builder()
-				.likeId(likeDTO.getLikeId())
-                .isLike(likeDTO.isLike())
-                .user(likeDTO.getUser())
-                .review(likeDTO.getReview())
+	public static Likes toEntity(LikesDTO likesDTO) {
+		return Likes.builder()
+				.likesId(likesDTO.getLikeId())
+                .isLikes(likesDTO.isLike())
+                .user(likesDTO.getUser())
+                .review(likesDTO.getReview())
                 .build();
 	}
 	

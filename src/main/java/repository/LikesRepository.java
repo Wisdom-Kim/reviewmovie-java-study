@@ -9,9 +9,9 @@ import util.JpaUtil;
 import java.util.List;
 
 @NoArgsConstructor
-public class LikeRepository {
+public class LikesRepository {
 
-    private LikeRepository likeRepository;
+    private LikesRepository likesRepository;
     private static final EntityManagerFactory emf =  JpaUtil.getEntityManagerFactory();
     private static final EntityManager em = emf.createEntityManager();
 

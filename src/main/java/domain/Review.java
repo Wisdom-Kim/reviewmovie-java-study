@@ -50,7 +50,7 @@ public class Review {
     private Date reviewDate;
 
 	@OneToMany(mappedBy = "review")
-	private List<Like> likeList = new ArrayList<>();
+	private List<Likes> likesList = new ArrayList<>();
 
 
     

@@ -26,7 +26,7 @@ public class ReviewDTO {
     private Date reviewDate;
 
     @Builder
-    public ReviewDTO(int reviewId, Movie movie, User user, Rating rating, String reviewContent, Date reviewDate, List<Like> listLike) {
+    public ReviewDTO(int reviewId, Movie movie, User user, Rating rating, String reviewContent, Date reviewDate, List<Likes> listLike) {
         this.reviewId = reviewId;
         this.movie = movie;
         this.user = user;
