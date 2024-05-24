@@ -21,7 +21,7 @@
   <dependency>
 	<groupId>javax.servlet</groupId>
 	<artifactId>javax.servlet-api</artifactId>
-	<version>3.1.0</version>
+	<version>4.0.1</version>
 	<scope>provided</scope>
   </dependency>
   <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
@@ -50,13 +50,6 @@
     <version>${hiberate.version}</version>
   </dependency>
   <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-apt -->
-  <dependency>
-    <groupId>com.querydsl</groupId>
-    <artifactId>querydsl-apt</artifactId>
-    <version>${querydsl.version}</version>
-    <classifier>jakarta</classifier>
-    <scope>provided</scope>
-  </dependency>
   <!-- https://mvnrepository.com/artifact/org.apache.taglibs/taglibs-standard-spec -->
   <dependency>
     <groupId>org.apache.taglibs</groupId>
@@ -70,6 +63,18 @@
     <version>1.2.5</version>
     <scope>runtime</scope>
   </dependency>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.10</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>RELEASE</version>
+        <scope>test</scope>
+    </dependency>
 </dependencies>
   <build>
    <plugins>

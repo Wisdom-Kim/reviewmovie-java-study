@@ -16,12 +16,12 @@ public class LikeRepository {
     private static final EntityManager em = emf.createEntityManager();
 
     public void save(Review review){
-        //리뷰 저장
+        
         em.persist(review);
     }
 
     public Review findOne(Long id){
-        //리뷰
+        
         return em.find(Review.class,id);
     }
     public static List<Review> findAll(){

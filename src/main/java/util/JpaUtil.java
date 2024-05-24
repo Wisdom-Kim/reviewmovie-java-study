@@ -6,39 +6,38 @@ import jakarta.persistence.Persistence;
 
 public class JpaUtil {
 	private static final String PERSISTENCE_UNIT = "jpa_config";
-	
+	private static EntityManagerFactory emf = null;
+
+
 	public static EntityManagerFactory getEntityManagerFactory() {
-		EntityManagerFactory emf = null;
-		
 		try {
-			emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+			if (emf != null) {
+				emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return emf;
 	}
-	
+
+
 	public static EntityManager getEntityManager() {
-		EntityManagerFactory emf = getEntityManagerFactory();
-		
-		if(emf != null) {
-			emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT); 
-		}
-		
-		return emf.createEntityManager();
+		return getEntityManagerFactory().createEntityManager();
 	}
-	
+
+
 	public static void emClose(EntityManager em) {
-		if(em != null) {
+		if (em != null) {
 			em.close();
 		}
 	}
 
-	public static void emfClose(EntityManagerFactory emf) {
-		if(emf != null) {
+	public static void emfClose() {
+		if (emf != null) {
 			emf.close();
 		}
 	}
-	
+
+	//싱글톤으로 변경
+	private JpaUtil() {}
 }

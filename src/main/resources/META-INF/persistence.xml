@@ -8,7 +8,7 @@
 
     <persistence-unit name="jpa_config">
         <properties>
-            <property name="jakarta.persistence.jdbc.driver" value="{driver}"/>
+            <property name="jakarta.persistence.jdbc.driver" value="${driver}"/>
             <property name="jakarta.persistence.jdbc.url" value="${url}"/>
             <property name="jakarta.persistence.jdbc.user" value="${username}"/>
             <property name="jakarta.persistence.jdbc.password" value="${password}"/>

@@ -1,6 +1,8 @@
 package dto;
 
 import domain.Like;
+import domain.Review;
+import domain.User;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,25 +17,26 @@ import lombok.ToString;
 @ToString
 public class LikeDTO {
 
-	//도메인 필드에 맞게 수정
-//	private boolean likeStatement;
-//	private int userId;
-//	private int reviewId;
-//	
-//	@Builder
-//	public LikeDTO(boolean likeStatement,int userId,int reviewId) {
-//		
-//		this.likeStatement = likeStatement;
-//		this.userId = userId;
-//		this.reviewId = reviewId;
-//	}
-//	
-//	public static Like toEntity(LikeDTO likeDTO) {
-//		return Like.builder()
-//					.deptno(deptDTO.getDeptno())
-//					.dname(deptDTO.getDname())
-//					.loc(deptDTO.getLoc())
-//					.build();
-//	}
+	private int likeId;
+	private boolean isLike;
+	private User user;
+	private Review review;
+
+	@Builder
+	public LikeDTO(int likeId, boolean isLike,User user,Review review) {
+		this.likeId = likeId;
+		this.isLike = isLike;
+		this.user = user;
+		this.review = review;
+	}
+
+	public static Like toEntity(LikeDTO likeDTO) {
+		return Like.builder()
+				.likeId(likeDTO.getLikeId())
+                .isLike(likeDTO.isLike())
+                .user(likeDTO.getUser())
+                .review(likeDTO.getReview())
+                .build();
+	}
 	
 }

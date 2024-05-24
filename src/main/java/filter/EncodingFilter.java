@@ -1,5 +1,7 @@
 package filter;
 
+import jakarta.servlet.http.HttpFilter; // 이거 지우고 푸쉬 안하면 바보임
+
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -9,7 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
-import javax.servlet.http.HttpFilter;
+//import javax.servlet.http.HttpFilter;
 
 @WebFilter(urlPatterns = {"*.do"},
 			initParams = {@WebInitParam(name = "charset", value = "UTF-8")})

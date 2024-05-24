@@ -51,5 +51,7 @@ public class Review {
 
 	@OneToMany(mappedBy = "review")
 	private List<Like> likeList = new ArrayList<>();
+
+
     
 }

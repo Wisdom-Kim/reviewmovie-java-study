@@ -16,12 +16,12 @@ public class MovieRepository {
     private static final EntityManager em = emf.createEntityManager();
 
     public void save(Movie review){
-        //리뷰 저장
+        
         em.persist(review);
     }
 
     public Movie findOne(Long id){
-        //리뷰
+        
         return em.find(Movie.class,id);
     }
     public static List<Movie> findAll(){

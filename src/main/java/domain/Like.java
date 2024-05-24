@@ -38,5 +38,5 @@ public class Like {
     private Review review;
     
     @Column(name = "like_statement")
-    private boolean likeStatement;
+    private boolean isLike;
 }

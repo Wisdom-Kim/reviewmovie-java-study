@@ -15,12 +15,12 @@ public class RatingRepository {
     private static final EntityManager em = emf.createEntityManager();
 
     public void save(Rating rating){
-        //리뷰 저장
+        
         em.persist(rating);
     }
 
     public Rating findOne(Long id){
-        //리뷰
+       
         return em.find(Rating.class,id);
     }
     public static List<Movie> findAll(){

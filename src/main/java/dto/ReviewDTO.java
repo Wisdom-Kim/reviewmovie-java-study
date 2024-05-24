@@ -1,12 +1,14 @@
 package dto;
-
-import domain.Review;
+import domain.*;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -15,24 +17,33 @@ import lombok.ToString;
 @ToString
 public class ReviewDTO {
 
-	//도메인 필드에 맞게 수정
-//	private boolean likeStatement;
-//	private int userId;
-//	private int reviewId;
-//	
-//	@Builder
-//	public ReviewDTO(boolean likeStatement,int userId,int reviewId) {
-//		
-//		this.likeStatement = likeStatement;
-//		this.userId = userId;
-//		this.reviewId = reviewId;
-//	}
-//	
-//	public static Movie toEntity(ReviewDTO reviewDTO) {
-//		return Review.builder()
-//					.deptno(ratingDTO.getDeptno())
-//					.dname(ratingDTO.getDname())
-//					.loc(ratingDTO.getLoc())
-//					.build();
-//	}
+	//Adjust fields according to the domain
+	private int reviewId;
+    private Movie movie;
+    private User user;
+    private Rating rating;
+    private String reviewContent;
+    private Date reviewDate;
+
+    @Builder
+    public ReviewDTO(int reviewId, Movie movie, User user, Rating rating, String reviewContent, Date reviewDate, List<Like> listLike) {
+        this.reviewId = reviewId;
+        this.movie = movie;
+        this.user = user;
+        this.rating = rating;
+        this.reviewContent = reviewContent;
+        this.reviewDate = reviewDate;
+    }
+
+
+	public static Review toEntity(ReviewDTO reviewDTO) {
+		return Review.builder()
+                .reviewId(reviewDTO.getReviewId())
+                .movie(reviewDTO.getMovie())
+                .user(reviewDTO.getUser())
+                .rating(reviewDTO.getRating())
+                .reviewContent(reviewDTO.getReviewContent())
+                .reviewDate(reviewDTO.getReviewDate())
+                .build();
+	}
 }
