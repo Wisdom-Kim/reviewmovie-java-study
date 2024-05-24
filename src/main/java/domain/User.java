@@ -9,12 +9,14 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-
+@Builder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,8 +31,8 @@ public class User {
 	@Column(name = "user_account_id")
     private String userAccountId;
 	
-	@Column(name = "user_password")
-    private String userPassword;
+	@Column(name = "user_passwd")
+    private String userPasswd;
 	
 	@Column(name = "user_name")
     private String userName;
@@ -46,5 +48,12 @@ public class User {
     
 	@OneToMany(mappedBy = "user")
 	private List<Like> likeList = new ArrayList<>();
-    
+	
+	public User(String accountId, String passwd, String username, Date birthday, boolean type) {
+		this.userAccountId = accountId;
+		this.userPasswd = passwd;
+		this.userName = username;
+		this.userBirthday = birthday;
+		this.userType = type;
+	}
 }
