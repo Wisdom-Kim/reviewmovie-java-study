@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dto.UserDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,5 +53,15 @@ public class User {
 		this.userName = username;
 		this.userBirthday = birthday;
 		this.userType = type;
+	}
+	
+	public static UserDTO toDTO(User user) {
+		return UserDTO.builder()
+				.userAccountId(user.getUserAccountId())
+				.userPasswd(user.getUserPasswd())
+				.userName(user.getUserName())
+				.userBirthday(user.getUserBirthday())
+				.userType(user.isUserType())
+				.build();
 	}
 }

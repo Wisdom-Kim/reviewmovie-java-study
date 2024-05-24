@@ -6,12 +6,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import domain.User;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import dto.UserDTO;
 import service.UserService;
 
 @WebServlet("/insertUser.do")
@@ -29,7 +30,7 @@ public class InsertUserController extends HttpServlet {
 		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		
-		User newUser = null;
+		UserDTO newUser = null;
 		boolean insertResult = false;
 		
 		if(accountId == null || accountId == "" || passwd == null || passwd == ""
@@ -39,7 +40,7 @@ public class InsertUserController extends HttpServlet {
 			try {	
 				Date birthday_to_date = df.parse(birthday);
 
-				newUser = new User(accountId, passwd, username, birthday_to_date, type);
+				newUser = new UserDTO(accountId, passwd, username, birthday_to_date, type);
 				
 				insertResult = UserService.insertUser(newUser);
 				if(!insertResult) {
@@ -50,11 +51,7 @@ public class InsertUserController extends HttpServlet {
 			} catch (ParseException e) {
 				request.setAttribute("error", "회원가입 실패: 생일을 바르게 입력하세요.");
 				request.getRequestDispatcher(errorUrl).forward(request, response);
-			} 
-//			catch (SQLException e) {
-//				request.setAttribute("error", "회원가입 실패: 서버 에러");
-//				request.getRequestDispatcher(errorUrl).forward(request, response);
-//			}
+			}
 		}
 		
 	}
