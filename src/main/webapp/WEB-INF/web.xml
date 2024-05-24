@@ -9,4 +9,14 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>ReviewController</display-name>
+    <servlet-name>ReviewController</servlet-name>
+    <servlet-class>controller.ReviewController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReviewController</servlet-name>
+    <url-pattern>/insertReview.do</url-pattern>
+  </servlet-mapping>
 </web-app>

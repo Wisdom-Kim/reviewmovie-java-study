@@ -57,8 +57,11 @@
         <div class="topWrapper">
             <h3 class="form-label py-3">이 영화, 어떠셨나요?</h3>
             <span class="py-2" style="flex-direction:row">
-                <input class="form-control"column="3" placeholder="이 영화에 대한 리뷰를 남겨주세요!">
-                <button type="button" class="btn btn-primary my-4">리뷰 등록</button>
+            <!-- 리뷰 등록 부분 -->
+	            <form id="myForm" action="/insertReview.do" method="post">
+	                <textarea  cols="50" class="form-control"column="3" placeholder="이 영화에 대한 리뷰를 남겨주세요!"></textarea>
+	                <button type="submit" form="myForm" class="btn btn-primary my-4" name="review_content">리뷰 등록</button>
+	            </form>
             </span>
         </div>
 
