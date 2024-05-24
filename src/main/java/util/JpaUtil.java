@@ -2,33 +2,38 @@ package util;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
 public class JpaUtil {
-	
-	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa_config");
+	// persistence.xml 내의 persistence-unit tag name
+	private static final String PERSISTENCE_UNIT = "jpa_config";
+	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 	
 	public static EntityManagerFactory getEntityManagerFactory() {
+		
 		return emf;
 	}
 	
-	public static void closeEntityManagerFactory() {
-		emf.close();
-	}
-	
-/*
 	public static EntityManager getEntityManager() {
-		EntityManager em = emf.createEntityManager();
+		EntityManagerFactory emf = getEntityManagerFactory();
 		
-		return em;
+		if(emf != null) {
+			emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT); 
+		}
+		
+		return emf.createEntityManager();
 	}
 	
-	public static EntityTransaction getEntityTransaction() {
-		EntityManager em = getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		
-		return tx;
+	public static void emClose(EntityManager em) {
+		if(em != null) {
+			em.close();
+		}
 	}
-*/
+
+	public static void emfClose(EntityManagerFactory emf) {
+		if(emf != null) {
+			emf.close();
+		}
+	}
+	
 }

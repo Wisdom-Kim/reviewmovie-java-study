@@ -6,24 +6,6 @@
 <meta charset="UTF-8">
 <title>로그인</title>
 <style type="text/css">
-<<<<<<< Updated upstream
-	body {
-		display: grid;
-		justify-items: center;
-	}
-	
-	table {
-		align: "center";
-		cellpadding: "5"; 
-		cellspacing: "1"; 
-		width: "1500px";
-		border: none;
-	}
-	
-	td {
-		height: "20px";
-	}
-=======
 header {
   padding: 10px;
   display: flex;
@@ -119,25 +101,16 @@ footer {
   padding: 10px;
   margin: 0;
 }
->>>>>>> Stashed changes
 </style>
 </head>
 <body>
-<%-- <%@ include file="../layout/header.jsp" %> --%>
+<%@ include file="/views/layout/header.jsp" %>
 
 <div id="container">
 	<h1>로그인</h1>
 	<form action="/login.do" method="POST" id="loginForm" onsubmit="checkData()">
 		<table>
 		    <tr>
-<<<<<<< Updated upstream
-		        <td height="50" colspan="2" bgcolor="#336699" align="center">
-			    	<b><font color="white">로그인</font></b>
-		        </td>
-		    </tr>
-		    <tr>
-=======
->>>>>>> Stashed changes
 		    	<td width="200" align="center">
 		        	<b>아이디</b>
 		        </td>
@@ -162,7 +135,7 @@ footer {
 	</form>
 </div>
 
-<%-- <%@ include file="../layout/footer.jsp" %> --%>
+<%@ include file="/views/layout/footer.jsp" %>
 
 <script type="text/javascript">
 	// 회원 정보 입력 값 검증
