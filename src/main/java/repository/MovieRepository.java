@@ -1,31 +1,30 @@
 package repository;
 
-import domain.Movie;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import lombok.NoArgsConstructor;
-import util.JpaUtil;
-
 import java.util.List;
 
-@NoArgsConstructor
+import domain.Movie;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+
 public class MovieRepository {
+    private EntityManager em;
 
-    private MovieRepository movieRepository;
-    private static final EntityManagerFactory emf =  JpaUtil.getEntityManagerFactory();
-    private static final EntityManager em = emf.createEntityManager();
-
-    public void save(Movie review){
-        //리뷰 저장
-        em.persist(review);
+    public MovieRepository(EntityManager em) {
+        this.em = em;
     }
 
-    public Movie findOne(Long id){
-        //리뷰
-        return em.find(Movie.class,id);
+    public List<Movie> searchMoviesByTitle(String title) {
+        String jpql = "SELECT m FROM Movie m WHERE m.title LIKE :title";
+        TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
+        query.setParameter("title", "%" + title + "%");
+        return query.getResultList();
     }
-    public static List<Movie> findAll(){
 
-        return em.createQuery("select m from Movie m ",Movie.class).getResultList();
+    public List<Movie> findAll() {
+        String jpql = "SELECT m FROM Movie m";
+        TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
+        return query.getResultList();
     }
+
+    
 }
