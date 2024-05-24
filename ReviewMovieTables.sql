@@ -36,14 +36,14 @@ CREATE TABLE Rating (
   CONSTRAINT fk_review_id FOREIGN KEY (review_id) REFERENCES Review (review_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE Like (
-  like_id int(10) NOT NULL AUTO_INCREMENT,
-  like_statement tinyint(1) DEFAULT NULL,
+CREATE TABLE Likes (
+  likes_id int(10) NOT NULL AUTO_INCREMENT,
+  likes_statement tinyint(1) DEFAULT NULL,
   user_id int(10) NOT NULL,
   review_id int(10) NOT NULL,
   PRIMARY KEY (like_id),
   KEY fk_user_id (user_id),
   KEY fk_like_review_id (review_id),
-  CONSTRAINT fk_like_review_id FOREIGN KEY (review_id) REFERENCES Review (review_id) ON DELETE CASCADE,
+  CONSTRAINT fk_likes_review_id FOREIGN KEY (review_id) REFERENCES Review (review_id) ON DELETE CASCADE,
   CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES User (user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
