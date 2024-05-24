@@ -1,7 +1,7 @@
 package service;
 
 import domain.User;
-
+import dto.UserDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -10,15 +10,18 @@ import util.JpaUtil;
 public class UserService {
 	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 	
-	public static boolean insertUser(User user) {
+	public static boolean insertUser(UserDTO userDTO) {
     	boolean insertResult = true;
 		
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
     	
+		User user = null;
+		
     	tx.begin();
 		try {
 			// 회원 등록
+			user = UserDTO.toEntity(userDTO);
 			em.persist(user);
 			
 			tx.commit();
@@ -32,7 +35,7 @@ public class UserService {
 		return insertResult;
     }
 
-	public static User getUser(String accountId, String passwd) {
+	public static UserDTO getUser(String accountId, String passwd) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
     	
@@ -55,6 +58,6 @@ public class UserService {
 			em.close();
 		}
 				
-		return user;
+		return User.toDTO(user);
 	}
 }

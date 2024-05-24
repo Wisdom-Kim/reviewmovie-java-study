@@ -1,7 +1,6 @@
 package controller;  
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import domain.User;
+import dto.UserDTO;
 import service.UserService;
 
 @WebServlet("/login.do")
@@ -23,7 +22,7 @@ public class LoginController extends HttpServlet {
 		String accountId = request.getParameter("accountId");
 		String passwd = request.getParameter("passwd");
 		
-		User user = null;
+		UserDTO user = null;
 		HttpSession session = null;
 		
 		if(accountId == null || accountId == "" || passwd == null || passwd == "") {
