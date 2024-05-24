@@ -29,5 +29,11 @@ public class EncodingFilter extends HttpFilter implements Filter {
 		response.setCharacterEncoding(charset);
 	}
 
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
