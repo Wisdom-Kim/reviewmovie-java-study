@@ -1,27 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" 
-    pageEncoding="UTF-8"%>
-    
-<!DOCTYPE html> 
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!doctype html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Error</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.104.2">
+
+  <link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/sign-in/">
+
+
+  <link href="https://getbootstrap.kr/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+
+  <style>
+
+    body{
+      margin: auto 0; //정중앙
+      display:flex;
+      flex-direction: column;
+      text-align: center;
+      height: 100vh;
+
+    }
+  </style>
+
+  <link href="https://getbootstrap.kr/docs/5.2/examples/sign-in/signin.css" rel="stylesheet">
 </head>
-<body>
-	<div align="center">
-		<h2>죄송합니다. 문제가 발생하였습니다.</h2>
-	</div>
-	
-	<br><hr><br>
-	
-	<div align="center">
-		<h3>${requestScope.error}</h3>
-	</div>
-	 
-	<br>
-	
-	<div align=center>
-		<span style="font-size:9pt;">&lt;<a href="">메인으로</a>&gt;</span>
-	</div>
+<body class="text-center mx-auto">
+  <div class="mx-auto my-auto">
+   <img class="mb-4" src="../../resources/img/droppedPopcorn.png" alt="" width="300" height="300">
+<h1 class="mb-3 fw-bold">어이쿠!</h1>
+
+    <div class="errorMessage">
+      <h3 class ="px-2 py-2">알 수 없는 에러가 발생했어요ㅠㅠ</h3><!-- TODO: error Attribute로 출력할 것 -->
+      <a class="py-3 icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;" href="#"><!--TODO: 링크 바꿀 것-->
+      메인으로
+      </a>
+    </div>
+  </div>
+
+
+
 </body>
 </html>
