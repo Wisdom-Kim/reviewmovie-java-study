@@ -1,6 +1,9 @@
 package dto;
 
+import java.util.Date;
+
 import domain.User;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -8,30 +11,36 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
 public class UserDTO {
-	//도메인 필드에 맞게 수정
-//	private boolean likeStatement;
-//	private int userId;
-//	private int reviewId;
-//	
-//	@Builder
-//	public UserDTO(boolean likeStatement,int userId,int reviewId) {
-//		
-//		this.likeStatement = likeStatement;
-//		this.userId = userId;
-//		this.reviewId = reviewId;
-//	}
-//	
-//	public static Like toEntity(UserDTO userDTO) {
-//		return User.builder()
-//					.deptno(userDTO.getDeptno())
-//					.dname(userDTO.getDname())
-//					.loc(userDTO.getLoc())
-//					.build();
-//	}
+    private int userId;
+    private String userAccountId;
+    private String userPasswd;
+    private String userName;
+    private Date userBirthday;
+    private boolean userType;
+	
+	public UserDTO(String accountId, String passwd, String username, Date birthday, boolean type) {
+		this.userAccountId = accountId;
+		this.userPasswd = passwd;
+		this.userName = username;
+		this.userBirthday = birthday;
+		this.userType = type;
+	}
+	
+	public static User toEntity(UserDTO userDTO) {
+		return User.builder()
+					.userAccountId(userDTO.getUserAccountId())
+					.userPasswd(userDTO.getUserPasswd())
+					.userName(userDTO.getUserName())
+					.userBirthday(userDTO.getUserBirthday())
+					.userType(userDTO.isUserType())
+					.build();
+	}
 }
