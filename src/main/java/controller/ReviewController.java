@@ -18,8 +18,8 @@ public class ReviewController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 //		response.getAttribute("review_content")
+
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

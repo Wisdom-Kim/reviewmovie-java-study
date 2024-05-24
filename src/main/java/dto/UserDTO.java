@@ -19,7 +19,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class UserDTO {
-	private int userId;
+    private int userId;
     private String userAccountId;
     private String userPasswd;
     private String userName;
