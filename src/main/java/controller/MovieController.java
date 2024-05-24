@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import domain.Movie;
-import service.Service;
+import service.MovieService;
 
 @WebServlet("/movies")
 public class MovieController extends HttpServlet {
@@ -19,7 +19,7 @@ public class MovieController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String searchTitle = request.getParameter("searchTitle");
-	    Service movieService = new Service();
+	    MovieService movieService = new MovieService();
 
 	    List<Movie> movieList;
 	    if (searchTitle != null && !searchTitle.isEmpty()) {
