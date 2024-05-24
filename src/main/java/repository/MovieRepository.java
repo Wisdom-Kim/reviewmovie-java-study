@@ -3,6 +3,7 @@ package repository;
 import domain.Movie;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
 import lombok.NoArgsConstructor;
 import util.JpaUtil;
 
@@ -20,12 +21,11 @@ public class MovieRepository {
         em.persist(review);
     }
 
-    public Movie findOne(Long id){
-        
+    public Movie findById(int id){
         return em.find(Movie.class,id);
     }
-    public static List<Movie> findAll(){
 
+    public static List<Movie> findAll(){
         return em.createQuery("select m from Movie m ",Movie.class).getResultList();
     }
 }

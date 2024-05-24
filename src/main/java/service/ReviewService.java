@@ -87,7 +87,7 @@ public class ReviewService {
     private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
     public static Review insertReview(String content, Rating rating) {
-        Review result = null;
+        Review review = null;
 
         EntityManager em = JpaUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -120,7 +120,7 @@ public class ReviewService {
 
         em.persist(user);
         try {
-            Review review = Review.builder()
+             review = Review.builder()
                     .reviewId(1)
                     .movie(movie)
                     .user(user)
@@ -136,7 +136,7 @@ public class ReviewService {
         }finally {
             em.close();
         }
-        return result;
+        return review;
 
     }
 
@@ -148,22 +148,12 @@ public class ReviewService {
         Review review = null;
         tx.begin();
         try {
-            // Movie movie = movieRepository.findOne(movieId);
-//            String getMovieJPQL = "SELECT m from Movie m WHERE movie_id=:movieId";
-//            Movie movie = em.createQuery(getMovieJPQL, Movie.class)
-//                    .setParameter("movieId",movieId)
-//                    .getSingleResult();
-            //아닌가? movieId만 있으면 굳이 movie 객체를 안 만들어도 되지?
-
-            String getReviewJPQL = "SELECT r from Review r WHERE movie_id=:movieId";
-//            Movie movie = em.createQuery(getMovieJPQL, Movie.class)
-//                    .setParameter("movieId",movieId)
-//                    .getSingleResult();
-
+            Movie movie= movieRepository.findById(movieId);
 
             tx.commit();
-        } catch (Exception e) {
+        }catch (Exception e){
             tx.rollback();
+
         } finally {
             em.close();
         }

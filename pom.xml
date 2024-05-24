@@ -50,13 +50,7 @@
             <version>${hiberate.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-apt -->
-        <dependency>
-            <groupId>com.querydsl</groupId>
-            <artifactId>querydsl-apt</artifactId>
-            <version>${querydsl.version}</version>
-            <classifier>jakarta</classifier>
-            <scope>provided</scope>
-        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.apache.taglibs/taglibs-standard-spec -->
         <dependency>
             <groupId>org.apache.taglibs</groupId>
@@ -81,16 +75,6 @@
             <artifactId>junit-jupiter</artifactId>
             <version>RELEASE</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
         </dependency>
     </dependencies>
     <build>
