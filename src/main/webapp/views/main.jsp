@@ -6,66 +6,75 @@
 <meta charset="UTF-8">
 <title>영화 리뷰 서비스</title>
 <style type="text/css">
-/* 전체 컨테이너 스타일 */
-	#container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 20px;
-		text-align: center;
-		font-family: 'Google Sans', Arial, sans-serif;
-	}
+#container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f8f8f8;
+  color: #333;
+}
 
-	/* 제목 스타일 */
-	h1 {
-		font-size: 80px;
-	 	font-weight: bold;
-		color: black;
-		margin-bottom: 30px;
-	}
+h1 {
+  margin-bottom: 40px;
+  font-size: 36px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
 
-/* 폼 스타일 */
 form {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 5px;
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-	input[type="search"] {
-		padding: 10px;
-		border: 1px solid #ddd;
-		border-radius: 4px 0 0 4px;
-		font-size: 16px;
-		width: 500px;
-	}
+input[type="search"] {
+  width: 500px;
+  height: 50px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px 0 0 25px;
+  outline: none;
+  font-size: 18px;
+  color: #333;
+}
 
 input[type="submit"] {
-  padding: 10px 20px;
-  background-color: #FEB941;
+  height: 50px;
+  padding: 10px 30px;
+  background-color: #333;
   color: #fff;
   border: none;
-  border-radius: 0 4px 4px 0;
-  font-size: 16px;
-  font-weight: bold;
+  border-radius: 0 25px 25px 0;
   cursor: pointer;
+  font-size: 18px;
+  background-image: url('https://cdn2.iconfinder.com/data/icons/font-awesome/1792/search-512.png');
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-/* 버튼 스타일 */
-	input[type="button"] {
-	  padding: 10px 20px;
-	  background-color: #f1f1f1;
-	  color: #333;
-	  border: none;
-	  border-radius: 4px;
-	  font-size: 16px;
-	  cursor: pointer;
-	  transition: background-color 0.3s ease;
-	}
+input[type="button"] {
+  margin-top: 40px;
+  padding: 15px 30px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
 
-	input[type="button"]:hover {
-		background-color: #e0e0e0;
-	}
+input[type="button"]:hover {
+  background-color: #555;
+}
 </style>
+
 </head>
 <body>
 <%@ include file="/views/layout/header.jsp" %>
@@ -75,7 +84,7 @@ input[type="submit"] {
 	<div>
 		<form action="/getMoviesByTitle.do" method="GET">
 	       	<input type="search" name="q" maxlength="100" placeholder="영화 제목을 입력해보세요.">
-			<input type="submit" value="검색">
+			<input type="submit" value="">
 		</form>
 	</div>
 	<div>
