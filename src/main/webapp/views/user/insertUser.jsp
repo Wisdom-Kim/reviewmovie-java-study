@@ -20,18 +20,18 @@
 	}
 	
 	td {
-		height: "20px";
+		height: "50px";
 	}
 </style>
 </head>
 <body>
-<%-- <%@ include file="../layout/header.jsp" %> --%>
+<%@ include file="/views/layout/header.jsp" %>
 
 <div id="container">
 	<form action="/insertUser.do" method="POST" id="insertForm" onsubmit="checkData()">
 		<table>
 		    <tr>
-		        <td height="50" colspan="2" bgcolor="#336699" align="center">
+		        <td height="80" colspan="2" bgcolor="#336699" align="center">
 			    	<b><font color="white">회원가입</font></b>
 		        </td>
 		    </tr>
@@ -39,7 +39,7 @@
 		    	<td width="200" align="center">
 		        	<b>아이디</b>
 		        </td>
-		        <td height="20" align="center">
+		        <td width="450" align="center">
 		        	<input type="text" name="accountId" size="30" placeholder="아이디">
 		        </td>
 		    </tr>
@@ -76,7 +76,7 @@
 	</form>
 </div>
 
-<%-- <%@ include file="../layout/footer.jsp" %> --%>
+<%@ include file="/views/layout/footer.jsp" %>
 
 <script type="text/javascript">
 	// 생년월일 오늘 날짜 이후로 지정 못하게 설정
