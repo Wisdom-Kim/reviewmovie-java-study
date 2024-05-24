@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>로그인</title>
 <style type="text/css">
 	body {
 		display: grid;
@@ -20,7 +20,15 @@
 	}
 	
 	td {
-		height: "50px";
+		height: "20px";
+	}
+	
+	input[type="text"], input[type="password"] {
+		padding: 10px;
+		width: 300px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		font-size: 16px;
 	}
 </style>
 </head>
@@ -28,18 +36,18 @@
 <%@ include file="/views/layout/header.jsp" %>
 
 <div id="container">
-	<form action="/insertUser.do" method="POST" id="insertForm" onsubmit="checkData()">
+	<form action="/login.do" method="POST" id="loginForm" onsubmit="checkData()">
 		<table>
 		    <tr>
 		        <td height="80" colspan="2" bgcolor="#336699" align="center">
-			    	<b><font color="white">회원가입</font></b>
+			    	<b><font color="white">로그인</font></b>
 		        </td>
 		    </tr>
 		    <tr>
 		    	<td width="200" align="center">
 		        	<b>아이디</b>
 		        </td>
-		        <td width="450" align="center">
+		        <td height="20" align="center">
 		        	<input type="text" name="accountId" size="30" placeholder="아이디">
 		        </td>
 		    </tr>
@@ -52,24 +60,8 @@
 		        </td>
 		    </tr>
 		    <tr>
-		    	<td width="200" align="center">
-		        	<b>이름</b>
-		        </td>
-		        <td width="450" height="20" align="center">
-		        	<input type="text" name="username" size="30" placeholder="이름">
-		        </td>
-		    </tr>
-		    <tr>
-		    	<td width="200" align="center">
-		        	<b>생년월일</b>
-		        </td>
-		        <td width="450" align="center">
-		        	<input type="date" id="birthday" name="birthday" size="30">
-		        </td>
-		    </tr>
-		    <tr>
 		        <td colspan="2" align="center">
-		        	<input type="submit" value="가입">
+		        	<input type="submit" value="로그인">
 				</td>
 		    </tr>
 		</table>
@@ -79,15 +71,6 @@
 <%@ include file="/views/layout/footer.jsp" %>
 
 <script type="text/javascript">
-	// 생년월일 오늘 날짜 이후로 지정 못하게 설정
-	window.onload = function() {
-		today = new Date();
-		today = today.toISOString().slice(0, 10);
-		birthday = document.getElementById("birthday");
-		birthday.max = today;
-		birthday.value = today;
-	}
-	
 	// 회원 정보 입력 값 검증
 	function checkData() {
 		let insertForm = document.getElementById("insertForm");
