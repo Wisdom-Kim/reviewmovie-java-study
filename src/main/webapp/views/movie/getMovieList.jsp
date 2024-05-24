@@ -31,7 +31,7 @@
         <p>검색 결과가 없습니다.</p>
     </c:if>
 
-	<form action="${pageContext.request.contextPath}/movies" method="get">
+	<form action="${pageContext.request.contextPath}/movies.do" method="get">
         <input type="text" name="searchTitle" placeholder="영화 제목 입력" />
         <input type="submit" value="검색" />
     </form>
