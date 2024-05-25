@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 import lombok.*;
 
 @Entity
@@ -14,7 +15,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Review {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewId;
@@ -25,13 +25,6 @@ public class Review {
     @Temporal(TemporalType.TIMESTAMP)
     private Date reviewDate;
 
-<<<<<<< Updated upstream
-	@OneToMany(mappedBy = "review")
-	private List<Likes> likesList = new ArrayList<>();
-
-
-    
-=======
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -41,6 +34,10 @@ public class Review {
     private Movie movie;
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Like> likeList = new ArrayList<>();
->>>>>>> Stashed changes
+    private List<Likes> likesList = new ArrayList<>();
+
+    @OneToOne(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Rating rating;
+
+    
 }

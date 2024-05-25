@@ -1,6 +1,7 @@
 package domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
 import lombok.*;
 
 @Entity
@@ -10,7 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Rating {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ratingId;
@@ -21,4 +21,6 @@ public class Rating {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")
     private Review review;
+
+    
 }

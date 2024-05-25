@@ -14,31 +14,6 @@ public class RatingDTO {
     private int ratingScore;
     private ReviewDTO review;
 
-<<<<<<< Updated upstream
-////Adjust fields according to the domain
-//	private boolean likeStatement;
-//	private int userId;
-//	private int reviewId;
-//	
-//	@Builder
-//	public RatingDTO(boolean likeStatement,int userId,int reviewId) {
-//		
-//		this.likeStatement = likeStatement;
-//		this.userId = userId;
-//		this.reviewId = reviewId;
-//	}
-//	
-//	public static Movie toEntity(RatingDTO ratingDTO) {
-//		return Movie.builder()
-//					.deptno(ratingDTO.getDeptno())
-//					.dname(ratingDTO.getDname())
-//					.loc(ratingDTO.getLoc())
-//					.build();
-//	}
-	
-	
-}
-=======
     @Builder
     public RatingDTO(int ratingId, int ratingScore, ReviewDTO review) {
         this.ratingId = ratingId;
@@ -62,4 +37,4 @@ public class RatingDTO {
                 .build();
     }
 }
->>>>>>> Stashed changes
+

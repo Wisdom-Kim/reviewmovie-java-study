@@ -5,9 +5,10 @@ import domain.Rating;
 import domain.Review;
 import domain.User;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import lombok.NoArgsConstructor;
 import repository.MovieRepository;
 import repository.ReviewRepository;
@@ -100,7 +101,7 @@ public class ReviewService {
 
         //일단 직접 생성
         Movie movie = Movie.builder()
-                .movieId("1")
+                .movieId(1)
                 .movieTitle("기생충")
                 .movieDirector("봉준호")
                 .moviePoster("https://img.movist.com/?img=/x00/05/04/96_p1.jpg")
@@ -113,7 +114,7 @@ public class ReviewService {
         User user = User.builder()
                 .userId(1)
                 .userAccountId("coocoa389")
-                .userPasswd("1234")
+                .userPassword("1234")
                 .userName("김지혜")
                 .userBirthday(new Date())
                 .build();//양방향 우짬? (reivewList, likeList)
