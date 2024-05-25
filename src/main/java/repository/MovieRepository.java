@@ -3,6 +3,7 @@ package repository;
 import java.util.List;
 
 import domain.Movie;
+<<<<<<< Updated upstream
 import jakarta.persistence.EntityManager;
 
 import jakarta.persistence.EntityManagerFactory;
@@ -10,6 +11,11 @@ import jakarta.persistence.TypedQuery;
 import lombok.NoArgsConstructor;
 import util.JpaUtil;
 import java.util.List;
+=======
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+>>>>>>> Stashed changes
 
 public class MovieRepository {
     private EntityManager em;
@@ -24,6 +30,7 @@ public class MovieRepository {
         query.setParameter("title", "%" + title + "%");
         return query.getResultList();
     }
+<<<<<<< Updated upstream
 
     public List<Movie> findAll() {
         String jpql = "SELECT m FROM Movie m";
@@ -34,3 +41,6 @@ public class MovieRepository {
 
     
 }
+=======
+}
+>>>>>>> Stashed changes

@@ -4,44 +4,35 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import dto.UserDTO;
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Builder
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@ToString
-@DiscriminatorValue(value = "user")
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
-	@Id
-	@Column(name = "user_id")
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
-	
-	@Column(name = "user_account_id")
+
+    @Column(nullable = false, unique = true)
     private String userAccountId;
-	
-	@Column(name = "user_passwd")
-    private String userPasswd;
-	
-	@Column(name = "user_name")
+
+    @Column(nullable = false)
+    private String userPassword;
+
+    @Column(nullable = false)
     private String userName;
-	
-	@Column(name = "user_birthday")
+
+    @Temporal(TemporalType.DATE)
     private Date userBirthday;
-	
-	@Column(name = "user_type")
+
     private boolean userType;
+<<<<<<< Updated upstream
 	
 	@OneToMany(mappedBy = "user")
 	private List<Review> reviewList = new ArrayList<>();
@@ -66,4 +57,12 @@ public class User {
 				.userType(user.isUserType())
 				.build();
 	}
+=======
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviewList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likeList = new ArrayList<>();
+>>>>>>> Stashed changes
 }

@@ -11,53 +11,61 @@ public class UserService {
 	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 	
 	public static boolean insertUser(UserDTO userDTO) {
-    	boolean insertResult = true;
-		
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction tx = em.getTransaction();
-    	
-		User user = null;
-		
-    	tx.begin();
-		try {
-			// 회원 등록
-			user = UserDTO.toEntity(userDTO);
-			em.persist(user);
-			
-			tx.commit();
-		} catch (Exception e) {
-			tx.rollback();
-			insertResult = false;
-		} finally {
-			em.close();
-		}
-				
-		return insertResult;
-    }
+	    boolean insertResult = true;
+	    EntityManager em = null;
+	    EntityTransaction tx = null;
+
+	    try {
+	        em = emf.createEntityManager();
+	        tx = em.getTransaction();
+	        tx.begin();
+
+	        User user = userDTO.toEntity(); // UserDTO를 User 엔티티로 변환
+	        em.persist(user);
+	        tx.commit();
+	    } catch (Exception e) {
+	        if (tx != null) {
+	            tx.rollback();
+	        }
+	        insertResult = false;
+	        e.printStackTrace(); 
+	    } finally {
+	        if (em != null) {
+	            em.close(); 
+	        }
+	    }
+
+	    return insertResult;
+	}
 
 	public static UserDTO getUser(String accountId, String passwd) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
     	
-		User user = null;
+		UserDTO userDTO = null;
 		
     	tx.begin();
 		try {
 			// 회원 조회
-			String getUserJPQL = "SELECT u FROM User u WHERE u.user_account_id = :accountId AND u.user_passwd = :passwd";
-			
-			user = em.createQuery(getUserJPQL, User.class)
-					.setParameter("accountId", accountId)
-					.setParameter("passwd", passwd)
-					.getSingleResult();
-			
-			tx.commit();
-		} catch (Exception e) {
-			tx.rollback();
-		} finally {
-			em.close();
-		}
-				
-		return User.toDTO(user);
+			String getUserJPQL = "SELECT u FROM User u WHERE u.userAccountId = :accountId AND u.userPassword = :passwd";
+	        User user = em.createQuery(getUserJPQL, User.class)
+	                			.setParameter("accountId", accountId)
+	                			.setParameter("passwd", passwd)
+	                			.getSingleResult();
+
+	        tx.commit();
+	        userDTO = UserDTO.fromEntity(user);
+	    } catch (Exception e) {
+	        if (tx != null) {
+	            tx.rollback();
+	        }
+	        e.printStackTrace();
+	    } finally {
+	        if (em != null) {
+	            em.close();
+	        }
+	    }
+
+	    return userDTO;
 	}
 }

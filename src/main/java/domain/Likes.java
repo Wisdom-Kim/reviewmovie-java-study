@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream:src/main/java/domain/Likes.java
 package domain;
 
 import jakarta.persistence.Column;
@@ -34,3 +35,33 @@ public class Likes {
     @Column(name = "like_statement")
     private boolean isLikes;
 }
+=======
+package domain;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@DiscriminatorValue(value = "like")
+public class Like {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int likeId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
+    private Review review;
+
+    private boolean likeStatement;
+}
+>>>>>>> Stashed changes:src/main/java/domain/Like.java
