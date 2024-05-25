@@ -75,5 +75,16 @@ public class ReviewRepository {
         }
     }
 
+    public List<Review> findByMovieId(int movieId) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Review> query = em.createQuery("SELECT r FROM Review r WHERE r.movie.movieId = :movieId", Review.class);
+            query.setParameter("movieId", movieId);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 
 }

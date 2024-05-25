@@ -4,51 +4,39 @@ import domain.Rating;
 import domain.Review;
 import dto.RatingDTO;
 import dto.ReviewDTO;
- import jakarta.persistence.EntityManager;
- import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.TypedQuery;
 import repository.ReviewRepository;
-import util.JpaUtil;
-import java.util.List;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReviewService {
 
     private final ReviewRepository reviewRepository = ReviewRepository.getInstance();
 
-
-    private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
-
     public void insertReview(ReviewDTO reviewDTO) {
-        //연관객체의 생성은 ReviewDTO에서 다 맡긴다
+        // 연관 객체의 생성은 ReviewDTO에서 다 맡긴다
         Review review = reviewDTO.toEntity();
         reviewRepository.save(review);
     }
 
-    public void updateReview(ReviewDTO reviewDTO,String newContent, RatingDTO newRatingDTO) {
-        Review review = reviewDTO.toEntity();//원본
-        Rating newRating = newRatingDTO.toEntity(); //수정된 평가
-        review.setReviewContent(newContent);//리뷰 내용 수정
-        review.setRating(newRating);//별점 수정
+    public void updateReview(ReviewDTO reviewDTO, String newContent, RatingDTO newRatingDTO) {
+        // 엔티티를 조회한 후 변경된 값을 적용한다.
+        Review review = reviewRepository.findOne(reviewDTO.getReviewId());
+        review.setReviewContent(newContent);
+        review.setRating(newRatingDTO.toEntity());
 
         reviewRepository.update(review);
-
     }
 
-    public List<Review> getListByMovieId(int movieId) {
-        EntityManager em = emf.createEntityManager();
-        List<Review> reviewList = null;
+    public ReviewDTO getReview(int reviewId) {
+        Review review = reviewRepository.findOne(reviewId);
+        return ReviewDTO.fromEntity(review);
+    }
 
-        try {
-            em.getTransaction().begin();
-            TypedQuery<Review> query = em.createQuery("SELECT r from Review r WHERE r.movie.movieId=:movieId", Review.class);
-            query.setParameter("movieId", movieId);
-            reviewList = query.getResultList();
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
+    public List<ReviewDTO> getReviewListByMovieId(int movieId) {
+        List<Review> reviewList = reviewRepository.findByMovieId(movieId);
 
-        return reviewList;
+        //Review 하나하나 다시 ReviewDTO로 변경
+        return reviewList.stream().map(ReviewDTO::fromEntity).collect(Collectors.toList());
     }
 }
