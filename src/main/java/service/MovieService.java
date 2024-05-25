@@ -1,5 +1,6 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,16 +23,26 @@ public class MovieService {
 
     public List<MovieDTO> searchMoviesByTitle(String movieTitle) {
         List<Movie> movies = movieRepository.searchMoviesByTitle(movieTitle);
-        return movies.stream()
-                .map(MovieDTO::fromEntity)
-                .collect(Collectors.toList());
+        List<MovieDTO> movieDTOs = new ArrayList<>();
+        
+        for (Movie movie : movies) {
+            MovieDTO movieDTO = MovieDTO.fromEntity(movie);
+            movieDTOs.add(movieDTO);
+        }
+        
+        return movieDTOs;
     }
 
     public List<MovieDTO> getMoviesByRatingDesc() {
         List<Movie> movies = movieRepository.findMoviesByRatingDesc();
-        return movies.stream()
-                .map(MovieDTO::fromEntity)
-                .collect(Collectors.toList());
+        List<MovieDTO> movieDTOs = new ArrayList<>();
+        
+        for (Movie movie : movies) {
+            MovieDTO movieDTO = MovieDTO.fromEntity(movie);
+            movieDTOs.add(movieDTO);
+        }
+        
+        return movieDTOs;
     }
 
     public void close() {

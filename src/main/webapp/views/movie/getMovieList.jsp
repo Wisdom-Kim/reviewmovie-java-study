@@ -31,7 +31,11 @@
         <p>검색 결과가 없습니다.</p>
     </c:if>
 
+<<<<<<< Updated upstream
 	<form action="${pageContext.request.contextPath}/getMovie.do" method="get">
+=======
+	<form action="${pageContext.request.contextPath}/movie.do" method="get">
+>>>>>>> Stashed changes
         <input type="text" name="searchTitle" placeholder="영화 제목 입력" />
         <input type="submit" value="검색" />
     </form>

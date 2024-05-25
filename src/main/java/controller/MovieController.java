@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import dto.MovieDTO;
 import service.MovieService;
 
-@WebServlet({"/getMovie.do", "/movies/rating.do"})
+@WebServlet({"/movie.do", "/movies/rating.do"})
 public class MovieController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

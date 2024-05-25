@@ -148,7 +148,7 @@ public class ReviewService {
         Review review = null;
         tx.begin();
         try {
-            Movie movie= movieRepository.findById(movieId);
+            Movie movie= movieRepository.searchMoviesByTitle(movieTitle);
 
             tx.commit();
         }catch (Exception e){

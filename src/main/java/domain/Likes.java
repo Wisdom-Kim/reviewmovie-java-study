@@ -38,7 +38,7 @@ public class Likes {
 =======
 package domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @Entity

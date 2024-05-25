@@ -12,16 +12,24 @@ import lombok.ToString;
 import domain.Review;
 import domain.Movie;
 import domain.User;
+<<<<<<< Updated upstream
 import domain.Like;
+=======
+import domain.Likes;
+import domain.Rating;
+>>>>>>> Stashed changes
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 
 import java.util.Date;
 import java.util.List;
+=======
+>>>>>>> Stashed changes
 
 @NoArgsConstructor
 @Getter
@@ -34,7 +42,12 @@ public class ReviewDTO {
     private Date reviewDate;
     private UserDTO user;
     private MovieDTO movie;
+<<<<<<< Updated upstream
     private List<LikeDTO> likeList = new ArrayList<>();
+=======
+    private RatingDTO rating;
+    private List<LikesDTO> likeList = new ArrayList<>();
+>>>>>>> Stashed changes
 
 <<<<<<< Updated upstream
 	//Adjust fields according to the domain
@@ -69,16 +82,18 @@ public class ReviewDTO {
 }
 =======
     @Builder
-    public ReviewDTO(int reviewId, String reviewContent, Date reviewDate, UserDTO user, MovieDTO movie) {
+    public ReviewDTO(int reviewId, String reviewContent, Date reviewDate, UserDTO user, MovieDTO movie, RatingDTO rating) {
         this.reviewId = reviewId;
         this.reviewContent = reviewContent;
         this.reviewDate = reviewDate;
         this.user = user;
         this.movie = movie;
+        this.rating = rating;
     }
 
     public static ReviewDTO fromEntity(Review review) {
         ReviewDTO reviewDTO = ReviewDTO.builder()
+<<<<<<< Updated upstream
                 .reviewId(review.getReviewId())
                 .reviewContent(review.getReviewContent())
                 .reviewDate(review.getReviewDate())
@@ -89,6 +104,21 @@ public class ReviewDTO {
         List<LikeDTO> likeDTOList = new ArrayList<>();
         for (Like like : review.getLikeList()) {
             likeDTOList.add(LikeDTO.fromEntity(like));
+=======
+            .reviewId(review.getReviewId())
+            .reviewContent(review.getReviewContent())
+            .reviewDate(review.getReviewDate())
+            .user(UserDTO.fromEntity(review.getUser()))
+            .movie(MovieDTO.fromEntity(review.getMovie()))
+            .rating(review.getRating() != null ? RatingDTO.fromEntity(review.getRating()) : null)
+            .build();
+
+        List<LikesDTO> likeDTOList = new ArrayList<>();
+        if (review.getLikesList() != null) {
+            for (Likes likes : review.getLikesList()) {
+                likeDTOList.add(LikesDTO.fromEntity(likes));
+            }
+>>>>>>> Stashed changes
         }
         reviewDTO.setLikeList(likeDTOList);
 
@@ -97,12 +127,17 @@ public class ReviewDTO {
 
     public Review toEntity() {
         return Review.builder()
-                .reviewId(this.reviewId)
-                .reviewContent(this.reviewContent)
-                .reviewDate(this.reviewDate)
-                .user(this.user.toEntity())
-                .movie(this.movie.toEntity())
-                .build();
+            .reviewId(this.reviewId)
+            .reviewContent(this.reviewContent)
+            .reviewDate(this.reviewDate)
+            .user(this.user != null ? this.user.toEntity() : null)
+            .movie(this.movie != null ? this.movie.toEntity() : null)
+            .rating(this.rating != null ? this.rating.toEntity() : null)
+            .build();
     }
+<<<<<<< Updated upstream
+}
+>>>>>>> Stashed changes
+=======
 }
 >>>>>>> Stashed changes
