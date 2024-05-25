@@ -4,9 +4,9 @@ import domain.Rating;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import util.JpaUtil;
-
 import java.util.List;
 
+//repository 싱글톤 처리
 public class RatingRepository {
 
     private static RatingRepository ratingRepository;
@@ -55,7 +55,7 @@ public class RatingRepository {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.remove(em.contains(rating) ? rating : em.merge(rating));
+            em.remove(em.contains(rating) ? rating : em.merge(rating)); //em이 어떻게든 rating을 관리하는 상태로 만들기
             em.getTransaction().commit();
         } finally {
             em.close();

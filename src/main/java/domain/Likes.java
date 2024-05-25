@@ -23,5 +23,4 @@ public class Likes {
     @JoinColumn(name = "review_id")
     private Review review;
 
-    private boolean likeStatement;
 }
