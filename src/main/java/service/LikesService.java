@@ -7,7 +7,7 @@ import repository.LikesRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LikesServices {
+public class LikesService {
 
     private final LikesRepository likesRepository = LikesRepository.getInstance();
 
