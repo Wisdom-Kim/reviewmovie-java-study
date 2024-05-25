@@ -59,16 +59,16 @@ public class ReviewService {
         }
     }
 
-    public List<Review> getListByMovieId(int movieId) {
-        EntityManager em = emf.createEntityManager();
-        ReviewRepository reviewRepository = new ReviewRepository(em);
-        List<Review> reviewList = null;
-
-        try {
-            reviewList = reviewRepository.getListByMovieId(movieId);
-        } finally {
-            em.close();
-        }
-        return reviewList;
-    }
+//    public List<Review> getListByMovieId(int movieId) {
+//        EntityManager em = emf.createEntityManager();
+//        ReviewRepository reviewRepository;
+//        List<Review> reviewList = null;
+//
+//        try {
+//            reviewList = reviewRepository.getListByMovieId(movieId);
+//        } finally {
+//            em.close();
+//        }
+//        return reviewList;
+//    }
 }

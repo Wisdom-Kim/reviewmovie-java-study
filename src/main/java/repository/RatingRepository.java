@@ -1,8 +1,11 @@
 package repository;
 
 import domain.Rating;
+import domain.Review;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import util.JpaUtil;
 import java.util.List;
 
@@ -61,4 +64,5 @@ public class RatingRepository {
             em.close();
         }
     }
+    
 }

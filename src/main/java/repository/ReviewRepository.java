@@ -5,17 +5,21 @@ import domain.Review;
 import dto.RatingDTO;
 import dto.ReviewDTO;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
+import util.JpaUtil;
 
 import java.util.List;
 
-@AllArgsConstructor
 public class ReviewRepository {
-;
+    //마찬가지로 싱글톤화
     private static ReviewRepository reviewRepository;
+    private static final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
+    private ReviewRepository() {
+    }
     private EntityManager em;
     //service 계층에서 em을 생성시키고, repository에 넣어주자
     public void save(Review review) {
@@ -28,7 +32,7 @@ public class ReviewRepository {
         }
     }
 
-    public Review findById(Long id) {
+    public Review findById(int id) {
         try {
             return em.find(Review.class, id);
         } finally {
@@ -44,28 +48,28 @@ public class ReviewRepository {
         }
     }
 
-    public void updateById(ReviewDTO reviewDTO, RatingDTO ratingDTO,String newContent) {
-        //리뷰, 평점 객체를 가져오기 위한 DTO, 수정할 리뷰 내용
-
-        //엔터티에 setter를 사용해서 수정하는 것은 보안상 좋지 않음
-        //DTO의 setter를 이용할 것
-
-        EntityTransaction tx = em.getTransaction();
-
-        try {
-            tx.begin();
-
-            Review review = em.find(Review.class, reviewDTO.getReviewId()); //수정될 개체
-
-
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-    }
+//    public void updateById(ReviewDTO reviewDTO, RatingDTO ratingDTO) {
+//        //리뷰, 평점 객체를 가져오기 위한 DTO, 수정할 리뷰 내용
+//
+//        //엔터티에 setter를 사용해서 수정하는 것은 보안상 좋지 않음
+//        //DTO의 setter를 이용할 것
+//
+//        EntityTransaction tx = em.getTransaction();
+//
+//        try {
+//            tx.begin();
+//
+//            Review review = em.find(Review.class, reviewDTO.getReviewId()); //수정될 개체
+//
+//
+//            tx.commit();
+//        } catch (Exception e) {
+//            tx.rollback();
+//            e.printStackTrace();
+//        } finally {
+//            em.close();
+//        }
+//    }
 
     //리뷰 삭제
     public void deleteById(Long id) {

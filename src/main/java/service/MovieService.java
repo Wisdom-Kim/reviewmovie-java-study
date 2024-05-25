@@ -9,6 +9,7 @@ import jakarta.persistence.Persistence;
 
 import domain.Movie;
 import dto.MovieDTO;
+import jakarta.persistence.TypedQuery;
 import repository.MovieRepository;
 
 public class MovieService {
@@ -32,6 +33,20 @@ public class MovieService {
         return movies.stream()
                 .map(MovieDTO::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    public double getAverageRating(MovieDTO movieDTO) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Double> query = em.createQuery(
+                    "SELECT AVG(r.ratingScore) FROM Rating r WHERE r.review.movie.movieId = :movieId", Double.class
+            );
+            query.setParameter("movieId", movieDTO.getMovieId());
+            Double averageRating = query.getSingleResult();
+            return (averageRating != null) ? averageRating : 0.0; //해당하는 영화가 없다면 일단 0으로 반환
+        } finally {
+            em.close();
+        }
     }
 
     public void close() {
