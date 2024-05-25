@@ -1,6 +1,7 @@
 package service;
 
 import domain.Movie;
+import domain.Rating;
 import domain.Review;
 import domain.User;
 import dto.ReviewDTO;
@@ -37,15 +38,18 @@ class ReviewServiceTest {
     void insertReview() {
         User user = userService.getUser("cocoa389", "1234").toEntity();
         Movie movie = movieService.getMovie(102).toEntity();
+        //레이팅 먼저 만들어야함
+        Rating rating = Rating.builder().ratingScore(5).build();
 
         ReviewDTO reviewDTO = ReviewDTO.builder()
-                .reviewContent("집가서 팽이 한 번 돌려보는 영화")
+                .reviewId(3)
+                .reviewContent("졸려요")
                 .reviewDate(new Date())
                 .userId(user.getUserId())
                 .userName(user.getUserName())
                 .movieId(movie.getMovieId())
                 .movieTitle(movie.getMovieTitle())
-                .ratingScore(3)
+                .ratingScore(rating.getRatingScore())
                 .likesList(Collections.emptyList())
                 .build();
 
