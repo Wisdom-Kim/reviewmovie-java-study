@@ -9,7 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@DiscriminatorValue(value = "likes")
 public class Likes {
 
     @Id
@@ -26,4 +25,3 @@ public class Likes {
 
     private boolean likeStatement;
 }
-

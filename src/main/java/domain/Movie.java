@@ -40,7 +40,4 @@ public class Movie {
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Likes> likesList = new ArrayList<>();
 
-    public List<Likes> getLikesList() {
-        return likesList;
-    }
 }

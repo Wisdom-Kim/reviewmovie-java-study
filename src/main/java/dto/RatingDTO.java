@@ -1,7 +1,6 @@
 package dto;
 
 import domain.Rating;
-import domain.Review;
 import lombok.*;
 
 @NoArgsConstructor
@@ -12,20 +11,18 @@ import lombok.*;
 public class RatingDTO {
     private int ratingId;
     private int ratingScore;
-    private ReviewDTO review;
 
     @Builder
-    public RatingDTO(int ratingId, int ratingScore, ReviewDTO review) {
+    public RatingDTO(int ratingId, int ratingScore) {
         this.ratingId = ratingId;
         this.ratingScore = ratingScore;
-        this.review = review;
     }
 
-    public static RatingDTO fromEntity(Rating rating) {
+    public RatingDTO fromEntity(Rating rating) {
+        //DTO로 변환
         return RatingDTO.builder()
                 .ratingId(rating.getRatingId())
                 .ratingScore(rating.getRatingScore())
-                .review(ReviewDTO.fromEntity(rating.getReview()))
                 .build();
     }
 
@@ -33,8 +30,6 @@ public class RatingDTO {
         return Rating.builder()
                 .ratingId(this.ratingId)
                 .ratingScore(this.ratingScore)
-                .review(this.review.toEntity())
                 .build();
     }
 }
-

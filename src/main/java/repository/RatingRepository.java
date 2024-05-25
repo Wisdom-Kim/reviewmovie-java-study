@@ -2,8 +2,8 @@ package repository;
 
 import domain.Movie;
 import domain.Rating;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import util.JpaUtil;
 
 import java.util.List;
@@ -19,12 +19,16 @@ public class RatingRepository {
         em.persist(rating);
     }
 
-    public Rating findOne(Long id){
+    public Rating findOne(int id){
        
         return em.find(Rating.class,id);
     }
     public static List<Movie> findAll(){
 
         return em.createQuery("select r from Review r",Movie.class).getResultList();
+    }
+
+    public void delete(Rating rating) {
+        em.remove(rating);
     }
 }

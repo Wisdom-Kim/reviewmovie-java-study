@@ -10,35 +10,28 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @ToString
+@Builder
+@AllArgsConstructor
 public class LikesDTO {
     private int likesId;
-    private boolean likeStatement;
-    private UserDTO user;
-    private ReviewDTO review;
-
-    @Builder
-    public LikesDTO(int likesId, boolean likeStatement, UserDTO user, ReviewDTO review) {
-        this.likesId = likesId;
-        this.likeStatement = likeStatement;
-        this.user = user;
-        this.review = review;
-    }
+    private int userId;
+    private int reviewId;
 
     public static LikesDTO fromEntity(Likes likes) {
         return LikesDTO.builder()
                 .likesId(likes.getLikesId())
-                .likeStatement(likes.isLikeStatement())
-                .user(UserDTO.fromEntity(likes.getUser()))
-                .review(ReviewDTO.fromEntity(likes.getReview()))
+                .userId(likes.getUser().getUserId())
+                .reviewId(likes.getReview().getReviewId())
                 .build();
     }
 
-    public Likes toEntity() {
+    public static Likes toEntity(LikesDTO likesDTO) {
+        User user = User.builder().userId(likesDTO.getUserId()).build(); // Assuming User entity with just ID
+        Review review = Review.builder().reviewId(likesDTO.getReviewId()).build(); // Assuming Review entity with just ID
         return Likes.builder()
-                .likesId(this.likesId)
-                .likeStatement(this.likeStatement)
-                .user(this.user.toEntity())
-                .review(this.review.toEntity())
+                .likesId(likesDTO.getLikesId())
+                .user(user)
+                .review(review)
                 .build();
     }
 }

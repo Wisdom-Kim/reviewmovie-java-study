@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
-
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -38,6 +37,4 @@ public class Review {
 
     @OneToOne(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private Rating rating;
-
-    
 }

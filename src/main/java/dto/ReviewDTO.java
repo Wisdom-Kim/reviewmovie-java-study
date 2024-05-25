@@ -1,18 +1,11 @@
 package dto;
 
-import domain.Review;
-import domain.Movie;
-import domain.User;
-import domain.Likes;
+import domain.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-
-import java.util.Date;
-import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
@@ -21,57 +14,50 @@ import java.util.List;
 @ToString
 public class ReviewDTO {
 
-
-	//Adjust fields according to the domain
-	private int reviewId;
-    private Movie movie;
-    private User user;
-    private Rating rating;
+    private int reviewId;
     private String reviewContent;
     private Date reviewDate;
-    private UserDTO user;
-    private MovieDTO movie;
-    private List<LikesDTO> likeList = new ArrayList<>();
+    private User user;
+    private String userName;
+    private Movie movie;
+    private Rating rating;
+    private List<Likes> likesList;
 
     @Builder
-    public ReviewDTO(int reviewId, String reviewContent, Date reviewDate, UserDTO user, MovieDTO movie) {
+    public ReviewDTO(int reviewId, String reviewContent, Date reviewDate, User user, String userName, Movie movie, Rating rating, List<Likes> likesList) {
         this.reviewId = reviewId;
         this.reviewContent = reviewContent;
         this.reviewDate = reviewDate;
         this.user = user;
+        this.userName = userName;
         this.movie = movie;
+        this.rating = rating;
+        this.likesList = likesList;
     }
 
+
     public static ReviewDTO fromEntity(Review review) {
-        ReviewDTO reviewDTO = ReviewDTO.builder()
+        //JPA로부터 받은 Entity를 DTO로 변경
+        return ReviewDTO.builder()
                 .reviewId(review.getReviewId())
                 .reviewContent(review.getReviewContent())
                 .reviewDate(review.getReviewDate())
-                .user(UserDTO.fromEntity(review.getUser()))
-                .movie(MovieDTO.fromEntity(review.getMovie()))
-                .rating(review.getRating() != null ? RatingDTO.fromEntity(review.getRating()) : null)
+                .user(review.getUser())
+                .movie(review.getMovie())
+                .rating(review.getRating())
+                .likesList(review.getLikesList())
                 .build();
-
-        List<LikesDTO> likeDTOList = new ArrayList<>();
-        for (Likes likes : review.getLikesList()) {
-            likeDTOList.add(LikesDTO.fromEntity(likes));
-        }
-        reviewDTO.setLikeList(likeDTOList);
-
-        return reviewDTO;
     }
 
-
-    public Review toEntity(Review existingReview, Rating newRating) {
-        //평점 정보
+    public Review toEntity() {
+        //DTO를 받아 Entity로 변경
         return Review.builder()
-                .reviewId(existingReview.getReviewId())
-                .movie(existingReview.getMovie())
-                .user(existingReview.getUser())
+                .reviewId(this.reviewId)
+                .movie(this.movie)
+                .user(this.user)
                 .reviewContent(this.reviewContent)
-                .rating(newRating)
-                .reviewDate(existingReview.getReviewDate()) // 생성 시 자동으로 설정되는 필드 유지
+                .rating(this.rating)
+                .reviewDate(this.reviewDate) // 리뷰 작성 시간이 수정되면 안된다
                 .build();
     }
 }
-

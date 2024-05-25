@@ -1,7 +1,6 @@
 package domain;
 
-import javax.persistence.*;
-
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -21,6 +20,4 @@ public class Rating {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")
     private Review review;
-
-    
 }
