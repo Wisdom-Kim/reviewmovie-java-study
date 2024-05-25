@@ -14,14 +14,17 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Review {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id")
     private int reviewId;
 
-    @Column(nullable = false)
+    @Column(name = "review_content", nullable = false)
     private String reviewContent;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "review_date")
     private Date reviewDate;
 
     @ManyToOne(fetch = FetchType.LAZY)

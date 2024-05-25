@@ -4,9 +4,14 @@ import domain.Movie;
 import domain.Review;
 import domain.User;
 import dto.ReviewDTO;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.MovieRepository;
 import repository.ReviewRepository;
+import util.JpaUtil;
 
 import java.util.Collections;
 import java.util.Date;
@@ -16,16 +21,25 @@ import static org.junit.jupiter.api.Assertions.*;
 class ReviewServiceTest {
 
 
+    private final UserService userService = new UserService();
     private final ReviewService reviewService = new ReviewService();
     private final MovieService movieService = new MovieService();
     private final MovieRepository movieRepository = MovieRepository.getInstance();
+    private EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
+
+    @BeforeEach
+    void setUp() {
+//        emf = Persistence.createEntityManagerFactory("your-persistence-unit");
+//        EntityManager em = emf.createEntityManager();
+    }
+
     @Test
     void insertReview() {
-        User user = UserService.getUser("cocoa389","1234").toEntity();
+        User user = userService.getUser("cocoa389", "1234").toEntity();
         Movie movie = movieService.getMovie(102).toEntity();
 
         ReviewDTO reviewDTO = ReviewDTO.builder()
-                .reviewContent("너무 어려운 영화")
+                .reviewContent("집가서 팽이 한 번 돌려보는 영화")
                 .reviewDate(new Date())
                 .userId(user.getUserId())
                 .userName(user.getUserName())
@@ -35,19 +49,13 @@ class ReviewServiceTest {
                 .likesList(Collections.emptyList())
                 .build();
 
-        Review review = reviewDTO.toEntity();
-        review.setUser(user);
-        review.setMovie(movie);
-
-        // Mock the save behavior
-
         // When
         reviewService.insertReview(reviewDTO);
 
         // Then
-        ReviewDTO reviewDTO1 = reviewService.getReview(1);
-        assertEquals(reviewDTO.getReviewId(), reviewDTO1.getReviewId());
-
+        ReviewDTO reviewDTO1 = reviewService.getReview(reviewDTO.getReviewId());
+        assertNotNull(reviewDTO1);
+        assertEquals(reviewDTO.getReviewContent(), reviewDTO1.getReviewContent());
     }
 
     @Test

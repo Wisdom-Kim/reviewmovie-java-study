@@ -17,20 +17,23 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private int userId;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "user_account_id", nullable = false, unique = true)
     private String userAccountId;
 
-    @Column(nullable = false)
+    @Column(name = "user_password", nullable = false)
     private String userPassword;
 
-    @Column(nullable = false)
+    @Column(name = "user_name", nullable = false)
     private String userName;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "user_birthday")
     private Date userBirthday;
 
+    @Column(name = "user_type")
     private boolean userType;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -38,5 +41,4 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Likes> likeList = new ArrayList<>();
-
 }
