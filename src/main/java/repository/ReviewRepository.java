@@ -3,6 +3,7 @@ package repository;
 import domain.Review;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
 import util.JpaUtil;
 
 import java.util.List;
@@ -61,4 +62,18 @@ public class ReviewRepository {
             em.close();
         }
     }
+
+    public void update(Review review) {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(review);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+
 }
