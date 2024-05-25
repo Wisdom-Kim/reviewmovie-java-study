@@ -14,6 +14,7 @@ import service.MovieService;
 
 @WebServlet("/movies.do")
 public class MovieController extends HttpServlet {
+<<<<<<< Updated upstream
 	private static final long serialVersionUID = 1L;
        
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,4 +42,37 @@ public class MovieController extends HttpServlet {
 	    
 	}
 }
+=======
+    private static final long serialVersionUID = 1L;
 
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url = "/views/errors/error.jsp";
+        String searchTitle = request.getParameter("searchTitle");
+        MovieService movieService = null;
+
+        try {
+            List<Movie> movieList;
+            movieService = new MovieService();
+>>>>>>> Stashed changes
+
+            if (searchTitle != null && !searchTitle.isEmpty()) {
+                movieList = movieService.searchMoviesByTitle(searchTitle);
+            } else {
+                request.setAttribute("error", "영화 제목을 입력해주세요.");
+                request.getRequestDispatcher("/views/getMovieList.jsp").forward(request, response);
+                return;
+            }
+
+            request.setAttribute("movieList", movieList);
+            request.getRequestDispatcher("/views/getMovieList.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Fail to search!");
+            request.getRequestDispatcher(url).forward(request, response);
+        } finally {
+            if (movieService != null) {
+                movieService.close();
+            }
+        }
+    }
+}

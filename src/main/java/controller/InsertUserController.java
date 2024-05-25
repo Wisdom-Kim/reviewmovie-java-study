@@ -40,7 +40,13 @@ public class InsertUserController extends HttpServlet {
 			try {	
 				Date birthday_to_date = df.parse(birthday);
 
-				newUser = new UserDTO(accountId, passwd, username, birthday_to_date, type);
+				newUser = UserDTO.builder()
+		                 				.userAccountId(accountId)
+		                 				.userPassword(passwd)
+		                 				.userName(username)
+		                 				.userBirthday(birthday_to_date)
+		                 				.userType(type)
+		                 				.build();
 				
 				insertResult = UserService.insertUser(newUser);
 				if(!insertResult) {
