@@ -17,6 +17,7 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int movieId;
 
     @Column(nullable = false)

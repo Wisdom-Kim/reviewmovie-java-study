@@ -1,31 +1,19 @@
 package service;
 
-
-import domain.Movie;
 import domain.Rating;
 import domain.Review;
-import domain.User;
-
-import dto.MovieDTO;
 import dto.RatingDTO;
 import dto.ReviewDTO;
  import jakarta.persistence.EntityManager;
  import jakarta.persistence.EntityManagerFactory;
- import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
-import repository.MovieRepository;
-import repository.RatingRepository;
 import repository.ReviewRepository;
-import repository.UserRepository;
 import util.JpaUtil;
 import java.util.List;
 
 
 public class ReviewService {
 
-    private final RatingRepository ratingRepository = RatingRepository.getInstance();
-    private final MovieRepository movieRepository = MovieRepository.getInstance();
-    private final UserRepository userRepository = UserRepository.getInstance();
     private final ReviewRepository reviewRepository = ReviewRepository.getInstance();
 
 

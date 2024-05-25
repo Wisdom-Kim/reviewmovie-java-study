@@ -10,7 +10,6 @@ import jakarta.persistence.Persistence;
 import domain.Movie;
 import dto.MovieDTO;
 import jakarta.persistence.TypedQuery;
-import repository.LikesRepository;
 import repository.MovieRepository;
 
 public class MovieService {
