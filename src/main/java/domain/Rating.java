@@ -1,31 +1,26 @@
 package domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import javax.persistence.*;
 
-@Builder
+import lombok.*;
+
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@ToString
-@DiscriminatorValue(value = "rating")
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Rating {
-	
-	@Id
-	@Column(name = "rating_id")
-	private int ratingId;
-	
-	@Column(name = "rating_score")
-	private int ratingScore;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int ratingId;
 
+    @Column(nullable = false)
+    private int ratingScore;
 
-	
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
+    private Review review;
+
+    
 }

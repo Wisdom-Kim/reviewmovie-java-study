@@ -3,12 +3,7 @@ package dto;
 import domain.Likes;
 import domain.Review;
 import domain.User;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @NoArgsConstructor
 @Getter
@@ -16,27 +11,34 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class LikesDTO {
+    private int likesId;
+    private boolean likeStatement;
+    private UserDTO user;
+    private ReviewDTO review;
 
-	private int likeId;
-	private boolean isLike;
-	private User user;
-	private Review review;
+    @Builder
+    public LikesDTO(int likesId, boolean likeStatement, UserDTO user, ReviewDTO review) {
+        this.likesId = likesId;
+        this.likeStatement = likeStatement;
+        this.user = user;
+        this.review = review;
+    }
 
-	@Builder
-	public LikesDTO(int likeId, boolean isLike, User user, Review review) {
-		this.likeId = likeId;
-		this.isLike = isLike;
-		this.user = user;
-		this.review = review;
-	}
-
-	public static Likes toEntity(LikesDTO likesDTO) {
-		return Likes.builder()
-				.likesId(likesDTO.getLikeId())
-                .isLikes(likesDTO.isLike())
-                .user(likesDTO.getUser())
-                .review(likesDTO.getReview())
+    public static LikesDTO fromEntity(Likes likes) {
+        return LikesDTO.builder()
+                .likesId(likes.getLikesId())
+                .likeStatement(likes.isLikeStatement())
+                .user(UserDTO.fromEntity(likes.getUser()))
+                .review(ReviewDTO.fromEntity(likes.getReview()))
                 .build();
-	}
-	
+    }
+
+    public Likes toEntity() {
+        return Likes.builder()
+                .likesId(this.likesId)
+                .likeStatement(this.likeStatement)
+                .user(this.user.toEntity())
+                .review(this.review.toEntity())
+                .build();
+    }
 }

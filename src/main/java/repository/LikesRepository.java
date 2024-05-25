@@ -1,8 +1,8 @@
 package repository;
 
 import domain.Review;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
 import util.JpaUtil;
 

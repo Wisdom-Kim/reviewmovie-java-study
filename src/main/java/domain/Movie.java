@@ -5,42 +5,42 @@ import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import static jakarta.persistence.GenerationType.*;
-
-@Builder
+import lombok.*;
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@ToString
-@DiscriminatorValue(value = "movie")
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Movie {
 
-	@Id
-	@Column(name = "movie_id")
-	private int movieId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int movieId;
 
-	@Column(name = "movie_title")
-	private String movieTitle;
+    @Column(nullable = false)
+    private String movieTitle;
 
-	@Column(name = "movie_director")
-	private String movieDirector;
+    @Column(nullable = false)
+    private String movieDirector;
 
-	@Column(name = "movie_poster")
-	private String moviePoster;
+    @Column(nullable = false)
+    private String moviePoster;
 
-	@Column(name = "movie_type")
-	private String movieType;
+    @Column(nullable = false)
+    private String movieType;
 
-	@Column(name = "movie_release_date")
-	private Date movieReleaseDate;
+    @Temporal(TemporalType.DATE)
+    private Date movieReleaseDate;
 
-	@OneToMany(mappedBy = "movie")
-	private List<Review> reviewList = new ArrayList<>();
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviewList = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Likes> likesList = new ArrayList<>();
+
+    public List<Likes> getLikesList() {
+        return likesList;
+    }
 }

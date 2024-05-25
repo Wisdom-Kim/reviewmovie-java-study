@@ -2,8 +2,8 @@ package repository;
 
 import domain.Movie;
 import domain.Rating;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import util.JpaUtil;
 
 import java.util.List;

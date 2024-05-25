@@ -4,54 +4,40 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
+import javax.persistence.*;
 
-@Builder
+import lombok.*;
+
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@ToString(exclude = {"user", "movie"})
-@DiscriminatorValue(value = "review")
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Review {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int reviewId;
 
-	@Id
-	@Column(name = "review_id")
-	private int reviewId;
+    @Column(nullable = false)
+    private String reviewContent;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "movie_id")
-	private Movie movie;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date reviewDate;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-	@OneToOne
-	@JoinColumn(name = "rating_id")
-	private Rating rating;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
 
-	@Column(name = "review_content")
-	private String reviewContent;
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Likes> likesList = new ArrayList<>();
 
-	@CreationTimestamp
-	@Column(name = "review_date")
-	private Date reviewDate;
+    @OneToOne(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Rating rating;
 
-	@OneToMany(mappedBy = "review")
-	private List<Likes> likesList = new ArrayList<>();
+    
 }

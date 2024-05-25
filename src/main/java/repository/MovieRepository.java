@@ -2,14 +2,10 @@ package repository;
 
 import java.util.List;
 
-import domain.Movie;
-import jakarta.persistence.EntityManager;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.TypedQuery;
-import lombok.NoArgsConstructor;
-import util.JpaUtil;
-import java.util.List;
+import domain.Movie;
 
 public class MovieRepository {
     private EntityManager em;
@@ -29,12 +25,14 @@ public class MovieRepository {
         return query.getResultList();
     }
 
-    public List<Movie> findAll() {
-        String jpql = "SELECT m FROM Movie m";
+    public List<Movie> findMoviesByRatingDesc() {
+        String jpql = "SELECT m FROM Movie m "
+                    + "LEFT JOIN m.reviewList r "
+                    + "LEFT JOIN r.ratingList rat "
+                    + "GROUP BY m "
+                    + "ORDER BY AVG(rat.ratingScore) DESC";
+
         TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
         return query.getResultList();
-
     }
-
-    
 }

@@ -10,6 +10,10 @@ import dto.ReviewDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+// import javax.persistence.EntityManager;
+// import javax.persistence.EntityManagerFactory;
+// import javax.persistence.EntityTransaction;
+// import javax.persistence.Persistence;
 import lombok.NoArgsConstructor;
 import repository.MovieRepository;
 import repository.ReviewRepository;
@@ -33,6 +37,33 @@ public class ReviewService {
         EntityTransaction tx = em.getTransaction();
         ReviewRepository reviewRepository = new ReviewRepository(em);
 
+        tx.begin();
+
+        //Movie movie = movieRepository.findOne(movieId);
+        //User user = userRepository.findOne(userId);
+
+
+        //일단 직접 생성
+        Movie movie = Movie.builder()
+                .movieId(1)
+                .movieTitle("기생충")
+                .movieDirector("봉준호")
+                .moviePoster("https://img.movist.com/?img=/x00/05/04/96_p1.jpg")
+                .movieType("스릴러")
+                .movieReleaseDate(new Date()) //양방향은 어떻게 함? (reivewList)
+                .build();
+
+        em.persist(movie);
+
+        User user = User.builder()
+                .userId(1)
+                .userAccountId("coocoa389")
+                .userPassword("1234")
+                .userName("김지혜")
+                .userBirthday(new Date())
+                .build();//양방향 우짬? (reivewList, likeList)
+
+        em.persist(user);
         try {
             tx.begin();
 

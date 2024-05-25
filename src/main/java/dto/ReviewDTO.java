@@ -1,11 +1,15 @@
 package dto;
-import domain.*;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import domain.Review;
+import domain.Movie;
+import domain.User;
+import domain.Likes;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 
 import java.util.Date;
 import java.util.List;
@@ -25,15 +29,36 @@ public class ReviewDTO {
     private Rating rating;
     private String reviewContent;
     private Date reviewDate;
+    private UserDTO user;
+    private MovieDTO movie;
+    private List<LikesDTO> likeList = new ArrayList<>();
 
     @Builder
-    public ReviewDTO(int reviewId, Movie movie, User user, Rating rating, String reviewContent, Date reviewDate, List<Likes> listLike) {
+    public ReviewDTO(int reviewId, String reviewContent, Date reviewDate, UserDTO user, MovieDTO movie) {
         this.reviewId = reviewId;
-        this.movie = movie;
-        this.user = user;
-        this.rating = rating;
         this.reviewContent = reviewContent;
         this.reviewDate = reviewDate;
+        this.user = user;
+        this.movie = movie;
+    }
+
+    public static ReviewDTO fromEntity(Review review) {
+        ReviewDTO reviewDTO = ReviewDTO.builder()
+                .reviewId(review.getReviewId())
+                .reviewContent(review.getReviewContent())
+                .reviewDate(review.getReviewDate())
+                .user(UserDTO.fromEntity(review.getUser()))
+                .movie(MovieDTO.fromEntity(review.getMovie()))
+                .rating(review.getRating() != null ? RatingDTO.fromEntity(review.getRating()) : null)
+                .build();
+
+        List<LikesDTO> likeDTOList = new ArrayList<>();
+        for (Likes likes : review.getLikesList()) {
+            likeDTOList.add(LikesDTO.fromEntity(likes));
+        }
+        reviewDTO.setLikeList(likeDTOList);
+
+        return reviewDTO;
     }
 
 
@@ -49,3 +74,4 @@ public class ReviewDTO {
                 .build();
     }
 }
+
