@@ -11,6 +11,7 @@ import lombok.*;
 @Builder
 public class Likes {
 
+    @Column(name = "likes_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int likesId;

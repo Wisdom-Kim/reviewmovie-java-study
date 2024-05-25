@@ -1,75 +1,42 @@
 package service;
 
-
-import domain.Movie;
 import domain.Rating;
 import domain.Review;
-import domain.User;
-
 import dto.RatingDTO;
 import dto.ReviewDTO;
- import jakarta.persistence.EntityManager;
- import jakarta.persistence.EntityManagerFactory;
- import jakarta.persistence.EntityTransaction;
-import repository.MovieRepository;
-import repository.RatingRepository;
 import repository.ReviewRepository;
-import repository.UserRepository;
-import util.JpaUtil;
-import java.util.List;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReviewService {
 
-    private final RatingRepository ratingRepository = RatingRepository.getInstance();
-    private final MovieRepository movieRepository = MovieRepository.getInstance();
-    private final UserRepository userRepository = UserRepository.getInstance();
+    private final ReviewRepository reviewRepository = ReviewRepository.getInstance();
 
-
-    private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
-
-    public void insertReview(ReviewDTO reviewDTO, RatingDTO ratingDTO) {
-        //reviewDTO에서 전송받은 정보들을 바탕으로 리뷰를 생성하고, 넣어주자
-        Rating rating = ratingDTO.toEntity();
-        reviewDTO.toEntity();
+    public void insertReview(ReviewDTO reviewDTO) {
+        // 연관 객체의 생성은 ReviewDTO에서 다 맡긴다
+        Review review = reviewDTO.toEntity();
+        reviewRepository.save(review);
     }
 
-    public void updateReview(int reviewId, ReviewDTO reviewDTO) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
+    public void updateReview(ReviewDTO reviewDTO, String newContent, RatingDTO newRatingDTO) {
+        // 엔티티를 조회한 후 변경된 값을 적용한다.
+        Review review = reviewRepository.findOne(reviewDTO.getReviewId());
+        review.setReviewContent(newContent);
+        review.setRating(newRatingDTO.toEntity());
 
-        try {
-            tx.begin();
-
-            Review review = em.find(Review.class, reviewId);
-            if (review != null) {
-//                Rating newRating = em.find(Rating.class, reviewDTO.getRating());
-
-                // DTO의 toEntity 메서드를 사용하여 변경된 내용을 반영한 새로운 Review 객체 생성
-                Review updatedReview = reviewDTO.toEntity();
-
-                em.merge(updatedReview);
-            }
-
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
+        reviewRepository.update(review);
     }
 
-//    public List<Review> getListByMovieId(int movieId) {
-//        EntityManager em = emf.createEntityManager();
-//        ReviewRepository reviewRepository;
-//        List<Review> reviewList = null;
-//
-//        try {
-//            reviewList = reviewRepository.getListByMovieId(movieId);
-//        } finally {
-//            em.close();
-//        }
-//        return reviewList;
-//    }
+    public ReviewDTO getReview(int reviewId) {
+        Review review = reviewRepository.findOne(reviewId);
+        return ReviewDTO.fromEntity(review);
+    }
+
+    public List<ReviewDTO> getReviewListByMovieId(int movieId) {
+        List<Review> reviewList = reviewRepository.findByMovieId(movieId);
+
+        //Review 하나하나 다시 ReviewDTO로 변경
+        return reviewList.stream().map(ReviewDTO::fromEntity).collect(Collectors.toList());
+    }
 }

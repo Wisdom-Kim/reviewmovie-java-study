@@ -3,6 +3,8 @@ package service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import domain.Likes;
+import dto.LikesDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -10,7 +12,6 @@ import jakarta.persistence.Persistence;
 import domain.Movie;
 import dto.MovieDTO;
 import jakarta.persistence.TypedQuery;
-import repository.LikesRepository;
 import repository.MovieRepository;
 
 public class MovieService {
@@ -45,6 +46,14 @@ public class MovieService {
         } finally {
             em.close();
         }
+    }
+
+    public MovieDTO getMovie(int movieId) {
+        Movie movie = movieRepository.findById(movieId);
+        if (movie == null) {
+            throw new NullPointerException("Likes not found");
+        }
+        return MovieDTO.fromEntity(movie);
     }
 
     public void close() {

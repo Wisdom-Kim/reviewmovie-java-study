@@ -10,11 +10,12 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Rating {
+    @Column(name = "rating_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ratingId;
 
-    @Column(nullable = false)
+    @Column(name = "rating_score", nullable = false)
     private int ratingScore;
 
     @OneToOne(fetch = FetchType.LAZY)

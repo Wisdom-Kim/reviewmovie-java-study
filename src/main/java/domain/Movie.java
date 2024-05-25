@@ -17,20 +17,22 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movie_id")
     private int movieId;
 
-    @Column(nullable = false)
+    @Column(name = "movie_title", nullable = false)
     private String movieTitle;
 
-    @Column(nullable = false)
+    @Column(name="movie_director",nullable = false)
     private String movieDirector;
 
-    @Column(nullable = false)
+    @Column(name = "movie_poster", nullable = false)
     private String moviePoster;
 
-    @Column(nullable = false)
+    @Column(name = "movie_type", nullable = false)
     private String movieType;
 
+    @Column(name = "movie_release_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date movieReleaseDate;
 

@@ -5,6 +5,11 @@
              version="3.0">
 
     <persistence-unit name="jpa_config">
+        <class>domain.Review</class>
+        <class>domain.Movie</class>
+        <class>domain.User</class>
+        <class>domain.Likes</class>
+        <class>domain.Rating</class>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/movie?serverTimezone=Asia/Seoul"/>

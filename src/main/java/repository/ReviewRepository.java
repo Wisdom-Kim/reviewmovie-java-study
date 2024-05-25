@@ -3,6 +3,7 @@ package repository;
 import domain.Review;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
 import util.JpaUtil;
 
 import java.util.List;
@@ -61,4 +62,29 @@ public class ReviewRepository {
             em.close();
         }
     }
+
+    public void update(Review review) {
+
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(review);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Review> findByMovieId(int movieId) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Review> query = em.createQuery("SELECT r FROM Review r WHERE r.movie.movieId = :movieId", Review.class);
+            query.setParameter("movieId", movieId);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+
 }
