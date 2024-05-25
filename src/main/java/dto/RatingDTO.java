@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class RatingDTO {
 
-//도메인 필드에 맞게 수정
+////Adjust fields according to the domain
 //	private boolean likeStatement;
 //	private int userId;
 //	private int reviewId;

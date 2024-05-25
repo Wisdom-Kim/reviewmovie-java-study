@@ -9,19 +9,19 @@ import util.JpaUtil;
 import java.util.List;
 
 @NoArgsConstructor
-public class LikeRepository {
+public class LikesRepository {
 
-    private LikeRepository likeRepository;
+    private LikesRepository likesRepository;
     private static final EntityManagerFactory emf =  JpaUtil.getEntityManagerFactory();
     private static final EntityManager em = emf.createEntityManager();
 
     public void save(Review review){
-        //리뷰 저장
+        
         em.persist(review);
     }
 
     public Review findOne(Long id){
-        //리뷰
+        
         return em.find(Review.class,id);
     }
     public static List<Review> findAll(){

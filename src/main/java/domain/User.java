@@ -47,7 +47,7 @@ public class User {
 	private List<Review> reviewList = new ArrayList<>();
     
 	@OneToMany(mappedBy = "user")
-	private List<Like> likeList = new ArrayList<>();
+	private List<Likes> likeList = new ArrayList<>();
 	
 	public User(String accountId, String passwd, String username, Date birthday, boolean type) {
 		this.userAccountId = accountId;

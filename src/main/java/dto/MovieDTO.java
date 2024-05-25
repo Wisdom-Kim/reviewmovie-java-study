@@ -15,6 +15,7 @@ import lombok.ToString;
 @ToString
 public class MovieDTO {
 
+	//Adjust fields according to the domain
 //	private boolean likeStatement;
 //	private int userId;
 //	private int reviewId;
