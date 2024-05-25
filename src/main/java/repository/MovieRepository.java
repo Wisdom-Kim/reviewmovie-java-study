@@ -4,7 +4,12 @@ import java.util.List;
 
 import domain.Movie;
 import jakarta.persistence.EntityManager;
+
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
+import lombok.NoArgsConstructor;
+import util.JpaUtil;
+import java.util.List;
 
 public class MovieRepository {
     private EntityManager em;
@@ -24,6 +29,7 @@ public class MovieRepository {
         String jpql = "SELECT m FROM Movie m";
         TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
         return query.getResultList();
+
     }
 
     

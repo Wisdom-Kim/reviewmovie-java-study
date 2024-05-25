@@ -8,10 +8,10 @@
 
     <persistence-unit name="jpa_config">
         <properties>
-            <property name="jakarta.persistence.jdbc.driver" value="${driver}"/>
-            <property name="jakarta.persistence.jdbc.url" value="${url}"/>
-            <property name="jakarta.persistence.jdbc.user" value="${username}"/>
-            <property name="jakarta.persistence.jdbc.password" value="${password}"/>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/movie?serverTimezone=Asia/Seoul"/>
+            <property name="jakarta.persistence.jdbc.user" value="movie"/>
+            <property name="jakarta.persistence.jdbc.password" value="movie"/>
 
             <property name="hibernate.hikari.poolName" value="pool"/>
             <property name="hibernate.hikari.maximumPoolSize" value="10"/>

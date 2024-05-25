@@ -3,34 +3,65 @@ package repository;
 import domain.Review;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import lombok.NoArgsConstructor;
 import util.JpaUtil;
 
 import java.util.List;
 
-@NoArgsConstructor
 public class ReviewRepository {
 
-    private  ReviewRepository reviewRepository;
-    private static final EntityManagerFactory emf =  JpaUtil.getEntityManagerFactory();
-    private static final EntityManager em = emf.createEntityManager();
+    private static final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
-    public void save(Review review){
-        //리뷰 저장
-        em.persist(review);
-        em.close();
+    public void save(Review review) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(review);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
-    public Review findOne(Long id){
-        //리뷰
-        Review review = em.find(Review.class,id);
-        em.close();
-        return review;
+    public Review findById(Long id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.find(Review.class, id);
+        } finally {
+            em.close();
+        }
     }
-    public static List<Review> findAll(){
 
-        List<Review> reviewList =  em.createQuery("select r from Review r",Review.class).getResultList();
-        em.close();
-        return reviewList;
+    public List<Review> findAll() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("select r from Review r", Review.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public void update(Review review) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.merge(review);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    public void delete(Long id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Review review = em.find(Review.class, id);
+            if (review != null) {
+                em.remove(review);
+            }
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 }

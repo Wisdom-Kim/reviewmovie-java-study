@@ -14,13 +14,13 @@ public class UserRepository {
     private static final EntityManager em = emf.createEntityManager();
 
     public void save(User user){
-        //리뷰 저장
+        
         em.persist(user);
         em.close();
     }
 
     public User findOne(Long id){
-        //리뷰
+        
         User user = em.find(User.class,id);
         em.close();
         return user;
