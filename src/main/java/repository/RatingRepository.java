@@ -1,6 +1,5 @@
 package repository;
 
-import domain.Movie;
 import domain.Rating;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -10,25 +9,56 @@ import java.util.List;
 
 public class RatingRepository {
 
-    private RatingRepository ratingRepository;
-    private static final EntityManagerFactory emf =  JpaUtil.getEntityManagerFactory();
-    private static final EntityManager em = emf.createEntityManager();
+    private static RatingRepository ratingRepository;
+    private static final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
-    public void save(Rating rating){
-        
-        em.persist(rating);
+    private RatingRepository() {
     }
 
-    public Rating findOne(int id){
-       
-        return em.find(Rating.class,id);
+    public static RatingRepository getInstance() {
+        if (ratingRepository == null) {
+            ratingRepository = new RatingRepository();
+        }
+        return ratingRepository;
     }
-    public static List<Movie> findAll(){
 
-        return em.createQuery("select r from Review r",Movie.class).getResultList();
+    public void save(Rating rating) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(rating);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    public Rating findOne(int id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.find(Rating.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Rating> findAll() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery("select r from Rating r", Rating.class).getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     public void delete(Rating rating) {
-        em.remove(rating);
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.remove(em.contains(rating) ? rating : em.merge(rating));
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 }

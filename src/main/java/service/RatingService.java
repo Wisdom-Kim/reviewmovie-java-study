@@ -2,35 +2,29 @@ package service;
 
 import domain.Rating;
 import dto.RatingDTO;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import repository.RatingRepository;
 
-
 public class RatingService {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa_config");
-    private EntityManager em = emf.createEntityManager();
-    private RatingRepository ratingRepository;
+
+    private final RatingRepository ratingRepository = RatingRepository.getInstance();
 
     public void insertRating(RatingDTO ratingDTO) {
         Rating rating = ratingDTO.toEntity();
         ratingRepository.save(rating);
     }
 
-    public Rating getRating(RatingDTO ratingDTO) {
-        Rating rating = ratingDTO.toEntity();
-        return ratingRepository.findOne(rating.getRatingId());
+    public RatingDTO getRating(int ratingId) {
+        Rating rating = ratingRepository.findOne(ratingId);
+        return RatingDTO.builder()
+                .ratingId(rating.getRatingId())
+                .ratingScore(rating.getRatingScore())
+                .build();
     }
 
-//    public void updateRating(RatingDTO ratingDTO) {
-//        Rating rating = ratingDTO.toEntity();
-//
-//    }
-
-    public void deleteRating (RatingDTO ratingDTO) {
-        Rating rating = ratingDTO.toEntity();
-        ratingRepository.delete(rating);
+    public void deleteRating(int ratingId) {
+        Rating rating = ratingRepository.findOne(ratingId);
+        if (rating != null) {
+            ratingRepository.delete(rating);
+        }
     }
-
 }

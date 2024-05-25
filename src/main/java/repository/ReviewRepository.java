@@ -14,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ReviewRepository {
 ;
+    private static ReviewRepository reviewRepository;
+
     private EntityManager em;
     //service 계층에서 em을 생성시키고, repository에 넣어주자
     public void save(Review review) {

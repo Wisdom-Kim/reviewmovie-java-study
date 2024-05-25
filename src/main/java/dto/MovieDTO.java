@@ -59,11 +59,11 @@ public class MovieDTO {
         movieDTO.setReviewList(reviewDTOList);
         movieDTO.setAverageRating(numReviews > 0 ? totalRating / numReviews : 0);
 
-        List<LikesDTO> likesDTOList = new ArrayList<>();
-        for (Likes likes : movie.getLikesList()) {
-            likesDTOList.add(LikesDTO.fromEntity(likes));
-        }
-        movieDTO.setLikesList(likesDTOList);
+//        List<LikesDTO> likesDTOList = new ArrayList<>();
+//        for (Likes likes : movie.getLikesList()) {
+//            likesDTOList.add(LikesDTO.fromEntity(likes));
+//        }
+//        movieDTO.setLikesList(likesDTOList);
 
         return movieDTO;
     }
