@@ -29,6 +29,7 @@ public class Likes {
     private User user;
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
     private Review review;
     
     @Column(name = "like_statement")

@@ -25,5 +25,7 @@ public class Rating {
 	
 	@Column(name = "rating_score")
 	private int ratingScore;
+
+
 	
 }

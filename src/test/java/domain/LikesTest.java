@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LikesTest {
 
     Movie movie = Movie.builder()
-            .movieId("1")
+            .movieId(1)
             .movieTitle("기생충")
             .movieDirector("봉준호")
             .moviePoster("https://img.movist.com/?img=/x00/05/04/96_p1.jpg")
