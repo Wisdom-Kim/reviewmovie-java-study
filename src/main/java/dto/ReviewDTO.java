@@ -1,6 +1,10 @@
 package dto;
 
-import domain.*;
+import domain.Likes;
+import domain.Movie;
+import domain.Rating;
+import domain.Review;
+import domain.User;
 import lombok.*;
 
 import java.util.Date;
@@ -17,47 +21,55 @@ public class ReviewDTO {
     private int reviewId;
     private String reviewContent;
     private Date reviewDate;
-    private User user;
+    private int userId;
     private String userName;
-    private Movie movie;
-    private Rating rating;
+    private int movieId;
+    private String movieTitle;
+    private int ratingScore;
     private List<Likes> likesList;
 
     @Builder
-    public ReviewDTO(int reviewId, String reviewContent, Date reviewDate, User user, String userName, Movie movie, Rating rating, List<Likes> likesList) {
+    public ReviewDTO(int reviewId, String reviewContent, Date reviewDate, int userId, String userName, int movieId, String movieTitle, int ratingScore, List<Likes> likesList) {
         this.reviewId = reviewId;
         this.reviewContent = reviewContent;
         this.reviewDate = reviewDate;
-        this.user = user;
+        this.userId = userId;
         this.userName = userName;
-        this.movie = movie;
-        this.rating = rating;
+        this.movieId = movieId;
+        this.movieTitle = movieTitle;
+        this.ratingScore = ratingScore;
         this.likesList = likesList;
     }
 
-
     public static ReviewDTO fromEntity(Review review) {
-        //JPA로부터 받은 Entity를 DTO로 변경
         return ReviewDTO.builder()
                 .reviewId(review.getReviewId())
                 .reviewContent(review.getReviewContent())
                 .reviewDate(review.getReviewDate())
-                .user(review.getUser())
-                .movie(review.getMovie())
-                .rating(review.getRating())
+                .userId(review.getUser().getUserId())
+                .userName(review.getUser().getUserName())
+                .movieId(review.getMovie().getMovieId())
+                .movieTitle(review.getMovie().getMovieTitle())
+                .ratingScore(review.getRating() != null ? review.getRating().getRatingScore() : 0)
                 .likesList(review.getLikesList())
                 .build();
     }
 
     public Review toEntity() {
-        //DTO를 받아 Entity로 변경
+        //관련객체를 새로 만들고,Entity로 만든다. 이 때 의존관계인 얘들을 주입할것
+
+        User user = new User();
+        user.setUserId(this.userId);
+        Movie movie = new Movie();
+        movie.setMovieId(this.movieId);
+
         return Review.builder()
-                .reviewId(this.reviewId)
-                .movie(this.movie)
-                .user(this.user)
                 .reviewContent(this.reviewContent)
-                .rating(this.rating)
-                .reviewDate(this.reviewDate) // 리뷰 작성 시간이 수정되면 안된다
+                .reviewDate(this.reviewDate)
+                .user(user)
+                .movie(movie)
+                .rating(Rating.builder().ratingScore(this.ratingScore).build()) //평가가 먼저 생성되어야 주입이 가능해진다
+                .likesList(this.likesList)
                 .build();
     }
 }

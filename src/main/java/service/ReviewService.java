@@ -11,19 +11,20 @@ import dto.ReviewDTO;
  import jakarta.persistence.EntityManager;
  import jakarta.persistence.EntityManagerFactory;
  import jakarta.persistence.EntityTransaction;
-import lombok.NoArgsConstructor;
 import repository.MovieRepository;
+import repository.RatingRepository;
 import repository.ReviewRepository;
 import repository.UserRepository;
 import util.JpaUtil;
 import java.util.List;
 
-@NoArgsConstructor
+
 public class ReviewService {
 
-    private static MovieRepository movieRepository;
-    private static ReviewRepository reviewRepository;
-    private static UserRepository userRepository;
+    private final RatingRepository ratingRepository = RatingRepository.getInstance();
+    private final MovieRepository movieRepository = MovieRepository.getInstance();
+    //private final UserRepository userRepository = UserRepository.getInstance();
+
 
     private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
