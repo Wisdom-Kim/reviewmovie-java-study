@@ -10,16 +10,14 @@ import jakarta.persistence.Persistence;
 import domain.Movie;
 import dto.MovieDTO;
 import jakarta.persistence.TypedQuery;
+import repository.LikesRepository;
 import repository.MovieRepository;
 
 public class MovieService {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa_config");
     private EntityManager em = emf.createEntityManager();
-    private MovieRepository movieRepository;
+    private final MovieRepository movieRepository = MovieRepository.getInstance();
 
-    public MovieService() {
-        movieRepository = new MovieRepository(em);
-    }
 
     public List<MovieDTO> searchMoviesByTitle(String movieTitle) {
         List<Movie> movies = movieRepository.searchMoviesByTitle(movieTitle);

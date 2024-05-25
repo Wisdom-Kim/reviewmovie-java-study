@@ -23,7 +23,7 @@ public class ReviewService {
 
     private final RatingRepository ratingRepository = RatingRepository.getInstance();
     private final MovieRepository movieRepository = MovieRepository.getInstance();
-    //private final UserRepository userRepository = UserRepository.getInstance();
+    private final UserRepository userRepository = UserRepository.getInstance();
 
 
     private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
@@ -43,7 +43,7 @@ public class ReviewService {
 
             Review review = em.find(Review.class, reviewId);
             if (review != null) {
-                Rating newRating = em.find(Rating.class, reviewDTO.getRating());
+//                Rating newRating = em.find(Rating.class, reviewDTO.getRating());
 
                 // DTO의 toEntity 메서드를 사용하여 변경된 내용을 반영한 새로운 Review 객체 생성
                 Review updatedReview = reviewDTO.toEntity();
