@@ -38,9 +38,9 @@ public class Movie {
     private List<Review> reviewList = new ArrayList<>();
     
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Like> likeList = new ArrayList<>();
+    private List<Likes> likesList = new ArrayList<>();
 
-    public List<Like> getLikeList() {
-        return likeList;
+    public List<Likes> getLikesList() {
+        return likesList;
     }
 }

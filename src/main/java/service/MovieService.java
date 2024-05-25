@@ -1,57 +1,37 @@
 package service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-<<<<<<< Updated upstream
-import domain.Movie;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
-
-public class MovieService {
-
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa_config");
-    private EntityManager em = emf.createEntityManager();
-
-    public List<Movie> searchMoviesByTitle(String movieTitle) {
-        TypedQuery<Movie> query = em.createQuery("SELECT m FROM Movie m WHERE m.title LIKE :title", Movie.class)
-        							.setParameter("title", "%" + movieTitle + "%");
-        return query.getResultList();
-    }
-
-    public List<Movie> getNothing() {
-        return null;
-    }
-
-    public void close() {
-        em.close();
-        emf.close();
-    }
-}
-=======
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceException;
-import javax.persistence.TypedQuery;
 
 import domain.Movie;
+import dto.MovieDTO;
+import repository.MovieRepository;
 
 public class MovieService {
-
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa_config");
     private EntityManager em = emf.createEntityManager();
+    private MovieRepository movieRepository;
 
-    public List<Movie> searchMoviesByTitle(String movieTitle) {
-        try {
-            TypedQuery<Movie> query = em.createQuery("SELECT m FROM Movie m WHERE m.title LIKE :title", Movie.class)
-                    .setParameter("title", "%" + movieTitle + "%");
-            return query.getResultList();
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public MovieService() {
+        movieRepository = new MovieRepository(em);
+    }
+
+    public List<MovieDTO> searchMoviesByTitle(String movieTitle) {
+        List<Movie> movies = movieRepository.searchMoviesByTitle(movieTitle);
+        return movies.stream()
+                .map(MovieDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    public List<MovieDTO> getMoviesByRatingDesc() {
+        List<Movie> movies = movieRepository.findMoviesByRatingDesc();
+        return movies.stream()
+                .map(MovieDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 
     public void close() {
@@ -62,10 +42,4 @@ public class MovieService {
             emf.close();
         }
     }
-
-	public List<Movie> getNothing() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
->>>>>>> Stashed changes

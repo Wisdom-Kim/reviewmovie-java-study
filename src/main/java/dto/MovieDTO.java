@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Like;
+import domain.Likes;
 import domain.Movie;
 import domain.Review;
 import domain.User;
@@ -22,33 +22,10 @@ public class MovieDTO {
     private String moviePoster;
     private String movieType;
     private Date movieReleaseDate;
+    private double averageRating;
     private List<ReviewDTO> reviewList = new ArrayList<>();
-    private List<LikeDTO> likeList = new ArrayList<>();
+    private List<LikesDTO> likesList = new ArrayList<>();
 
-<<<<<<< Updated upstream
-	//Adjust fields according to the domain
-//	private boolean likeStatement;
-//	private int userId;
-//	private int reviewId;
-//	
-//	@Builder
-//	public MovieDTO(boolean likeStatement,int userId,int reviewId) {
-//		
-//		this.likeStatement = likeStatement;
-//		this.userId = userId;
-//		this.reviewId = reviewId;
-//	}
-//	
-//	public static Movie toEntity(MovieDTO movieDTO) {
-//		return Movie.builder()
-//					.deptno(deptDTO.getDeptno())
-//					.dname(deptDTO.getDname())
-//					.loc(deptDTO.getLoc())
-//					.build();
-//	}
-	
-}
-=======
     @Builder
     public MovieDTO(int movieId, String movieTitle, String movieDirector, String moviePoster, String movieType, Date movieReleaseDate) {
         this.movieId = movieId;
@@ -70,16 +47,23 @@ public class MovieDTO {
                 .build();
 
         List<ReviewDTO> reviewDTOList = new ArrayList<>();
+        double totalRating = 0;
+        int numReviews = 0;
         for (Review review : movie.getReviewList()) {
             reviewDTOList.add(ReviewDTO.fromEntity(review));
+            if (review.getRating() != null) {
+                totalRating += review.getRating().getRatingScore();
+                numReviews++;
+            }
         }
         movieDTO.setReviewList(reviewDTOList);
+        movieDTO.setAverageRating(numReviews > 0 ? totalRating / numReviews : 0);
 
-        List<LikeDTO> likeDTOList = new ArrayList<>();
-        for (Like like : movie.getLikeList()) {
-            likeDTOList.add(LikeDTO.fromEntity(like));
+        List<LikesDTO> likesDTOList = new ArrayList<>();
+        for (Likes likes : movie.getLikesList()) {
+            likesDTOList.add(LikesDTO.fromEntity(likes));
         }
-        movieDTO.setLikeList(likeDTOList);
+        movieDTO.setLikesList(likesDTOList);
 
         return movieDTO;
     }
@@ -95,4 +79,3 @@ public class MovieDTO {
                 .build();
     }
 }
->>>>>>> Stashed changes

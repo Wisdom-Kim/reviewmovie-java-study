@@ -2,20 +2,10 @@ package repository;
 
 import java.util.List;
 
-import domain.Movie;
-<<<<<<< Updated upstream
-import jakarta.persistence.EntityManager;
-
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.TypedQuery;
-import lombok.NoArgsConstructor;
-import util.JpaUtil;
-import java.util.List;
-=======
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
->>>>>>> Stashed changes
+
+import domain.Movie;
 
 public class MovieRepository {
     private EntityManager em;
@@ -25,22 +15,20 @@ public class MovieRepository {
     }
 
     public List<Movie> searchMoviesByTitle(String title) {
-        String jpql = "SELECT m FROM Movie m WHERE m.title LIKE :title";
+        String jpql = "SELECT m FROM Movie m WHERE m.movieTitle LIKE :title";
         TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
         query.setParameter("title", "%" + title + "%");
         return query.getResultList();
     }
-<<<<<<< Updated upstream
 
-    public List<Movie> findAll() {
-        String jpql = "SELECT m FROM Movie m";
+    public List<Movie> findMoviesByRatingDesc() {
+        String jpql = "SELECT m FROM Movie m "
+                    + "LEFT JOIN m.reviewList r "
+                    + "LEFT JOIN r.ratingList rat "
+                    + "GROUP BY m "
+                    + "ORDER BY AVG(rat.ratingScore) DESC";
+
         TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
         return query.getResultList();
-
     }
-
-    
 }
-=======
-}
->>>>>>> Stashed changes
