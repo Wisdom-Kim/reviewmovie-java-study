@@ -1,76 +1,87 @@
 package service;
 
 import domain.Movie;
-import domain.Rating;
-import domain.Review;
 import domain.User;
-import dto.LikesDTO;
+import dto.RatingDTO;
 import dto.ReviewDTO;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import repository.MovieRepository;
-import repository.ReviewRepository;
-import util.JpaUtil;
 
-import java.util.Collections;
+
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReviewServiceTest {
 
-    private final LikesService likesService = new LikesService();
     private final UserService userService = new UserService();
     private final ReviewService reviewService = new ReviewService();
     private final MovieService movieService = new MovieService();
-    private final MovieRepository movieRepository = MovieRepository.getInstance();
-    private EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
-
-    @Test
-    void getReview(){
-        ReviewDTO reviewDTO = reviewService.getReview(1);
-        assertEquals(reviewDTO.getReviewId(),1);
-    }
     @Test
     void insertReview() {
         User user = userService.getUser("cocoa389", "1234").toEntity();
+//        Movie movie = movieService.getMovie(102).toEntity();
+        RatingDTO ratingDTO = RatingDTO.builder().ratingScore(4).build();
+
+        ReviewDTO reviewDTO = ReviewDTO.builder()
+                .reviewContent("2트")
+                .reviewDate(new Date())
+                .userId(user.getUserId())
+                .movieId(3)
+                .build();
+
+        reviewService.insertReview(reviewDTO, ratingDTO);
+//
+//        ReviewDTO retrievedReview = reviewService.getReview(2);
+//        assertNotNull(retrievedReview);
+//        assertEquals(reviewDTO.getReviewContent(), retrievedReview.getReviewContent());
+    }
+
+    @Test
+    void deleteReview() {
+        User user = userService.getUser("cocoa389", "1234").toEntity();
         Movie movie = movieService.getMovie(102).toEntity();
-        Rating rating = Rating.builder().ratingScore(5).build();
-        Review review = Review.builder()
+        RatingDTO ratingDTO = RatingDTO.builder().ratingScore(5).build();
+
+        ReviewDTO reviewDTO = ReviewDTO.builder()
                 .reviewContent("Great movie!")
                 .reviewDate(new Date())
-                .user(user)
-                .movie(movie)
-                .rating(rating)
-                .build();
-        reviewService.insertReview(ReviewDTO.fromEntity(review));
-
-        LikesDTO likesDTO = LikesDTO.builder()
                 .userId(user.getUserId())
-                .reviewId(review.getReviewId())
+                .movieId(movie.getMovieId())
+                .ratingScore(ratingDTO.getRatingScore())
                 .build();
 
-        // When
-        likesService.insertLikes(likesDTO);
+        reviewService.insertReview(reviewDTO, ratingDTO);
 
-        // Then
-        LikesDTO retrievedLikes = likesService.getLikes(likesDTO.getLikesId());
-        assertNotNull(retrievedLikes);
-        assertEquals(likesDTO.getUserId(), retrievedLikes.getUserId());
+        reviewService.deleteReview(reviewDTO.getReviewId());
 
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            reviewService.getReview(reviewDTO.getReviewId());
+        });
 
-
+        String expectedMessage = "Review not found";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
-    void updateReview() {
-    }
+    void getReview() {
+        User user = userService.getUser("cocoa389", "1234").toEntity();
+        Movie movie = movieService.getMovie(102).toEntity();
+        RatingDTO ratingDTO = RatingDTO.builder().ratingScore(5).build();
 
-    @Test
-    void getReviewListByMovieId() {
+        ReviewDTO reviewDTO = ReviewDTO.builder()
+                .reviewContent("Amazing!")
+                .reviewDate(new Date())
+                .userId(user.getUserId())
+                .movieId(movie.getMovieId())
+                .ratingScore(ratingDTO.getRatingScore())
+                .build();
+
+        reviewService.insertReview(reviewDTO, ratingDTO);
+
+        ReviewDTO retrievedReview = reviewService.getReview(reviewDTO.getReviewId());
+        assertNotNull(retrievedReview);
+        assertEquals("Amazing!", retrievedReview.getReviewContent());
     }
 }

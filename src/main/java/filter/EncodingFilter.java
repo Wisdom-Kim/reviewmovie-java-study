@@ -1,6 +1,6 @@
 package filter;
 
-import jakarta.servlet.http.HttpFilter; // 이거 지우고 푸쉬 안하면 바보임
+import javax.servlet.http.HttpFilter; // 이거 지우고 푸쉬 안하면 바보임
 
 import java.io.IOException;
 import javax.servlet.Filter;

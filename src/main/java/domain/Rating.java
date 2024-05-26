@@ -1,6 +1,6 @@
 package domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @Entity
@@ -10,11 +10,14 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Rating {
-    @Column(name = "rating_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "rating_id")
     private int ratingId;
 
     @Column(name = "rating_score", nullable = false)
     private int ratingScore;
+
+    @OneToOne(mappedBy = "rating", cascade = CascadeType.ALL)
+    private Review review;
 }

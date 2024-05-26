@@ -35,6 +35,7 @@ public class InsertUserController extends HttpServlet {
 		
 		if(accountId == null || accountId == "" || passwd == null || passwd == ""
 				|| username == null || username == "" || birthday == null || birthday == "") {
+
 			response.sendRedirect(errorUrl);
 		} else {
 			try {	
@@ -53,6 +54,8 @@ public class InsertUserController extends HttpServlet {
 					request.setAttribute("error", "회원가입 실패: 서버 오류");
 					request.getRequestDispatcher(errorUrl).forward(request, response);
 				}
+
+				response.sendRedirect("/main.do");//메인으로 이동
 				
 			} catch (ParseException e) {
 				request.setAttribute("error", "회원가입 실패: 생일을 바르게 입력하세요.");

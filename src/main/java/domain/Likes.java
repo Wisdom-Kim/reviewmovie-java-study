@@ -1,6 +1,6 @@
 package domain;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @Entity
@@ -9,11 +9,14 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id", "review_id"})
+})
 public class Likes {
 
-    @Column(name = "likes_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "likes_id")
     private int likesId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -23,5 +26,4 @@ public class Likes {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")
     private Review review;
-
 }

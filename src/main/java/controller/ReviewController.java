@@ -1,34 +1,48 @@
 package controller;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import service.ReviewService;
+import service.LikesService;
+import dto.ReviewDTO;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
-
-@WebServlet("/detailPage.do")
+@WebServlet("/getReviewPage.do")
 public class ReviewController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
+	private ReviewService reviewService = new ReviewService();
+	private LikesService likesService = new LikesService();
 
-    public ReviewController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		response.getAttribute("review_content");
+		String reviewIdStr = request.getParameter("reviewId");
+		if (reviewIdStr == null || reviewIdStr.isEmpty()) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Review ID is required");
+			return;
+		}
 
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int reviewId;
+		try {
+			reviewId = Integer.parseInt(reviewIdStr);
+		} catch (NumberFormatException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Review ID");
+			return;
+		}
+
+		try {
+			ReviewDTO review = reviewService.getReview(reviewId);
+			long likesCount = likesService.countLikesByReviewId(reviewId);
+
+			request.setAttribute("review", review);
+			request.setAttribute("likesCount", likesCount);
+
+			request.getRequestDispatcher("/reviewPage.jsp").forward(request, response);
+		} catch (Exception e) {
+			throw new ServletException("Error retrieving review", e);
+		}
 	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
 }

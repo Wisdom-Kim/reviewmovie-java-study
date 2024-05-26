@@ -1,9 +1,7 @@
 package dto;
 
-import domain.Likes;
 import domain.Movie;
 import domain.Review;
-import domain.User;
 import lombok.*;
 
 import java.util.ArrayList;
