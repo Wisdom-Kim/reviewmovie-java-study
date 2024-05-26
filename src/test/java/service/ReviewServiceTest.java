@@ -4,6 +4,7 @@ import domain.Movie;
 import domain.Rating;
 import domain.Review;
 import domain.User;
+import dto.LikesDTO;
 import dto.ReviewDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -21,45 +22,48 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ReviewServiceTest {
 
-
+    private final LikesService likesService = new LikesService();
     private final UserService userService = new UserService();
     private final ReviewService reviewService = new ReviewService();
     private final MovieService movieService = new MovieService();
     private final MovieRepository movieRepository = MovieRepository.getInstance();
     private EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
-    @BeforeEach
-    void setUp() {
-//        emf = Persistence.createEntityManagerFactory("your-persistence-unit");
-//        EntityManager em = emf.createEntityManager();
-    }
 
+    @Test
+    void getReview(){
+        ReviewDTO reviewDTO = reviewService.getReview(1);
+        assertEquals(reviewDTO.getReviewId(),1);
+    }
     @Test
     void insertReview() {
         User user = userService.getUser("cocoa389", "1234").toEntity();
         Movie movie = movieService.getMovie(102).toEntity();
-        //레이팅 먼저 만들어야함
         Rating rating = Rating.builder().ratingScore(5).build();
-
-        ReviewDTO reviewDTO = ReviewDTO.builder()
-                .reviewId(3)
-                .reviewContent("졸려요")
+        Review review = Review.builder()
+                .reviewContent("Great movie!")
                 .reviewDate(new Date())
+                .user(user)
+                .movie(movie)
+                .rating(rating)
+                .build();
+        reviewService.insertReview(ReviewDTO.fromEntity(review));
+
+        LikesDTO likesDTO = LikesDTO.builder()
                 .userId(user.getUserId())
-                .userName(user.getUserName())
-                .movieId(movie.getMovieId())
-                .movieTitle(movie.getMovieTitle())
-                .ratingScore(rating.getRatingScore())
-                .likesList(Collections.emptyList())
+                .reviewId(review.getReviewId())
                 .build();
 
         // When
-        reviewService.insertReview(reviewDTO);
+        likesService.insertLikes(likesDTO);
 
         // Then
-        ReviewDTO reviewDTO1 = reviewService.getReview(reviewDTO.getReviewId());
-        assertNotNull(reviewDTO1);
-        assertEquals(reviewDTO.getReviewContent(), reviewDTO1.getReviewContent());
+        LikesDTO retrievedLikes = likesService.getLikes(likesDTO.getLikesId());
+        assertNotNull(retrievedLikes);
+        assertEquals(likesDTO.getUserId(), retrievedLikes.getUserId());
+
+
+
     }
 
     @Test

@@ -48,6 +48,7 @@ public class MovieService {
         }
     }
 
+
     public MovieDTO getMovie(int movieId) {
         Movie movie = movieRepository.findById(movieId);
         if (movie == null) {
