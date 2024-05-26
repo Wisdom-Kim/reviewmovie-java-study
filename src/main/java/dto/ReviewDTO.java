@@ -1,15 +1,10 @@
 package dto;
 
-import domain.Likes;
-import domain.Movie;
-import domain.Rating;
-import domain.Review;
-import domain.User;
+import domain.*;
 import lombok.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter

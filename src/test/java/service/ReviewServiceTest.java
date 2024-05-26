@@ -1,15 +1,11 @@
 package service;
 
 import domain.Movie;
-import domain.Rating;
-import domain.Review;
 import domain.User;
 import dto.RatingDTO;
 import dto.ReviewDTO;
 import org.junit.jupiter.api.Test;
-import util.JpaUtil;
 
-import jakarta.persistence.EntityManagerFactory;
 
 import java.util.Date;
 
@@ -20,8 +16,6 @@ class ReviewServiceTest {
     private final UserService userService = new UserService();
     private final ReviewService reviewService = new ReviewService();
     private final MovieService movieService = new MovieService();
-    private final RatingService ratingService = new RatingService();
-    private final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
     @Test
     void insertReview() {

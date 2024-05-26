@@ -1,22 +1,11 @@
 package service;
 
-import domain.Likes;
 import domain.Movie;
-import domain.Rating;
-import domain.Review;
 import domain.User;
 import dto.LikesDTO;
 import dto.RatingDTO;
 import dto.ReviewDTO;
 import org.junit.jupiter.api.Test;
-import repository.LikesRepository;
-import repository.MovieRepository;
-import repository.RatingRepository;
-import repository.ReviewRepository;
-import repository.UserRepository;
-import util.JpaUtil;
-
-import jakarta.persistence.EntityManagerFactory;
 
 import java.util.Date;
 
@@ -28,9 +17,7 @@ class LikesServiceTest {
     private final UserService userService = new UserService();
     private final ReviewService reviewService = new ReviewService();
     private final MovieService movieService = new MovieService();
-    private final RatingService ratingService = new RatingService();
-    private final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
-
+    
     @Test
     void insertLikes() {
         User user = userService.getUser("cocoa389", "1234").toEntity();
