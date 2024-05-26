@@ -25,11 +25,12 @@ public class ReviewDTO {
     private String userName;
     private int movieId;
     private String movieTitle;
+    private int ratingId;
     private int ratingScore;
     private List<Likes> likesList;
 
     @Builder
-    public ReviewDTO(int reviewId, String reviewContent, Date reviewDate, int userId, String userName, int movieId, String movieTitle, int ratingScore, List<Likes> likesList) {
+    public ReviewDTO(int reviewId, String reviewContent, Date reviewDate, int userId, String userName, int movieId, String movieTitle, int ratingId, int ratingScore, List<Likes> likesList) {
         this.reviewId = reviewId;
         this.reviewContent = reviewContent;
         this.reviewDate = reviewDate;
@@ -37,6 +38,7 @@ public class ReviewDTO {
         this.userName = userName;
         this.movieId = movieId;
         this.movieTitle = movieTitle;
+        this.ratingId = ratingId;
         this.ratingScore = ratingScore;
         this.likesList = likesList;
     }
@@ -50,27 +52,33 @@ public class ReviewDTO {
                 .userName(review.getUser().getUserName())
                 .movieId(review.getMovie().getMovieId())
                 .movieTitle(review.getMovie().getMovieTitle())
+                .ratingId(review.getRating().getRatingId())
                 .ratingScore(review.getRating().getRatingScore())
                 .likesList(review.getLikesList())
                 .build();
     }
 
     public Review toEntity() {
-        //관련객체를 새로 만들고,Entity로 만든다. 이 때 의존관계인 얘들을 주입할것
+        User user = User.builder()
+                .userId(this.userId)
+                .build();
 
-        User user = new User();
-        user.setUserId(this.userId);
-        Movie movie = new Movie();
-        movie.setMovieId(this.movieId);
-        Rating ratnig = new Rating();
-        ratnig.setRatingScore(this.ratingScore);
+        Movie movie = Movie.builder()
+                .movieId(this.movieId)
+                .build();
+
+        Rating rating = Rating.builder()
+                .ratingId(this.ratingId)
+                .ratingScore(this.ratingScore)
+                .build();
 
         return Review.builder()
+                .reviewId(this.reviewId)
                 .reviewContent(this.reviewContent)
                 .reviewDate(this.reviewDate)
                 .user(user)
                 .movie(movie)
-                .rating(ratnig) //평가가 먼저 생성되어야 주입이 가능해진다
+                .rating(rating)
                 .likesList(this.likesList)
                 .build();
     }

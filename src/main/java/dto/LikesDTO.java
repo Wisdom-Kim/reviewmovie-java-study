@@ -10,12 +10,17 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @ToString
-@Builder
-@AllArgsConstructor
 public class LikesDTO {
     private int likesId;
     private int userId;
     private int reviewId;
+
+    @Builder
+    public LikesDTO(int likesId, int userId, int reviewId) {
+        this.likesId = likesId;
+        this.userId = userId;
+        this.reviewId = reviewId;
+    }
 
     public static LikesDTO fromEntity(Likes likes) {
         return LikesDTO.builder()

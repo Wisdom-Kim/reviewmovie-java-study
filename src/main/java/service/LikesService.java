@@ -2,7 +2,6 @@ package service;
 
 import domain.Likes;
 import dto.LikesDTO;
-import dto.RatingDTO;
 import repository.LikesRepository;
 
 import java.util.List;
@@ -19,10 +18,10 @@ public class LikesService {
 
     public LikesDTO getLikes(int likesId) {
         Likes likes = likesRepository.findOne(likesId);
-        return LikesDTO.builder()
-                .likesId(likesId)
-                .reviewId(likes.getReview().getReviewId())
-                .build();
+        if (likes == null) {
+            throw new NullPointerException("Likes not found");
+        }
+        return LikesDTO.fromEntity(likes);
     }
 
     public List<LikesDTO> getAllLikes() {
@@ -37,5 +36,9 @@ public class LikesService {
         if (likes != null) {
             likesRepository.delete(likes);
         }
+    }
+
+    public int countLikesByReviewId(int reviewId) {
+        return likesRepository.countLikesByReviewId(reviewId);
     }
 }

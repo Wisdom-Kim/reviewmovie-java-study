@@ -1,23 +1,18 @@
 package repository;
 
 import domain.Likes;
-import domain.Rating;
-import domain.Review;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
-import lombok.NoArgsConstructor;
 import util.JpaUtil;
 
 import java.util.List;
 
-//repository 싱글톤 처리
 public class LikesRepository {
 
-    private static final EntityManagerFactory emf =  JpaUtil.getEntityManagerFactory();
+    private static final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
     private static LikesRepository likesRepository;
 
-    //싱글톤으로 만들기
     private LikesRepository() {
     }
 
@@ -51,7 +46,7 @@ public class LikesRepository {
     public List<Likes> findAll() {
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("select l from Likes l",Likes.class).getResultList();
+            return em.createQuery("SELECT l FROM Likes l", Likes.class).getResultList();
         } finally {
             em.close();
         }
@@ -61,7 +56,7 @@ public class LikesRepository {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.remove(em.contains(likes) ? likes : em.merge(likes)); //em이 어떻게든 likes를 관리하게 만들기
+            em.remove(em.contains(likes) ? likes : em.merge(likes));
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -71,9 +66,12 @@ public class LikesRepository {
     public int countLikesByReviewId(int reviewId) {
         EntityManager em = emf.createEntityManager();
         try {
-            TypedQuery<Integer> query = em.createQuery("SELECT COUNT(l) FROM Likes l WHERE l.review.reviewId = :reviewId", Integer.class);
+            TypedQuery<Long> query = em.createQuery(
+                    "SELECT COUNT(l) FROM Likes l WHERE l.review.reviewId = :reviewId", Long.class
+            );
             query.setParameter("reviewId", reviewId);
-            return query.getSingleResult();
+            Long countLikes = query.getSingleResult();
+            return countLikes.intValue();
         } finally {
             em.close();
         }

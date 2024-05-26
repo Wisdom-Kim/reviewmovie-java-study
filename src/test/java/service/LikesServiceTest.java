@@ -1,5 +1,6 @@
 package service;
 
+import domain.Likes;
 import domain.Movie;
 import domain.Rating;
 import domain.Review;
@@ -7,9 +8,15 @@ import domain.User;
 import dto.LikesDTO;
 import dto.RatingDTO;
 import dto.ReviewDTO;
-import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.Test;
+import repository.LikesRepository;
+import repository.MovieRepository;
+import repository.RatingRepository;
+import repository.ReviewRepository;
+import repository.UserRepository;
 import util.JpaUtil;
+
+import jakarta.persistence.EntityManagerFactory;
 
 import java.util.Date;
 
@@ -17,31 +24,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LikesServiceTest {
 
-
     private final LikesService likesService = new LikesService();
-
     private final UserService userService = new UserService();
     private final ReviewService reviewService = new ReviewService();
     private final MovieService movieService = new MovieService();
-    private EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
+    private final RatingService ratingService = new RatingService();
+    private final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
     @Test
     void insertLikes() {
         User user = userService.getUser("cocoa389", "1234").toEntity();
-        Movie movie = movieService.getMovie(102).toEntity(); // 인셉션
-        Rating rating = Rating.builder().ratingScore(5).build();
-        Review review = Review.builder()
+        Movie movie = movieService.getMovie(102).toEntity();
+        RatingDTO ratingDTO = RatingDTO.builder().ratingScore(5).build();
+        ReviewDTO reviewDTO = ReviewDTO.builder()
                 .reviewContent("Great movie!")
                 .reviewDate(new Date())
-                .user(user)
-                .movie(movie)
-                .rating(rating)
+                .userId(user.getUserId())
+                .movieId(movie.getMovieId())
+                .ratingScore(ratingDTO.getRatingScore())
                 .build();
-        reviewService.insertReview(ReviewDTO.fromEntity(review));
+
+        reviewService.insertReview(reviewDTO, ratingDTO);
 
         LikesDTO likesDTO = LikesDTO.builder()
                 .userId(user.getUserId())
-                .reviewId(review.getReviewId())
+                .reviewId(reviewDTO.getReviewId())
                 .build();
 
         // When
@@ -55,24 +62,33 @@ class LikesServiceTest {
     }
 
     @Test
-    void getLikes() {
-        LikesDTO likesDTO = LikesDTO.builder()
-                .userId(1)
-                .reviewId(1)//아직 리뷰가 없어서 못한다
+    void countLikesByReviewId() {
+        User user = userService.getUser("cocoa389", "1234").toEntity();
+        Movie movie = movieService.getMovie(102).toEntity();
+        RatingDTO ratingDTO = RatingDTO.builder().ratingScore(5).build();
+        ReviewDTO reviewDTO = ReviewDTO.builder()
+                .reviewContent("Great movie!")
+                .reviewDate(new Date())
+                .userId(user.getUserId())
+                .movieId(movie.getMovieId())
+                .ratingScore(ratingDTO.getRatingScore())
                 .build();
-        likesService.insertLikes(likesDTO);
 
-        LikesDTO retrievedLikes = likesService.getLikes(1);
+        reviewService.insertReview(reviewDTO, ratingDTO);
 
-        assertNotNull(retrievedLikes);
-        assertEquals(retrievedLikes.getUserId(), 1, "user id가 1일것");
-    }
+        LikesDTO likesDTO1 = LikesDTO.builder()
+                .userId(user.getUserId())
+                .reviewId(reviewDTO.getReviewId())
+                .build();
+        likesService.insertLikes(likesDTO1);
 
-    @Test
-    void getAllLikes() {
-    }
+        LikesDTO likesDTO2 = LikesDTO.builder()
+                .userId(user.getUserId())
+                .reviewId(reviewDTO.getReviewId())
+                .build();
+        likesService.insertLikes(likesDTO2);
 
-    @Test
-    void deleteLikes() {
+        int count = likesService.countLikesByReviewId(reviewDTO.getReviewId());
+        assertEquals(2, count);
     }
 }
