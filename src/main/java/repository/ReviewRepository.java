@@ -3,7 +3,6 @@ package repository;
 import domain.Review;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.TypedQuery;
 import util.JpaUtil;
 
 import java.util.List;
@@ -29,6 +28,22 @@ public class ReviewRepository {
             em.getTransaction().begin();
             em.persist(review);
             em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    public Review findOneWithDetails(int id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Review review = em.find(Review.class, id);
+            if (review != null) {
+                review.getUser().getUserName(); // 명시적으로 초기화
+                review.getMovie().getMovieTitle(); // 명시적으로 초기화
+            }
+            em.getTransaction().commit();
+            return review;
         } finally {
             em.close();
         }
@@ -62,29 +77,4 @@ public class ReviewRepository {
             em.close();
         }
     }
-
-    public void update(Review review) {
-
-        EntityManager em = emf.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.merge(review);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-    }
-
-    public List<Review> findByMovieId(int movieId) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            TypedQuery<Review> query = em.createQuery("SELECT r FROM Review r WHERE r.movie.movieId = :movieId", Review.class);
-            query.setParameter("movieId", movieId);
-            return query.getResultList();
-        } finally {
-            em.close();
-        }
-    }
-
-
 }

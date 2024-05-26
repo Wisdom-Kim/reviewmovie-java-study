@@ -50,7 +50,7 @@ public class ReviewDTO {
                 .userName(review.getUser().getUserName())
                 .movieId(review.getMovie().getMovieId())
                 .movieTitle(review.getMovie().getMovieTitle())
-                .ratingScore(review.getRating() != null ? review.getRating().getRatingScore() : 0)
+                .ratingScore(review.getRating().getRatingScore())
                 .likesList(review.getLikesList())
                 .build();
     }
@@ -62,13 +62,15 @@ public class ReviewDTO {
         user.setUserId(this.userId);
         Movie movie = new Movie();
         movie.setMovieId(this.movieId);
+        Rating ratnig = new Rating();
+        ratnig.setRatingScore(this.ratingScore);
 
         return Review.builder()
                 .reviewContent(this.reviewContent)
                 .reviewDate(this.reviewDate)
                 .user(user)
                 .movie(movie)
-                .rating(Rating.builder().ratingScore(this.ratingScore).build()) //평가가 먼저 생성되어야 주입이 가능해진다
+                .rating(ratnig) //평가가 먼저 생성되어야 주입이 가능해진다
                 .likesList(this.likesList)
                 .build();
     }

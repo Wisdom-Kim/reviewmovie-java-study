@@ -17,8 +17,4 @@ public class Rating {
 
     @Column(name = "rating_score", nullable = false)
     private int ratingScore;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id")
-    private Review review;
 }

@@ -14,17 +14,16 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Review {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private int reviewId;
 
-    @Column(name = "review_content", nullable = false)
+    @Column(nullable = false, name="review_content")
     private String reviewContent;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "review_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date reviewDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,9 +34,11 @@ public class Review {
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
+
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Likes> likesList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "rating_id")
     private Rating rating;
 }

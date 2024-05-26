@@ -1,42 +1,56 @@
 package service;
 
-import domain.Rating;
 import domain.Review;
-import dto.RatingDTO;
+import dto.MovieDTO;
 import dto.ReviewDTO;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 import repository.ReviewRepository;
+import repository.RatingRepository;
+import util.JpaUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ReviewService {
 
+    private EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
+
     private final ReviewRepository reviewRepository = ReviewRepository.getInstance();
+    private final RatingRepository ratingRepository = RatingRepository.getInstance();
 
     public void insertReview(ReviewDTO reviewDTO) {
-        // 연관 객체의 생성은 ReviewDTO에서 다 맡긴다
         Review review = reviewDTO.toEntity();
+
+        // Rating을 먼저 저장
+        if (review.getRating() != null) {
+            ratingRepository.save(review.getRating());
+        }
+
         reviewRepository.save(review);
     }
 
-    public void updateReview(ReviewDTO reviewDTO, String newContent, RatingDTO newRatingDTO) {
-        // 엔티티를 조회한 후 변경된 값을 적용한다.
-        Review review = reviewRepository.findOne(reviewDTO.getReviewId());
-        review.setReviewContent(newContent);
-        review.setRating(newRatingDTO.toEntity());
-
-        reviewRepository.update(review);
-    }
-
     public ReviewDTO getReview(int reviewId) {
-        Review review = reviewRepository.findOne(reviewId);
+        Review review = reviewRepository.findOneWithDetails(reviewId);
+        if (review == null) {
+            throw new NullPointerException("Review not found");
+        }
         return ReviewDTO.fromEntity(review);
     }
 
-    public List<ReviewDTO> getReviewListByMovieId(int movieId) {
-        List<Review> reviewList = reviewRepository.findByMovieId(movieId);
+    public List<ReviewDTO> getAllReviews() {
+        List<Review> reviews = reviewRepository.findAll();
+        return reviews.stream()
+                .map(ReviewDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
 
-        //Review 하나하나 다시 ReviewDTO로 변경
-        return reviewList.stream().map(ReviewDTO::fromEntity).collect(Collectors.toList());
+    public void deleteReview(int reviewId) {
+        Review review = reviewRepository.findOne(reviewId);
+        if (review != null) {
+            reviewRepository.delete(review);
+        }
     }
 }
