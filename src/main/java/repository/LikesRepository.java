@@ -5,6 +5,7 @@ import domain.Rating;
 import domain.Review;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
 import lombok.NoArgsConstructor;
 import util.JpaUtil;
 
@@ -38,7 +39,7 @@ public class LikesRepository {
         }
     }
 
-    public Likes findOne(int id){
+    public Likes findOne(int id) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.find(Likes.class, id);
@@ -62,6 +63,17 @@ public class LikesRepository {
             em.getTransaction().begin();
             em.remove(em.contains(likes) ? likes : em.merge(likes)); //em이 어떻게든 likes를 관리하게 만들기
             em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+
+    public int countLikesByReviewId(int reviewId) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Integer> query = em.createQuery("SELECT COUNT(l) FROM Likes l WHERE l.review.reviewId = :reviewId", Integer.class);
+            query.setParameter("reviewId", reviewId);
+            return query.getSingleResult();
         } finally {
             em.close();
         }

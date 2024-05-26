@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import domain.Likes;
 import dto.LikesDTO;
+import dto.RatingDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -51,9 +52,6 @@ public class MovieService {
 
     public MovieDTO getMovie(int movieId) {
         Movie movie = movieRepository.findById(movieId);
-        if (movie == null) {
-            throw new NullPointerException("Likes not found");
-        }
         return MovieDTO.fromEntity(movie);
     }
 

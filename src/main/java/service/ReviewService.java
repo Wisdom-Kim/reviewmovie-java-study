@@ -40,21 +40,6 @@ public class ReviewService {
         return ReviewDTO.fromEntity(review);
     }
 
-
-    public int getCountLikes(ReviewDTO reviewDTO) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            TypedQuery<Integer> query = em.createQuery(
-                    "SELECT COUNT(l) FROM Likes l WHERE l.review.reviewId = :reviewId", Integer.class
-            );
-            query.setParameter("reviewId", reviewDTO.getReviewId());
-            Integer countingLikes = query.getSingleResult();
-            return (countingLikes != null) ? countingLikes : 0; //해당하는 영화가 없다면 일단 0으로 반환
-        } finally {
-            em.close();
-        }
-    }
-
     public List<ReviewDTO> getAllReviews() {
         List<Review> reviews = reviewRepository.findAll();
         return reviews.stream()

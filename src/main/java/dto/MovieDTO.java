@@ -37,6 +37,8 @@ public class MovieDTO {
     }
 
     public static MovieDTO fromEntity(Movie movie) {
+
+
         MovieDTO movieDTO = MovieDTO.builder()
                 .movieId(movie.getMovieId())
                 .movieTitle(movie.getMovieTitle())
