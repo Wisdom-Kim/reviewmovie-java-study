@@ -20,7 +20,8 @@ public class InsertUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	UserService userService = UserService.getInstance();
-	
+
+	//jsp에서 입력받은 정보들을 기반으로 유저 생성
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String errorUrl = "/views/errors/error.jsp";
 		

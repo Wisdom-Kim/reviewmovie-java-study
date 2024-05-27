@@ -13,11 +13,11 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rating_id")
-    private int ratingId;
+    private int ratingId; //평점 ID
 
     @Column(name = "rating_score", nullable = false)
-    private int ratingScore;
+    private int ratingScore; //평점값
 
     @OneToOne(mappedBy = "rating", cascade = CascadeType.ALL)
-    private Review review;
+    private Review review; //매핑된 리뷰
 }

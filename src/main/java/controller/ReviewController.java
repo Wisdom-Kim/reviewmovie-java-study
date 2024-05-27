@@ -23,6 +23,7 @@ public class ReviewController extends HttpServlet {
 
 	@Override
 	//?movieId=
+	//movieId로 영화의 정보를 받아와 노출
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "/views/erros/error.jsp";
 		int movieId = 0;

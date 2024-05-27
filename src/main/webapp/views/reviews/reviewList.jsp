@@ -45,7 +45,7 @@
             width: 30px;
         }
         .form-control{
-            height:20vh !important;
+            height:10vh !important;
         }
     </style>
     <link href="https://getbootstrap.kr/docs/5.2/examples/sign-in/signin.css" rel="stylesheet">
@@ -53,14 +53,15 @@
 <body>
 <div class="movie-info d-flex py-3">
     <div class="movie-poster px-4">
-        <img src="${requestScope.movie.moviePoster}" alt="Movie Poster">
+        <img src="${requestScope.movie.moviePoster}" alt="Movie Poster" onerror="this.onerror=null;this.src='../../resources/img/placeholder.png'">
     </div>
     <div class="movie-detail" style="text-align: left;">
         <h1>${requestScope.movie.movieTitle} </h1>
         <div class="py-5"></div>
         <h4>평점: ${requestScope.movie.averageRating}</h4>
         <h4>감독: ${requestScope.movie.movieDirector}</h4>
-        <h4>상영 연도: ${requestScope.movie.movieReleaseDate}</h4>
+        <h4>장르: ${requestScope.movie.movieType}</h4>
+        <h4>상영 일자: ${requestScope.movie.movieReleaseDate}</h4>
     </div>
 </div>
 <div class="wrapper py-4" style="width:70vw;">

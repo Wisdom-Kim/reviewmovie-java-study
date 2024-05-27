@@ -19,25 +19,25 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_id")
-    private int movieId;
+    private int movieId; //영화Id
 
     @Column(name = "movie_title", nullable = false)
-    private String movieTitle;
+    private String movieTitle; //영화제목
 
     @Column(name = "movie_director", nullable = false)
-    private String movieDirector;
+    private String movieDirector; //영화감독
 
     @Column(name = "movie_poster", nullable = false)
-    private String moviePoster;
+    private String moviePoster; //영화 포스터 Url
 
     @Column(name = "movie_type", nullable = false)
-    private String movieType;
+    private String movieType; //영화 장르
 
     @Temporal(TemporalType.DATE)
     @Column(name = "movie_release_date", nullable = false)
-    private Date movieReleaseDate;
+    private Date movieReleaseDate;//상영일자
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviewList = new ArrayList<>();
+    private List<Review> reviewList = new ArrayList<>(); //해당 영화에 달린 리뷰 리스트
 
 }

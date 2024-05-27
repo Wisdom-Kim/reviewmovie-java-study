@@ -31,7 +31,7 @@ public class InsertReviewController extends HttpServlet {
 	private final RatingService ratingService = RatingService.getInstance();
 
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "/views/errors/error.jsp";
 
 		int movieId = 0;

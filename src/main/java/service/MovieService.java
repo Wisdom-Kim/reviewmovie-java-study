@@ -119,25 +119,4 @@ public class MovieService {
             em.close();
         }
     }
-
-    public void insertReview(int movieId, ReviewDTO reviewDTO) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = null;
-        try {
-            tx = em.getTransaction();
-            tx.begin();
-            Review review = reviewDTO.toEntity();
-            Movie movie = movieRepository.findById(movieId, em);
-
-            tx.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
-            }
-            throw e;
-        } finally {
-            em.close();
-        }
-    }
 }

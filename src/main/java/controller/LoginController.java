@@ -18,7 +18,7 @@ public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	UserService userService = UserService.getInstance();
-	
+	//form에서 입력받은 정보로 로그인 요청
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String errorUrl = "views/errors/error.jsp";
 		

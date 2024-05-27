@@ -12,7 +12,8 @@ import util.JpaUtil;
 public class UserRepository {
 	private static UserRepository instance;
 	private static final EntityManagerFactory emf =  JpaUtil.getEntityManagerFactory();
-
+    //엔터티와 서비스 계층 사이 계층
+    //저장소 하나는 계속 쓰여야하므로 싱글톤으로 관리
     private UserRepository() { }
 
     public static UserRepository getInstance() {

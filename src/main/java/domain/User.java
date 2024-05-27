@@ -28,24 +28,24 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int userId;
+    private int userId; //유저Id
 
     @Column(name = "user_account_id",unique = true)
-    private String userAccountId;
+    private String userAccountId; //유저 계정
 
     @Column(name = "user_password")
-    private String userPassword;
+    private String userPassword; //유저 패스워드
 
     @Column(name = "user_name")
-    private String userName;
+    private String userName; //유저 이름
 
     @Temporal(TemporalType.DATE)
     @Column(name = "user_birthday")
-    private Date userBirthday;
+    private Date userBirthday; //유저 생일
 
     @Column(name = "user_type")
-    private boolean userType;
+    private boolean userType; //유저 타입(관리자 1 일반인 0)
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviewList = new ArrayList<>();
+    private List<Review> reviewList = new ArrayList<>(); //유저에 매핑된 리뷰 리스트
 }

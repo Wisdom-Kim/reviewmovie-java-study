@@ -12,6 +12,8 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class ReviewDTO {
+    //DTO: 레퍼지토리와 엔터티 사이 계층
+    //데이터 전송과 수정을 용이하게 한다
 
     private int reviewId;
     private String reviewContent;

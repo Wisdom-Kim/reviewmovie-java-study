@@ -15,6 +15,9 @@ import jakarta.persistence.TypedQuery;
 import util.JpaUtil;
 
 public class MovieRepository {
+
+	//엔터티와 서비스 계층 사이 계층
+	//저장소 하나는 계속 쓰여야하므로 싱글톤으로 관리
 	private static final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 	private static MovieRepository instance;
 
