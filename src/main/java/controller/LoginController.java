@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dto.UserDTO;
+import jakarta.persistence.NoResultException;
 import service.UserService;
 
 @WebServlet("/login.do")
@@ -38,13 +39,17 @@ public class LoginController extends HttpServlet {
 					session.setAttribute("userId", user.getUserId());
 					session.setAttribute("userName", user.getUserName());
 					
-					System.out.println(user.getUserId());
-					
 					response.sendRedirect("/main.do");
 				} else {
 					request.setAttribute("error", "로그인 실패: 회원 정보가 없습니다.");
 					request.getRequestDispatcher(errorUrl).forward(request, response);
 				}
+			} catch (NoResultException e) {
+				request.setAttribute("error", "로그인 실패: 회원 정보가 없습니다.");
+				request.getRequestDispatcher(errorUrl).forward(request, response);
+			} catch (NullPointerException e) {
+				request.setAttribute("error", "로그인 실패: 회원 정보가 없습니다.");
+				request.getRequestDispatcher(errorUrl).forward(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
