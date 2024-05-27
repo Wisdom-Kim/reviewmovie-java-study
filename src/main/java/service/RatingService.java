@@ -5,7 +5,7 @@ import dto.RatingDTO;
 import repository.RatingRepository;
 
 public class RatingService {
-    private static RatingService ratingService;
+    private static final RatingService ratingService = new RatingService();
     private final RatingRepository ratingRepository = RatingRepository.getInstance();
 
 

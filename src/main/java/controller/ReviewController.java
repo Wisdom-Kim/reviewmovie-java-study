@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Movie;
+import dto.MovieDTO;
 import dto.RatingDTO;
 import service.MovieService;
 import service.ReviewService;
@@ -28,11 +29,17 @@ public class ReviewController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "/views/erros/error.jsp";
 		int movieId = 0;
-		Movie movie = null;
+		MovieDTO movieDTO = null;
 		try {
 			movieId = Integer.parseInt(request.getParameter("movieId"));
-			movie = movieService.getMovie(movieId).toEntity();
-			request.setAttribute("movie", movie);
+			movieDTO = movieService.getMovie(movieId);
+			//평점을 구해서 set
+			double movieRating = movieService.getAverageRating(movieDTO);
+			movieDTO.setAverageRating(movieRating);
+
+			request.setAttribute("movie", movieDTO);
+			//Entity 대신 DTO를 넣어준다
+
 		} catch (NumberFormatException e) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "유효하지 않은 영화 ID입니다");
 			request.getRequestDispatcher(url).forward(request, response); //에러 페이지 이동

@@ -57,6 +57,7 @@
     <div class="movie-detail" style="text-align: left;">
         <h1>${requestScope.movie.movieTitle} </h1>
         <div class="py-5"></div>
+        <h4>평점: ${requestScope.movie.averageRating}</h4>
         <h4>감독: ${requestScope.movie.movieDirector}</h4>
         <h4>상영 연도: ${requestScope.movie.movieReleaseDate}</h4>
     </div>

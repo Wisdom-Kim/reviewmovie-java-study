@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class ReviewService {
 
-    private static ReviewService reviewService;
+    private static final ReviewService reviewService = new ReviewService();
     private final ReviewRepository reviewRepository = ReviewRepository.getInstance();
     private final RatingRepository ratingRepository = RatingRepository.getInstance();
 

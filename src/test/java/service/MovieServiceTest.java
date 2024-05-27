@@ -25,6 +25,10 @@ class MovieServiceTest {
 
     @Test
     void getAverageRating() {
+        int movieId= 102;
+        MovieDTO movieDTO = movieService.getMovie(movieId);
+        double avgRating = movieService.getAverageRating(movieDTO);
+        System.out.println(movieDTO.getMovieTitle()+"의 평균 평점 : "+ avgRating);
     }
 
     @Test
