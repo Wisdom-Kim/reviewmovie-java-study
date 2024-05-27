@@ -1,12 +1,5 @@
 package controller;
 
-import dto.MovieDTO;
-import dto.RatingDTO;
-import dto.ReviewDTO;
-import service.MovieService;
-import service.ReviewService;
-import service.LikesService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +15,7 @@ public class ReviewController extends HttpServlet {
 
 	private final ReviewService reviewService = ReviewService.getInstance();
 	private final LikesService likesService = LikesService.getInstance();
-	private MovieService movieService = new MovieService();
+	private MovieService movieService = MovieService.getInstance();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
