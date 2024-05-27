@@ -13,12 +13,15 @@ import javax.servlet.http.HttpSession;
 public class MainController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		String url ="/getMovie.do";
-		if(session == null) {
+		
+		String url ="/movies.do";
+		
+		if(session != null) {
 			url = "/views/main.jsp";
 			response.sendRedirect(url);
 			return;
 		}
+		
 		response.sendRedirect(url);
 		
 	}

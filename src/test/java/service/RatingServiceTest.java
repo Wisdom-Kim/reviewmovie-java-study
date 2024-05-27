@@ -7,7 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RatingServiceTest {
 
-    private final RatingService ratingService = new RatingService();
+    private final RatingService ratingService = RatingService.getInstance();
+
     @Test
     void insertRating() {
         RatingDTO ratingDTO = RatingDTO.builder()
