@@ -1,5 +1,11 @@
 package controller;
 
+import dto.MovieDTO;
+import dto.RatingDTO;
+import service.MovieService;
+import service.ReviewService;
+import service.LikesService;
+import dto.ReviewDTO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

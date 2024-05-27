@@ -1,34 +1,158 @@
-/* Style the body */ 
+header {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100px;
+}
+
+header div {
+  display: flex;
+  align-items: center;
+}
+
+header span {
+  margin-right: 10px;
+}
+
 body {
-  font-family: Arial;
   margin: 0;
 }
 
-/* Header/Logo Title */
-header {
-  padding: 60px;
-  margin-bottom: 20px;
-  text-align: center;
-  background: #336699;
-  color: white;
-  font-size: 30px;
+h1 {
+  margin-bottom: 40px;
+  font-size: 36px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+#main_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f8f8f8;
+  color: #333;
 }
 
 #container {
-  height: auto;
-  min-height: 100%;
-  padding-bottom: 50px;
+  width: 400px;
+  height: 100vh;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-/* Style the footer */
-footer {
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 20px 15px;
+  background-color: transparent;
+  color: #535C91;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+td:first-child {
+  background-color: transparent;
+  color: #1B1A55;
+  font-weight: bold;
+  border-bottom: none;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"] {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  color: #535C91;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus {
+  background-color: #e5e5e5;
+  outline: none;
+}
+
+input[type="submit"],
+input[type="button"] {
+  background-color: #1B1A55;
+  color: #fff;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background-color: #535C91;
+}
+
+input[type="search"] {
+  width: 500px;
   height: 50px;
-  background-color: #336699;
-  padding: 10px;
-  margin-top: 20px;
-  text-align: center;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px 0 0 25px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  outline: none;
+  font-size: 18px;
+  color: #333;
+}
+
+#btnSearch {
+  height: 50px;
+  padding: 10px 30px;
+  background-color: #1B1A55;
+  color: #fff;
+  border: none;
+  border-radius: 0 25px 25px 0;
+  cursor: pointer;
+  font-size: 18px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  background-image: url('../../resources/img/search.png');
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#btnList {
+  margin-top: 40px;
+  padding: 15px 30px;
+  background-color: #1B1A55;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 18px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+#btnList:hover {
+  background-color: #535C91;
+}
+
+footer {
+  background-color: #9290C3;
   color: white;
-  font-size: 10px;
-  position : relative;
-  transform : translateY(0%);
+  text-align: center;
+  height: 100px;
+  padding: 10px;
+  margin: 0;
 }
