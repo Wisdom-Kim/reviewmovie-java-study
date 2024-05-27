@@ -9,7 +9,15 @@ import java.util.stream.Collectors;
 
 public class LikesService {
 
+    //서비스 계층도 싱글톤으로 변경
+    private static final LikesService likesService = new LikesService();
     private final LikesRepository likesRepository = LikesRepository.getInstance();
+
+    public static LikesService getInstance() {
+        return likesService;
+    }
+
+    private LikesService() {}
 
     public void insertLikes(LikesDTO likesDTO) {
         Likes likes = likesDTO.toEntity();

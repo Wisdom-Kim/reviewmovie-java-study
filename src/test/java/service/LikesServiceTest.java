@@ -13,9 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LikesServiceTest {
 
-    private final LikesService likesService = new LikesService();
+    private final LikesService likesService = LikesService.getInstance();
     private final UserService userService = new UserService();
-    private final ReviewService reviewService = new ReviewService();
+    private final ReviewService reviewService = ReviewService.getInstance();
     private final MovieService movieService = new MovieService();
     
     @Test

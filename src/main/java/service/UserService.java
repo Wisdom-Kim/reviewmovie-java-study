@@ -2,7 +2,11 @@ package service;
 
 import domain.User;
 import dto.UserDTO;
-import repository.UserRepository;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import util.JpaUtil;
 
 public class UserService {
 //	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
