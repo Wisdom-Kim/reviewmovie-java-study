@@ -38,40 +38,40 @@
 
         .search-container input[type="text"] {
             width: 500px;
-  			height: 40px;
-  			padding: 10px 20px;
-  			border: none;
-  			border-radius: 25px 0 0 25px;
-  			outline: none;
-  			font-size: 18px;
-  			color: #333;
+  	    height: 40px;
+  	    padding: 10px 20px;
+  	    border: none;
+	    border-radius: 25px 0 0 25px;
+  	    outline: none;
+  	    font-size: 18px;
+  	    color: #333;
         }
 
         .search-container input[type="submit"] {
             height: 60px;
-  			padding: 10px 30px;
-  			background-color: #1B1A55;
-  			color: #fff;
-  			border: none;
-  			border-radius: 0 25px 25px 0;
-  			cursor: pointer;
-  			font-size: 18px;
-  			background-image: url('../../resources/img/search.png');
-  			background-size: 24px;
-  			background-repeat: no-repeat;
-  			background-position: center;
+  	    padding: 10px 30px;
+  	    background-color: #1B1A55;
+  	    color: #fff;
+  	    border: none;
+  	    border-radius: 0 25px 25px 0;
+  	    cursor: pointer;
+  	    font-size: 18px;
+      	    background-image: url('../../resources/img/search.png');
+  	    background-size: 24px;
+  	    background-repeat: no-repeat;
+  	    background-position: center;
         }
         .movie-list {
- 			display: flex;
-  			justify-content: center;
-  			flex-wrap: wrap;
-		}
+ 	    display: flex;
+  	    justify-content: center;
+  	    flex-wrap: wrap;
+	}
 
-		.row {
-  			display: flex;
-  			justify-content: center;
-  			flex-wrap: wrap;
-		}
+	.row {
+  	    display: flex;
+  	    justify-content: center;
+  	    flex-wrap: wrap; 
+	}
     </style>
 </head>
 <body>
