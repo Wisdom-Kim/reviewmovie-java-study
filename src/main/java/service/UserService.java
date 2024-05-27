@@ -2,10 +2,14 @@ package service;
 
 import domain.User;
 import dto.UserDTO;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 import repository.UserRepository;
 
 public class UserService {
-
+	UserRepository userRepository = UserRepository.getInstance();
 	private static UserService instance;
 	
 	private UserService() {}
@@ -20,11 +24,11 @@ public class UserService {
 	public void insertUser(UserDTO userDTO) {
 		User user = userDTO.toEntity();
 
-        UserRepository.save(user);
+		userRepository.save(user);
 	}
 
 	public UserDTO getUser(String accountId, String passwd) {
-        User user = UserRepository.findOne(accountId, passwd);
+        User user = userRepository.findOne(accountId, passwd);
         
         if (user == null) {
             throw new NullPointerException("회원 정보가 없습니다.");
