@@ -33,6 +33,7 @@ public class InsertUserController extends HttpServlet {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		
 		UserDTO newUser = null;
+		boolean insertResult = false;
 		
 		if(accountId == null || accountId == "" || passwd == null || passwd == ""
 				|| username == null || username == "" || birthday == null || birthday == "") {
@@ -50,10 +51,15 @@ public class InsertUserController extends HttpServlet {
 		                 			.userType(type)
 		                 			.build();
 				
-				userService.insertUser(newUser);
+				insertResult = userService.insertUser(newUser);
 				
-				response.sendRedirect("/main.do");
-				
+				if(insertResult) {
+					response.sendRedirect("/main.do");
+					
+				} else {
+					request.setAttribute("error", "회원가입 실패: 서버 오류");
+					request.getRequestDispatcher(errorUrl).forward(request, response);
+				}
 			} catch (ParseException e) {
 				request.setAttribute("error", "회원가입 실패: 생일을 바르게 입력하세요.");
 				request.getRequestDispatcher(errorUrl).forward(request, response);

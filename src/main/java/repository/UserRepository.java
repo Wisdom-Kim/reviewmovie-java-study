@@ -2,6 +2,8 @@ package repository;
 
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
+
 import domain.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -21,24 +23,40 @@ public class UserRepository {
     	return instance;
     }
     
-    public void save(User user){
+    public boolean save(User user){
         EntityManager em = emf.createEntityManager();
+        boolean insertResult = true;
         
-        em.getTransaction().begin();
-        em.merge(user);
-        em.getTransaction().commit();
-        em.close();
+        try {
+        	em.getTransaction().begin();
+        	em.merge(user);
+        	em.getTransaction().commit();
+        } catch(ConstraintViolationException e) {
+        	em.getTransaction().rollback();
+        	insertResult = false;
+        
+        } finally {        	
+        	em.close();
+        }
+        
+        return insertResult;
     }
 
     public User findOne(String accountId, String passwd){
         EntityManager em = emf.createEntityManager();
         
-        String getUserJPQL = "SELECT u FROM User u WHERE u.userAccountId = :accountId AND u.userPassword = :passwd";
-        User user = em.createQuery(getUserJPQL, User.class)
-                			.setParameter("accountId", accountId)
-                			.setParameter("passwd", passwd)
-                			.getSingleResult();
-        em.close();
+        User user = null;
+        try {
+        	String getUserJPQL = "SELECT u FROM User u WHERE u.userAccountId = :accountId AND u.userPassword = :passwd";
+        	user = em.createQuery(getUserJPQL, User.class)
+        			.setParameter("accountId", accountId)
+        			.setParameter("passwd", passwd)
+        			.getSingleResult();
+        } catch(Exception e) {
+        	e.printStackTrace();
+        } finally {
+        	em.close();
+		}
         
         return user;
     }
