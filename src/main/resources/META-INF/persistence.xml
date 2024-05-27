@@ -1,29 +1,44 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
-              https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
-           version="3.0">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Search</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/liststyle.css">
+</head>
+<body>
+    <%@ include file="/views/layout/header.jsp" %>
 
-	<persistence-unit name="jpa_config">
-		<properties>
-			<property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-			<property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/movie?serverTimezone=Asia/Seoul"/>
-			<property name="jakarta.persistence.jdbc.user" value="movie"/>
-			<property name="jakarta.persistence.jdbc.password" value="movie"/>
-			<property name="hibernate.hikari.poolName" value="pool" />
-			<property name="hibernate.hikari.maximumPoolSize" value="10" />
-			<property name="hibernate.hikari.minimumIdle" value="10" />
-			<property name="hibernate.hikari.connectionTimeout" value="1000" />
-      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-      <property name="hibernate.show_sql" value="true" />
-      <property name="hibernate.format_sql" value="true" />
-      <property name="hibernate.use_sql_comments" value="true"/>
-      <property name="hibernate.hbm2ddl.auto" value="update" />
-      <property name="hibernate.hbm2ddl.import_files_sql_extractor"
-                value="org.hibernate.tool.schema.internal.script.MultiLineSqlScriptExtractor" />
+    <div class="container">
+        <form action="${pageContext.request.contextPath}/movies.do" method="get">
+            <input type="text" name="searchTitle" placeholder="Enter movie title" />
+            <input type="submit" value="Search" />
+        </form>
 
-        </properties>
-    </persistence-unit>
-</persistence>
+        <div class="movie-list">
+            <c:if test="${not empty requestScope.movieList}">
+                <c:forEach items="${requestScope.movieList}" var="movie" step="3">
+                    <div class="row">
+                        <c:forEach items="${requestScope.movieList}" var="item" begin="${status.index}" end="${status.index + 2}" varStatus="status">
+                            <div class="movie-item">
+                                <a href="${pageContext.request.contextPath}/review?movieId=${item.movieId}">
+                                    <img src="${item.moviePoster}" alt="${item.movieTitle}" class="movie-poster">
+                                    <div class="movie-title">${item.movieTitle}</div>
+                                </a>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </c:forEach>
+            </c:if>
+
+            <c:if test="${empty requestScope.movieList}">
+                <p>검색어를 입력해주세요</p>
+            </c:if>
+        </div>
+    </div>
+
+    <%@ include file="/views/layout/footer.jsp" %>
+</body>
+</html>

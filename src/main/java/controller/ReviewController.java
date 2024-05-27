@@ -22,7 +22,7 @@ public class ReviewController extends HttpServlet {
 
 	private final ReviewService reviewService = ReviewService.getInstance();
 	private final LikesService likesService = LikesService.getInstance();
-	private MovieService movieService = new MovieService();
+	private MovieService movieService = MovieService.getInstance();
 
 	@Override
 	//?movieId=
