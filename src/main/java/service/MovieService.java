@@ -5,15 +5,17 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
 
 import domain.Movie;
 import dto.MovieDTO;
-import javax.persistence.TypedQuery;
+
 import repository.MovieRepository;
+import util.JpaUtil;
 
 public class MovieService {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa_config");
+	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
     private EntityManager em = emf.createEntityManager();
     private final MovieRepository movieRepository = MovieRepository.getInstance();
 
@@ -33,17 +35,7 @@ public class MovieService {
     }
 
     public double getAverageRating(MovieDTO movieDTO) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            TypedQuery<Double> query = em.createQuery(
-                    "SELECT AVG(r.ratingScore) FROM Rating r WHERE r.review.movie.movieId = :movieId", Double.class
-            );
-            query.setParameter("movieId", movieDTO.getMovieId());
-            Double averageRating = query.getSingleResult();
-            return (averageRating != null) ? averageRating : 0.0; //해당하는 영화가 없다면 일단 0으로 반환
-        } finally {
-            em.close();
-        }
+        return movieRepository.getAverageRating(movieDTO);
     }
 
 
