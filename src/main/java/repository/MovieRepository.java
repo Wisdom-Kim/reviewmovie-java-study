@@ -7,11 +7,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
 import domain.Movie;
+import dto.MovieDTO;
 import util.JpaUtil;
 
 public class MovieRepository {
-    //김지혜 수정 사항
-    //
+
     private static MovieRepository movieRepository;
     private static final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 
@@ -24,12 +24,6 @@ public class MovieRepository {
         }
         return movieRepository;
     }
-
-    //싱글톤으로 관리하기 위해 public 제거
-    //또, em을 CRUD 작업마다 새로 만들어주어야 꼬일 위험이 적어서, 일단 주석처리하고 싱글톤으로 만들게요
-//    public MovieRepository(EntityManager em) {
-//        this.em = em;
-//    }
 
     public Movie findById(int id) {
         EntityManager em = emf.createEntityManager();
@@ -54,5 +48,19 @@ public class MovieRepository {
 
         TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
         return query.getResultList();
+    }
+    
+    public double getAverageRating(MovieDTO movieDTO) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Double> query = em.createQuery(
+                "SELECT AVG(r.ratingScore) FROM Rating r WHERE r.review.movie.movieId = :movieId", Double.class
+            );
+            query.setParameter("movieId", movieDTO.getMovieId());
+            Double averageRating = query.getSingleResult();
+            return (averageRating != null) ? averageRating : 0.0; //해당하는 영화가 없다면 일단 0으로 반환
+        } finally {
+            em.close();
+        }
     }
 }
