@@ -1,4 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!doctype html>
 <html lang="ko">
@@ -26,6 +28,7 @@
         <h1 class="mb-3 fw-bold">어이쿠!</h1>
         <div class="errorMessage">
             <h3 class="px-2 py-2">알 수 없는 에러가 발생했어요ㅠㅠ</h3>
+            <h4>${requestScope.e}</h4>
             <a class="py-3 icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;" href="/main.do">메인으로</a>
         </div>
     </div>

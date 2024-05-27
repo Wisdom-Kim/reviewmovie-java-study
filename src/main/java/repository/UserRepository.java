@@ -12,8 +12,13 @@ public class UserRepository {
     // 1. 싱글톤으로 변환
     // 2. CRUD작업마다 em새로 만들어주기
 
-//    private static UserRepository userRepository;
+    private static UserRepository userRepository;
     private static final EntityManagerFactory emf =  JpaUtil.getEntityManagerFactory();
+
+    public static UserRepository getInstance() {
+        return userRepository;
+    }
+
 
     private UserRepository() {
     }

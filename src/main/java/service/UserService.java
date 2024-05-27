@@ -6,16 +6,16 @@ import dto.UserDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import repository.UserRepository;
 import util.JpaUtil;
 
 public class UserService {
-//	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
-//	private final static UserRepository userRepository = UserRepository.getInstance();
+	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
+	private final static UserRepository userRepository = UserRepository.getInstance();
 	
 	public static boolean insertUser(UserDTO userDTO) {
 		User user = userDTO.toEntity();
-
-        UserRepository.save(user);
+		userRepository.save(user);
         
 		return true;
 		

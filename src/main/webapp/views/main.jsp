@@ -1,97 +1,131 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+		 pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!doctype html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>영화 리뷰 서비스</title>
-<style type="text/css">
-#container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f8f8f8;
-  color: #333;
-}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="generator" content="Hugo 0.104.2">
 
-h1 {
-  margin-bottom: 40px;
-  font-size: 36px;
-  font-weight: 300;
-  letter-spacing: 2px;
-}
+	<link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/sign-in/">
+	<link href="https://getbootstrap.kr/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-form {
-  display: flex;
-  align-items: center;
-  padding: 5px;
-  border-radius: 30px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-input[type="search"] {
-  width: 500px;
-  height: 50px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 25px 0 0 25px;
-  outline: none;
-  font-size: 18px;
-  color: #333;
-}
-
-input[type="submit"] {
-  height: 50px;
-  padding: 10px 30px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 0 25px 25px 0;
-  cursor: pointer;
-  font-size: 18px;
-  background-image: url('https://cdn2.iconfinder.com/data/icons/font-awesome/1792/search-512.png');
-  background-size: 24px;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-input[type="button"] {
-  margin-top: 40px;
-  padding: 15px 30px;
-  background-color: #333;
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 18px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-}
-
-input[type="button"]:hover {
-  background-color: #555;
-}
-</style>
-
+	<style>
+		body{
+			margin: auto 0;
+			display:flex;
+			flex-direction: column;
+			text-align: center;
+			height: 100vh;
+		}
+		.movie-poster img{
+			width: 200px;
+			height:300px;
+			background-color:black;
+		}
+		.topWrapper{
+			flex-direction: column;
+		}
+		.feed{
+			text-align: left !important;
+		}
+		.feed_input{
+			border: none;
+			box-sizing: border-box;
+			width: 100%;
+			overflow: hidden;
+			font-size: 20px;
+		}
+		.icon{
+			height: 30px;
+			width: 30px;
+		}
+		.form-control{
+			height:20vh !important;
+		}
+	</style>
+	<link href="https://getbootstrap.kr/docs/5.2/examples/sign-in/signin.css" rel="stylesheet">
 </head>
 <body>
-<%@ include file="/views/layout/header.jsp" %>
-
-<div id="container">
-	<h1>무슨 영화 볼까?</h1>
-	<div>
-		<form action="/getMovie.do" method="GET">
-	       	<input type="search" name="q" maxlength="100" placeholder="영화 제목을 입력해보세요.">
-			<input type="submit" value="">
-		</form>
+<div class="movie-info d-flex py-3">
+	<div class="movie-poster px-4">
+		<img src="${requestScope.movie.moviePoster}" alt="Movie Poster">
 	</div>
-	<div>
-		<input type="button" value="평점 좋은 영화 보러가기" onclick="location.href='/movie/rating.do'">
+	<div class="movie-detail" style="text-align: left;">
+		<h1>${requestScope.movie.movieTitle} </h1>
+		<div class="py-5"></div>
+		<h4>평점: ${requestScope.movie.averageRating}</h4>
+		<h4>감독: ${requestScope.movie.movieDirector}</h4>
+		<h4>상영 연도: ${requestScope.movie.movieReleaseDate}</h4>
 	</div>
 </div>
-
-<%@ include file="/views/layout/footer.jsp" %>
+<div class="wrapper py-4" style="width:70vw;">
+	<div class="topWrapper">
+		<h3 class="form-label py-3">이 영화, 어떠셨나요?</h3>
+		<span class="py-2 d-flex rating" style="justify-content: center;">
+            <c:forEach var="i" begin="1" end="5">
+                <div class="form-check d-flex mx-3">
+                    <input class="form-check-input" type="radio" name="ratingScore" id="flexRadioDefault${i}" value="${i}">
+                    <label class="form-check-label" for="flexRadioDefault${i}">
+                        ${i} 점
+                    </label>
+                </div>
+			</c:forEach>
+        </span>
+		<span>
+            <form id="myForm" action="/review" method="post">
+                <input type="hidden" value="${requestScope.movie.movieId}" name="movieId">
+                <input type="hidden" value="${sessionScope.userId}" name="userId">
+                <textarea name="reviewContent" cols="50" class="form-control" rows="1" placeholder="이 영화에 대한 한줄평을 남겨주세요!"></textarea>
+                <button type="submit" class="btn btn-primary my-4">리뷰 등록</button>
+            </form>
+        </span>
+	</div>
+	<c:if test="${not empty requestScope.reviewList}">
+		<div class="review-list d-flex">
+			<c:forEach items="${requestScope.reviewList}" var="review">
+				<div class="card" style="width: 18rem;">
+					<div class="card-body">
+						<p class="card-title">${review.reviewContent}</p>
+						<div class="btn">
+							<label style="cursor: pointer" onclick="like()">
+								<img class="icon" id="like" src="../../resources/img/red_heart.png" alt="heart" />
+								<span>${fn:length(review.likesList)}</span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+	</c:if>
+	<c:if test="${empty requestScope.reviewList}">
+		<div>
+			영화에 등록된 리뷰가 없어요!
+		</div>
+	</c:if>
+</div>
+</div>
 </body>
+
+<script type="text/javascript">
+	async function like(){
+		let heart = document.getElementById("like") //좋아요 상태
+		const url = "/like?reviewId="+reviewId;
+
+		await fetch(url)
+				.then(response => response.json()) // 응답을 JSON으로 파싱
+				.then(data => {
+					console.log(data);
+					if(data.result.isLike){
+						heart.src="../../resources/img/heart.png"
+					}else{
+						heart.src="../../resources/img/red_heart.png"
+					}
+				});
+	}
+</script>
+
 </html>

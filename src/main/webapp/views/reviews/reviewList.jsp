@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!doctype html>
@@ -79,10 +79,11 @@
             </span>
         <span>
                 <!-- 리뷰 등록 부분 -->
-                <form id="myForm" action="/review" method="post">
+                <form id="myForm" action="/insertReview.do" method="post">
                     <input value="${requestScope.movie.movieId}" name="movieId" style="display: none"></input>
+                    <input value="${sessionScope.userId}" name="userId" style="display: none"></input>
 <%--                    영화 id를 함께 보내기 위한 hidden처리--%>
-                    <textarea name="reviewContent" cols="50" class="form-control" rows="3" placeholder="이 영화에 대한 리뷰를 남겨주세요!"></textarea>
+                    <textarea name="reviewContent" cols="50" class="form-control" rows="1" placeholder="이 영화에 대한 한줄평을 남겨주세요!"></textarea>
                     <button type="submit" class="btn btn-primary my-4">리뷰 등록</button>
                 </form>
             </span>
@@ -118,7 +119,6 @@
 
 
 <script type="text/javascript">
-
     async function like(){
 
         let heart = document.getElementById("like") //좋아요 상태
