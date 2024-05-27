@@ -1,57 +1,53 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import jakarta.persistence.*;
 import lombok.*;
 
-@ToString //테스트용
+import java.util.Date;
+
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"user_id", "movie_id"})
-}) //각 유저는 한 영화에 대해 리뷰 하나만 적을 수 있으므로 복합키 대신 대리키로 제약조건 설정
+@ToString(exclude = {"movie", "user"})
 public class Review {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private int reviewId;
 
-    @Column(nullable = false, name = "review_content")
-    private String reviewContent;
-
-    @Column(name = "review_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date reviewDate;
-
-    @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "movie_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Likes> likesList = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rating_id")
+    @JoinColumn(name = "rating_id", referencedColumnName = "rating_id")
     private Rating rating;
 
-    public void addLike(Likes like) {
-        likesList.add(like);
-        like.setReview(this);
+    @Column(name = "review_content", nullable = false)
+    private String reviewContent;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "review_date", nullable = false)
+    private Date reviewDate;
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+        if (movie != null && !movie.getReviewList().contains(this)) {
+            movie.getReviewList().add(this);
+        }
     }
 
-    public void removeLike(Likes like) {
-        likesList.remove(like);
-        like.setReview(null);
+    public void setUser(User user) {
+        this.user = user;
+        if (user != null && !user.getReviewList().contains(this)) {
+            user.getReviewList().add(this);
+        }
     }
 }

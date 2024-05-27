@@ -1,11 +1,18 @@
 package service;
 
+import domain.Movie;
 import domain.Rating;
 import domain.Review;
+import domain.User;
 import dto.RatingDTO;
 import dto.ReviewDTO;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import repository.MovieRepository;
 import repository.ReviewRepository;
 import repository.RatingRepository;
+import repository.UserRepository;
+import util.JpaUtil;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,26 +22,18 @@ public class ReviewService {
     private static final ReviewService reviewService = new ReviewService();
     private final ReviewRepository reviewRepository = ReviewRepository.getInstance();
     private final RatingRepository ratingRepository = RatingRepository.getInstance();
+    private final MovieRepository movieRepository = MovieRepository.getInstance();
+    private final UserRepository userRepository = UserRepository.getInstance();
 
+    EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
     public static ReviewService getInstance() {
         return reviewService;
     }
 
     private ReviewService(){};
 
-    public void insertReview(ReviewDTO reviewDTO, RatingDTO ratingDTO) {
-        // Rating을 먼저 생성하고 저장
-        Rating rating = ratingDTO.toEntity();
-        ratingRepository.save(rating);
-
-        // 생성된 Rating의 ID를 ReviewDTO에 설정
-        reviewDTO.setRatingId(rating.getRatingId());
-
-        // ReviewDTO를 이용해 Review를 생성하고 저장
-        Review review = reviewDTO.toEntity();
-        review.setRating(rating);  // Rating을 Review에 매핑
-
-        reviewRepository.save(review);
+    public void insertReview(ReviewDTO reviewDTO) {
+        reviewRepository.save(reviewDTO.toEntity());
     }
 
     public ReviewDTO getReview(int reviewId) {

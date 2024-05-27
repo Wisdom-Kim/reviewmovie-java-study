@@ -1,7 +1,12 @@
 package service;
 
+import domain.Movie;
+import domain.Review;
 import domain.User;
+import dto.ReviewDTO;
 import dto.UserDTO;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import repository.UserRepository;
 
 public class UserService {
@@ -31,5 +36,10 @@ public class UserService {
         }
         
 		return UserDTO.fromEntity(user);
+	}
+
+
+	public User getUserById(int movieId) {
+		return userRepository.findById(movieId);
 	}
 }

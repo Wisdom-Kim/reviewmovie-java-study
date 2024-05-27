@@ -26,6 +26,7 @@
         <h1 class="mb-3 fw-bold">어이쿠!</h1>
         <div class="errorMessage">
             <h3 class="px-2 py-2">알 수 없는 에러가 발생했어요ㅠㅠ</h3>
+            <h4>${requestScope.error}</h4>
             <a class="py-3 icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 25, 135, 84;" href="/main.do">메인으로</a>
         </div>
     </div>

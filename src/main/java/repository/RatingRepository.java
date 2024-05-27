@@ -23,18 +23,15 @@ public class RatingRepository {
     }
 
     public void save(Rating rating) {
-        EntityManager em = emf.createEntityManager();
-        try {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        try{
             em.getTransaction().begin();
-            if (rating.getRatingId() == 0) {
-                em.persist(rating);
-            } else {
-                em.merge(rating);
-            }
-            em.getTransaction().commit();
-        } finally {
-            em.close();
+            em.persist(rating);
+            em.getTransaction().commit();}
+        catch (Exception e) {
+            em.getTransaction().rollback();
         }
+        em.close();
     }
 
     public Rating findOne(int id) {

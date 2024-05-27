@@ -1,6 +1,8 @@
 package repository;
 
+import domain.Rating;
 import domain.Review;
+import dto.ReviewDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
@@ -23,16 +25,27 @@ public class ReviewRepository {
         return reviewRepository;
     }
 
-    public void save(Review review) {
+    public void saveRating(Rating rating) {
         EntityManager em = emf.createEntityManager();
-        try {
+        em.getTransaction().begin();
+        em.persist(rating);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    public void save(Review review) {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        try{
             em.getTransaction().begin();
-            em.flush();
-            em.merge(review);
+            em.persist(review);
             em.getTransaction().commit();
-        } finally {
+            System.out.println("리뷰 저장이 잘 되었수다");
+        }catch (Exception e) {
+            em.getTransaction().rollback();
+        }finally {
             em.close();
         }
+
     }
 
     public Review findOne(int id) {

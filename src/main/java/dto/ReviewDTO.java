@@ -22,10 +22,9 @@ public class ReviewDTO {
     private String movieTitle;
     private int ratingId;
     private int ratingScore;
-    private List<Likes> likesList;
 
     @Builder
-    public ReviewDTO(int reviewId, String reviewContent, Date reviewDate, int userId, String userName, int movieId, String movieTitle, int ratingId, int ratingScore, List<Likes> likesList) {
+    public ReviewDTO(int reviewId, String reviewContent, Date reviewDate, int userId, String userName, int movieId, String movieTitle, int ratingId, int ratingScore) {
         this.reviewId = reviewId;
         this.reviewContent = reviewContent;
         this.reviewDate = reviewDate;
@@ -35,7 +34,6 @@ public class ReviewDTO {
         this.movieTitle = movieTitle;
         this.ratingId = ratingId;
         this.ratingScore = ratingScore;
-        this.likesList = likesList;
     }
 
     public static ReviewDTO fromEntity(Review review) {
@@ -49,7 +47,6 @@ public class ReviewDTO {
                 .movieTitle(review.getMovie().getMovieTitle())
                 .ratingId(review.getRating().getRatingId())
                 .ratingScore(review.getRating().getRatingScore())
-                .likesList(review.getLikesList())
                 .build();
     }
 
@@ -74,7 +71,7 @@ public class ReviewDTO {
                 .user(user)
                 .movie(movie)
                 .rating(rating)
-                .likesList(this.likesList)
                 .build();
     }
+
 }

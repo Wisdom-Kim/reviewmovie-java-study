@@ -52,4 +52,20 @@ public class UserRepository {
         return userList;
     }
 
+    public User findById(int userId) {
+        EntityManager em = emf.createEntityManager();
+        User user = null;
+        try{
+            em.getTransaction().begin();
+            user = em.find(User.class,userId);
+            em.getTransaction().commit();
+        }catch (Exception e){
+            em.getTransaction().rollback();
+        }finally {
+            em.close();
+
+        }
+        return user;
+
+    }
 }

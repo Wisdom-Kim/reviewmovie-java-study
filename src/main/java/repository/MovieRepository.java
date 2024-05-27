@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import domain.Movie;
+import domain.Review;
 import dto.MovieDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -14,7 +15,8 @@ import jakarta.persistence.TypedQuery;
 import util.JpaUtil;
 
 public class MovieRepository {
-	 private static MovieRepository instance;
+	private static final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
+	private static MovieRepository instance;
 
 	 private MovieRepository() {}
 
@@ -25,7 +27,7 @@ public class MovieRepository {
 	     return instance;
 	 }
 
-	 public Movie findById(int id, EntityManager em) {
+	 public Movie findById(int id,EntityManager em) {
 	     return em.find(Movie.class, id);
 	 }
 
@@ -56,4 +58,5 @@ public class MovieRepository {
 	     Double averageRating = query.getSingleResult();
 	     return (averageRating != null) ? averageRating : 0.0;
 	 }
+
 }

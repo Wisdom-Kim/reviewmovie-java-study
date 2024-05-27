@@ -22,7 +22,6 @@ public class MovieDTO {
     private Date movieReleaseDate;
     private double averageRating;
     private List<ReviewDTO> reviewList = new ArrayList<>();
-    private List<LikesDTO> likesList = new ArrayList<>();
 
     @Builder
     public MovieDTO(int movieId, String movieTitle, String movieDirector, String moviePoster, String movieType, Date movieReleaseDate) {
