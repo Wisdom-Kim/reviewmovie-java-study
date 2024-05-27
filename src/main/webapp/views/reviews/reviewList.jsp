@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -56,8 +57,8 @@
     <div class="movie-detail" style="text-align: left;">
         <h1>${requestScope.movie.movieTitle} </h1>
         <div class="py-5"></div>
-        <h4>Director: ${requestScope.movie.movieDirector}</h4>
-        <h4>Release Date: ${requestScope.movie.movieReleaseDate}</h4>
+        <h4>감독: ${requestScope.movie.movieDirector}</h4>
+        <h4>상영 연도: ${requestScope.movie.movieReleaseDate}</h4>
     </div>
 </div>
 <div class="wrapper py-4" style="width:70vw;">
@@ -82,20 +83,30 @@
                 </form>
             </span>
     </div>
-    <div class="review-list d-flex">
-        <c:forEach items= "${requestScope.reviewList}" var="review">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <p class="card-title">${review.content}</p>
-                    <div class="btn">
-<%--                        TODO: 좋아요 버튼 누르면 하트 변경--%>
-                        <label style="cursor: pointer" onclick="like()"><img class="icon" id="like" src="../../resources/img/red_heart.png" alt="heart" /> <span>${review.likes}</span></label>
-                        <span>128</span>
-                    </div>
-                </div>
-            </div>
-        </c:forEach>
-    </div>
+<%--    <c:if test="${not empty requestScope.reviewList}">--%>
+<%--        <div class="review-list d-flex">--%>
+<%--            <c:forEach items="${requestScope.reviewList}" var="review">--%>
+<%--                <div class="card" style="width: 18rem;">--%>
+<%--                    <div class="card-body">--%>
+<%--                        <p class="card-title">${review.reviewContent}</p>--%>
+<%--                        <div class="btn">--%>
+<%--                                &lt;%&ndash; TODO: 좋아요 버튼 누르면 하트 변경 &ndash;%&gt;--%>
+<%--                            <label style="cursor: pointer" onclick="like()">--%>
+<%--                                <img class="icon" id="like" src="../../resources/img/red_heart.png" alt="heart" />--%>
+<%--                                <span>${fn:length(review.likesList)}</span>--%>
+<%--                            </label>--%>
+<%--                            <span>128</span>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </c:forEach>--%>
+<%--        </div>--%>
+<%--    </c:if>--%>
+<%--    <c:if test="${empty requestScope.reviewList}">--%>
+        <div>
+            영화에 등록된 리뷰가 없어요!
+        </div>
+<%--    </c:if>--%>
     <!-- 여기에 다른 카드들도 추가 -->
 </div>
 </div>

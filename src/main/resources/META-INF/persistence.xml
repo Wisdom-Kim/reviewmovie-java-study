@@ -12,7 +12,7 @@
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost/scott?characterEncoding=utf8"/>
+                      value="jdbc:mysql://localhost/movie?characterEncoding=utf8"/>
             <property name="jakarta.persistence.jdbc.user" value="movie"/>
             <property name="jakarta.persistence.jdbc.password" value="movie"/>
 
@@ -25,7 +25,7 @@
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.use_sql_comments" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="none" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
             <property name="hibernate.hbm2ddl.import_files_sql_extractor"
                       value="org.hibernate.tool.schema.internal.script.MultiLineSqlScriptExtractor" />
 

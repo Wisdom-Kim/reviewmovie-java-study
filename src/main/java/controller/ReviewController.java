@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/getReviewPage.do")
+@WebServlet("/getReview")
 public class ReviewController extends HttpServlet {
 
 	private ReviewService reviewService = new ReviewService();
