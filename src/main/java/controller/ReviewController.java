@@ -1,6 +1,5 @@
 package controller;
 
-import domain.Movie;
 import dto.MovieDTO;
 import dto.RatingDTO;
 import service.MovieService;
@@ -22,7 +21,7 @@ public class ReviewController extends HttpServlet {
 
 	private final ReviewService reviewService = ReviewService.getInstance();
 	private final LikesService likesService = LikesService.getInstance();
-	private MovieService movieService = new MovieService();
+	private MovieService movieService = MovieService.getInstance();
 
 	@Override
 	//?movieId=
