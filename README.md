@@ -13,3 +13,6 @@ Controller 는 View에서 보여줄 내용을 가져오기 위해 Service 에 �
 View에서 Repository까지는 DTO 객체를 통해 데이터를 주고 받고 Repository에서만 Entity에 직접 접근한다.
 Service 및 Repository는 자원을 절약하기 위해 싱글톤으로 되어 필요한 곳에서 이미 만들어진 인스턴스를 호출해 쓰는 방식으로 사용한다.
 ![img_1.png](src/main/webapp/resources/img/img_1.png)
+
+## 화면 구조
+![img.png](src/main/webapp/resources/img/img.png)
