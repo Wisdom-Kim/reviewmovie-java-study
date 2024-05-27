@@ -5,63 +5,23 @@
 <!doctype html>
 <html lang="ko">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="generator" content="Hugo 0.104.2">
-
-	<link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/sign-in/">
-	<link href="https://getbootstrap.kr/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
-	<style>
-		body{
-			margin: auto 0;
-			display:flex;
-			flex-direction: column;
-			text-align: center;
-			height: 100vh;
-		}
-		.movie-poster img{
-			width: 200px;
-			height:300px;
-			background-color:black;
-		}
-		.topWrapper{
-			flex-direction: column;
-		}
-		.feed{
-			text-align: left !important;
-		}
-		.feed_input{
-			border: none;
-			box-sizing: border-box;
-			width: 100%;
-			overflow: hidden;
-			font-size: 20px;
-		}
-		.icon{
-			height: 30px;
-			width: 30px;
-		}
-		.form-control{
-			height:20vh !important;
-		}
-	</style>
-	<link href="https://getbootstrap.kr/docs/5.2/examples/sign-in/signin.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>영화 리뷰 서비스</title>
+<link rel="stylesheet" href="/static/css/layout.css" />
 </head>
 <body>
 <%@ include file="/views/layout/header.jsp" %>
 
-<div id="container">
+<div id="main_container">
 	<h1>무슨 영화 볼까?</h1>
 	<div>
 		<form action="/movies.do" method="GET">
 	       	<input type="search" name="searchTitle" maxlength="100" placeholder="영화 제목을 입력해보세요.">
-			<input type="submit" value="">
+			<input type="submit" id="btnSearch" value="">
 		</form>
 	</div>
 	<div>
-		<input type="button" value="평점 좋은 영화 보러가기" onclick="location.href='/movies/rating.do'">
+		<input type="button" id="btnList" value="평점 좋은 영화 보러가기" onclick="location.href='/movies/rating.do'">
 	</div>
 </div>
 <div class="wrapper py-4" style="width:70vw;">
