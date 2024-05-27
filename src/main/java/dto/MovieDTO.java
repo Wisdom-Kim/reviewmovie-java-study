@@ -22,8 +22,9 @@ public class MovieDTO {
     private Date movieReleaseDate;
     private double averageRating;
     private List<ReviewDTO> reviewList = new ArrayList<>();
-    private List<LikesDTO> likesList = new ArrayList<>();
 
+    //DTO: 레퍼지토리와 엔터티 사이 계층
+    //데이터 전송과 수정을 용이하게 한다
     @Builder
     public MovieDTO(int movieId, String movieTitle, String movieDirector, String moviePoster, String movieType, Date movieReleaseDate) {
         this.movieId = movieId;

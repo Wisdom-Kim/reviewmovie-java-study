@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import domain.Movie;
+import domain.Review;
 import dto.MovieDTO;
+import dto.ReviewDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;

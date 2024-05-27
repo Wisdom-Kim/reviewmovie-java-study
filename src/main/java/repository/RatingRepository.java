@@ -9,6 +9,9 @@ import java.util.List;
 
 public class RatingRepository {
 
+    //엔터티와 서비스 계층 사이 계층
+    //저장소 하나는 계속 쓰여야하므로 싱글톤으로 관리
+
     private static final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
     private static RatingRepository ratingRepository;
 
@@ -23,18 +26,15 @@ public class RatingRepository {
     }
 
     public void save(Rating rating) {
-        EntityManager em = emf.createEntityManager();
-        try {
+        EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+        try{
             em.getTransaction().begin();
-            if (rating.getRatingId() == 0) {
-                em.persist(rating);
-            } else {
-                em.merge(rating);
-            }
-            em.getTransaction().commit();
-        } finally {
-            em.close();
+            em.persist(rating);
+            em.getTransaction().commit();}
+        catch (Exception e) {
+            em.getTransaction().rollback();
         }
+        em.close();
     }
 
     public Rating findOne(int id) {

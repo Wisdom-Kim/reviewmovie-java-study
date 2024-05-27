@@ -58,7 +58,7 @@
             <div class="movie-item">
                 <a href="/review?movieId=${movie.movieId}">
                     <c:if test="${not empty movie.moviePoster}">
-                        <img src="${movie.moviePoster}" alt="${movie.movieTitle}" class="movie-poster">
+                        <img src="${movie.moviePoster}" alt="${movie.movieTitle}" class="movie-poster" onerror="this.onerror=null;this.src='../../resources/img/placeholder.png'";>
                     </c:if>
                 </a>
                 <a href="/review?movieId=${movie.movieId}">

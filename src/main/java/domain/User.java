@@ -14,11 +14,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -26,32 +22,30 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = {"reviewList"})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int userId;
+    private int userId; //유저Id
 
-    @Column(name = "user_account_id", nullable = false, unique = true)
-    private String userAccountId;
+    @Column(name = "user_account_id",unique = true)
+    private String userAccountId; //유저 계정
 
-    @Column(name = "user_password", nullable = false)
-    private String userPassword;
+    @Column(name = "user_password")
+    private String userPassword; //유저 패스워드
 
-    @Column(name = "user_name", nullable = false)
-    private String userName;
+    @Column(name = "user_name")
+    private String userName; //유저 이름
 
     @Temporal(TemporalType.DATE)
     @Column(name = "user_birthday")
-    private Date userBirthday;
+    private Date userBirthday; //유저 생일
 
     @Column(name = "user_type")
-    private boolean userType;
+    private boolean userType; //유저 타입(관리자 1 일반인 0)
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviewList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Likes> likeList = new ArrayList<>();
+    private List<Review> reviewList = new ArrayList<>(); //유저에 매핑된 리뷰 리스트
 }

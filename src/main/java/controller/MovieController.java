@@ -16,7 +16,7 @@ import service.MovieService;
 public class MovieController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private MovieService movieService;
-
+//영화 검색, 평점 순 조회 요청
     @Override
     public void init() {
         movieService = MovieService.getInstance();
