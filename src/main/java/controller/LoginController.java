@@ -1,4 +1,4 @@
-package controller;  
+package controller;
 
 import java.io.IOException;
 
@@ -35,6 +35,8 @@ public class LoginController extends HttpServlet {
 					session = request.getSession();
 					session.setAttribute("userId", user.getUserId());
 					session.setAttribute("userName", user.getUserName());
+					
+					System.out.println(user.getUserId());
 					
 					response.sendRedirect("/main.do");
 				} else {
