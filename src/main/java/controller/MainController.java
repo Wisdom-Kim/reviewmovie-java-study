@@ -14,7 +14,7 @@ public class MainController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		
-		String url ="/movies.do";
+		String url ="/views/main.jsp";
 		
 		if(session != null) {
 			url = "/views/main.jsp";
@@ -23,6 +23,5 @@ public class MainController extends HttpServlet {
 		}
 		
 		response.sendRedirect(url);
-		
 	}
 }
