@@ -11,7 +11,6 @@
   <link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/sign-in/">
   <link href="https://getbootstrap.kr/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-
   <style>
 
     body{
@@ -21,6 +20,12 @@
       text-align: center;
       height: 100vh;
 
+    }
+
+
+    .movie-poster{
+        height:20vh;
+        width: 16vw;
     }
 
     .topWrapper{
@@ -42,7 +47,7 @@
         height: 30px;
         width: 30px;
     }
-    
+
     .form-control{
         height:20vh !important;
     }
@@ -53,6 +58,16 @@
   <link href="https://getbootstrap.kr/docs/5.2/examples/sign-in/signin.css" rel="stylesheet">
 </head>
 <body>
+    <div class="wrapper">
+        <div class="movie-poster">
+            <img src="https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg" alt="Movie Poster">
+        </div>
+        <div class="movie-detail">
+            <h1>${movie.movieTitle}</h1>
+            <p>Director: ${movie.movieDirector}</p>
+            <p>Release Date: ${movie.movieReleaseDate}</p>
+        </div>
+    </div>
     <div class="wrapper" style="width:70vw;">
         <div class="topWrapper">
             <h3 class="form-label py-3">이 영화, 어떠셨나요?</h3>
@@ -74,7 +89,7 @@
                         <label style="cursor: pointer" onclick="like()"><img class="icon" src="../../resources/img/red_heart.png" alt="heart" /> <span>좋아요</span></label>
                         <span>128</span>
                       </div>
-                     
+
                     </div>
                 </div>
             </div>
@@ -86,7 +101,7 @@
                         <label style="cursor: pointer" onclick="like()"><img class="icon" src="../../resources/img/red_heart.png" alt="heart" /> <span>좋아요</span></label>
                         <span>128</span>
                       </div>
-                     
+
                     </div>
                 </div>
             </div>
@@ -98,11 +113,11 @@
                         <label style="cursor: pointer" onclick="like()"><img class="icon" src="../../resources/img/red_heart.png" alt="heart" /> <span>좋아요</span></label>
                         <span>128</span>
                       </div>
-                     
+
                     </div>
                 </div>
             </div>
-            
+
           </div>
 
         <!-- <div class="feed" style="flex-direction:row;">

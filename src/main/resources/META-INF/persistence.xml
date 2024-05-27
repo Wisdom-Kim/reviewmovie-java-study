@@ -1,9 +1,6 @@
-<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
-                https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
-             version="3.0">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             version="2.2">
     <persistence-unit name="jpa_config">
         <class>domain.Review</class>
         <class>domain.Movie</class>
@@ -11,10 +8,10 @@
         <class>domain.Likes</class>
         <class>domain.Rating</class>
         <properties>
-            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/movie?serverTimezone=Asia/Seoul"/>
-            <property name="jakarta.persistence.jdbc.user" value="movie"/>
-            <property name="jakarta.persistence.jdbc.password" value="movie"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/movie?serverTimezone=Asia/Seoul"/>
+            <property name="javax.persistence.jdbc.user" value="movie"/>
+            <property name="javax.persistence.jdbc.password" value="movie"/>
 
             <property name="hibernate.hikari.poolName" value="pool"/>
             <property name="hibernate.hikari.maximumPoolSize" value="10"/>

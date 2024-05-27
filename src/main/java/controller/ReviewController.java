@@ -40,7 +40,7 @@ public class ReviewController extends HttpServlet {
 			request.setAttribute("review", review);
 			request.setAttribute("likesCount", likesCount);
 
-			request.getRequestDispatcher("/reviewPage.jsp").forward(request, response);
+			request.getRequestDispatcher("/reviewList.jsp").forward(request, response);
 		} catch (Exception e) {
 			throw new ServletException("Error retrieving review", e);
 		}
