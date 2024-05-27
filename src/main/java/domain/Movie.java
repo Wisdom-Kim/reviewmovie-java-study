@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
-import lombok.*;
 
+import jakarta.persistence.*;
+import lombok.*;
 @Entity
 @Getter
 @Setter
@@ -17,30 +17,27 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "movie_id")
     private int movieId;
 
-    @Column(nullable = false)
+    @Column(name = "movie_title", nullable = false)
     private String movieTitle;
 
-    @Column(nullable = false)
+    @Column(name="movie_director",nullable = false)
     private String movieDirector;
 
-    @Column(nullable = false)
+    @Column(name = "movie_poster", nullable = false)
     private String moviePoster;
 
-    @Column(nullable = false)
+    @Column(name = "movie_type", nullable = false)
     private String movieType;
 
+    @Column(name = "movie_release_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date movieReleaseDate;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviewList = new ArrayList<>();
-    
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Likes> likesList = new ArrayList<>();
 
-    public List<Likes> getLikesList() {
-        return likesList;
-    }
+
 }

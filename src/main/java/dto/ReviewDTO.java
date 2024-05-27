@@ -1,143 +1,76 @@
-package dto;
-<<<<<<< Updated upstream
-import domain.*;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-=======
-
-import domain.Review;
-import domain.Movie;
-import domain.User;
-<<<<<<< Updated upstream
-import domain.Like;
-=======
-import domain.Likes;
-import domain.Rating;
->>>>>>> Stashed changes
-import lombok.*;
+package domain;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
 
-import java.util.Date;
-import java.util.List;
-=======
->>>>>>> Stashed changes
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@NoArgsConstructor
+@ToString //테스트용
+@Entity
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-public class ReviewDTO {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id", "movie_id"})
+}) //각 유저는 한 영화에 대해 리뷰 하나만 적을 수 있으므로 복합키 대신 대리키로 제약조건 설정
+public class Review {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id")
     private int reviewId;
-    private String reviewContent;
-    private Date reviewDate;
-    private UserDTO user;
-    private MovieDTO movie;
-<<<<<<< Updated upstream
-    private List<LikeDTO> likeList = new ArrayList<>();
-=======
-    private RatingDTO rating;
-    private List<LikesDTO> likeList = new ArrayList<>();
->>>>>>> Stashed changes
 
-<<<<<<< Updated upstream
-	//Adjust fields according to the domain
-	private int reviewId;
-    private Movie movie;
+    @Column(nullable = false, name = "review_content")
+    private String reviewContent;
+
+    @Column(name = "review_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date reviewDate;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
+
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Likes> likesList = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "rating_id")
     private Rating rating;
-    private String reviewContent;
-    private Date reviewDate;
 
-    @Builder
-    public ReviewDTO(int reviewId, Movie movie, User user, Rating rating, String reviewContent, Date reviewDate, List<Likes> listLike) {
-        this.reviewId = reviewId;
-        this.movie = movie;
-        this.user = user;
-        this.rating = rating;
-        this.reviewContent = reviewContent;
-        this.reviewDate = reviewDate;
+    public void addLike(Likes like) {
+        likesList.add(like);
+        like.setReview(this);
     }
 
-
-	public static Review toEntity(ReviewDTO reviewDTO) {
-		return Review.builder()
-                .reviewId(reviewDTO.getReviewId())
-                .movie(reviewDTO.getMovie())
-                .user(reviewDTO.getUser())
-                .rating(reviewDTO.getRating())
-                .reviewContent(reviewDTO.getReviewContent())
-                .reviewDate(reviewDTO.getReviewDate())
-                .build();
-	}
+    public void removeLike(Likes like) {
+        likesList.remove(like);
+        like.setReview(null);
+    }
 }
-=======
-    @Builder
-    public ReviewDTO(int reviewId, String reviewContent, Date reviewDate, UserDTO user, MovieDTO movie, RatingDTO rating) {
-        this.reviewId = reviewId;
-        this.reviewContent = reviewContent;
-        this.reviewDate = reviewDate;
-        this.user = user;
-        this.movie = movie;
-        this.rating = rating;
-    }
-
-    public static ReviewDTO fromEntity(Review review) {
-        ReviewDTO reviewDTO = ReviewDTO.builder()
-<<<<<<< Updated upstream
-                .reviewId(review.getReviewId())
-                .reviewContent(review.getReviewContent())
-                .reviewDate(review.getReviewDate())
-                .user(UserDTO.fromEntity(review.getUser()))
-                .movie(MovieDTO.fromEntity(review.getMovie()))
-                .build();
-
-        List<LikeDTO> likeDTOList = new ArrayList<>();
-        for (Like like : review.getLikeList()) {
-            likeDTOList.add(LikeDTO.fromEntity(like));
-=======
-            .reviewId(review.getReviewId())
-            .reviewContent(review.getReviewContent())
-            .reviewDate(review.getReviewDate())
-            .user(UserDTO.fromEntity(review.getUser()))
-            .movie(MovieDTO.fromEntity(review.getMovie()))
-            .rating(review.getRating() != null ? RatingDTO.fromEntity(review.getRating()) : null)
-            .build();
-
-        List<LikesDTO> likeDTOList = new ArrayList<>();
-        if (review.getLikesList() != null) {
-            for (Likes likes : review.getLikesList()) {
-                likeDTOList.add(LikesDTO.fromEntity(likes));
-            }
->>>>>>> Stashed changes
-        }
-        reviewDTO.setLikeList(likeDTOList);
-
-        return reviewDTO;
-    }
-
-    public Review toEntity() {
-        return Review.builder()
-            .reviewId(this.reviewId)
-            .reviewContent(this.reviewContent)
-            .reviewDate(this.reviewDate)
-            .user(this.user != null ? this.user.toEntity() : null)
-            .movie(this.movie != null ? this.movie.toEntity() : null)
-            .rating(this.rating != null ? this.rating.toEntity() : null)
-            .build();
-    }
-<<<<<<< Updated upstream
-}
->>>>>>> Stashed changes
-=======
-}
->>>>>>> Stashed changes

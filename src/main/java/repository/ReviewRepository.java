@@ -3,6 +3,7 @@ package repository;
 import domain.Review;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
 import util.JpaUtil;
 
 import java.util.List;
@@ -10,19 +11,31 @@ import java.util.List;
 public class ReviewRepository {
 
     private static final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
+    private static ReviewRepository reviewRepository;
+
+    private ReviewRepository() {
+    }
+
+    public static ReviewRepository getInstance() {
+        if (reviewRepository == null) {
+            reviewRepository = new ReviewRepository();
+        }
+        return reviewRepository;
+    }
 
     public void save(Review review) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(review);
+            em.flush();
+            em.merge(review);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
     }
 
-    public Review findById(Long id) {
+    public Review findOne(int id) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.find(Review.class, id);
@@ -34,32 +47,53 @@ public class ReviewRepository {
     public List<Review> findAll() {
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("select r from Review r", Review.class).getResultList();
+            return em.createQuery("SELECT r FROM Review r", Review.class).getResultList();
         } finally {
             em.close();
         }
     }
 
-    public void update(Review review) {
+    public void delete(Review review) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.merge(review);
+            em.remove(em.contains(review) ? review : em.merge(review));
             em.getTransaction().commit();
         } finally {
             em.close();
         }
     }
 
-    public void delete(Long id) {
+    public Review findOneWithDetails(int reviewId) {
         EntityManager em = emf.createEntityManager();
         try {
-            em.getTransaction().begin();
-            Review review = em.find(Review.class, id);
-            if (review != null) {
-                em.remove(review);
-            }
-            em.getTransaction().commit();
+            TypedQuery<Review> query = em.createQuery(
+                    "SELECT r FROM Review r " +
+                            "JOIN FETCH r.user " +
+                            "JOIN FETCH r.movie " +
+                            "LEFT JOIN FETCH r.rating " +
+                            "WHERE r.reviewId = :reviewId", Review.class);
+            query.setParameter("reviewId", reviewId);
+            return query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Review> findManyByMovieId(int movieId) {
+
+        //아직 개수 제한은 구현하지 못함
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Review> query = em.createQuery(
+                    "SELECT r FROM Review r " +
+                            "JOIN FETCH r.user " +
+                            "JOIN FETCH r.movie " +
+                            "LEFT JOIN FETCH r.rating " +
+                            "WHERE r.movie.movieId = :movieId"
+                            , Review.class);
+            query.setParameter("movieId", movieId);
+            return query.getResultList();
         } finally {
             em.close();
         }

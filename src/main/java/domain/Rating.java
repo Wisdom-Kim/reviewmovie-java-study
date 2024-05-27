@@ -10,15 +10,14 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Rating {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "rating_id")
     private int ratingId;
 
-    @Column(nullable = false)
+    @Column(name = "rating_score", nullable = false)
     private int ratingScore;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id")
+    @OneToOne(mappedBy = "rating", cascade = CascadeType.ALL)
     private Review review;
 }

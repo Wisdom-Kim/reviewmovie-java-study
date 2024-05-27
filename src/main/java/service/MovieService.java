@@ -4,21 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import domain.Movie;
 import dto.MovieDTO;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import repository.MovieRepository;
+import util.JpaUtil;
 
 public class MovieService {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa_config");
+    private static MovieService instance;
+    private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
     private EntityManager em = emf.createEntityManager();
-    private MovieRepository movieRepository;
+    private final MovieRepository movieRepository = MovieRepository.getInstance();
 
-    public MovieService() {
-        movieRepository = new MovieRepository(em);
+    private MovieService() {
+        // private 생성자로 외부에서 인스턴스 생성을 막음
+    }
+
+    public static synchronized MovieService getInstance() {
+        if (instance == null) {
+            instance = new MovieService();
+        }
+        return instance;
     }
 
     public List<MovieDTO> searchMoviesByTitle(String movieTitle) {
@@ -43,6 +50,15 @@ public class MovieService {
         }
         
         return movieDTOs;
+    }
+
+    public double getAverageRating(MovieDTO movieDTO) {
+        return movieRepository.getAverageRating(movieDTO);
+    }
+
+    public MovieDTO getMovie(int movieId) {
+        Movie movie = movieRepository.findById(movieId);
+        return MovieDTO.fromEntity(movie);
     }
 
     public void close() {

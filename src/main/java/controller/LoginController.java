@@ -1,4 +1,4 @@
-package controller;  
+package controller;
 
 import java.io.IOException;
 
@@ -16,6 +16,8 @@ import service.UserService;
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	UserService userService = UserService.getInstance();
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String errorUrl = "views/errors/error.jsp";
 		
@@ -29,12 +31,14 @@ public class LoginController extends HttpServlet {
 			response.sendRedirect(errorUrl);
 		} else {
 			try {
-				user = UserService.getUser(accountId, passwd);
+				user = userService.getUser(accountId, passwd);
 				
 				if(user != null) {
 					session = request.getSession();
 					session.setAttribute("userId", user.getUserId());
 					session.setAttribute("userName", user.getUserName());
+					
+					System.out.println(user.getUserId());
 					
 					response.sendRedirect("/main.do");
 				} else {

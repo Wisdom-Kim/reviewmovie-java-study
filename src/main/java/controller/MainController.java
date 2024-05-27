@@ -7,11 +7,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/main.do")
 public class MainController extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("/main.do");
+		HttpSession session = request.getSession(false);
 		
+		String url ="/views/main.jsp";
+		
+		if(session != null) {
+			url = "/views/main.jsp";
+			response.sendRedirect(url);
+			return;
+		}
+		
+		response.sendRedirect(url);
 	}
 }

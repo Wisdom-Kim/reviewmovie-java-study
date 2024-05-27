@@ -1,47 +1,44 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" 
-    pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Movie Detail</title>
-<link href="/static/css/layout.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>Movie Search</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/liststyle.css">
 </head>
 <body>
+    <%@ include file="/views/layout/header.jsp" %>
 
-<%@ include file="/views/layout/header.jsp" %>
+    <div class="container">
+        <form action="${pageContext.request.contextPath}/movies.do" method="get">
+            <input type="text" name="searchTitle" placeholder="Enter movie title" />
+            <input type="submit" value="Search" />
+        </form>
 
-<div id="container">
-	 <h2>영화 검색 결과</h2>
-
-    <c:if test="${not empty movieList}">
         <div class="movie-list">
-            <c:forEach var="movie" items="${movieList}">
-                <div class="movie-item">
-                    <img src="${movie.poster}" alt="${movie.title}" class="movie-poster">
-                    <h3>${movie.title}</h3>
-                </div>
-            </c:forEach>
+            <c:if test="${not empty requestScope.movieList}">
+                <c:forEach items="${requestScope.movieList}" var="movie" step="3">
+                    <div class="row">
+                        <c:forEach items="${requestScope.movieList}" var="item" begin="${status.index}" end="${status.index + 2}" varStatus="status">
+                            <div class="movie-item">
+                                <a href="${pageContext.request.contextPath}/review?movieId=${item.movieId}">
+                                    <img src="${item.moviePoster}" alt="${item.movieTitle}" class="movie-poster">
+                                    <div class="movie-title">${item.movieTitle}</div>
+                                </a>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </c:forEach>
+            </c:if>
+
+            <c:if test="${empty requestScope.movieList}">
+                <p>검색어를 입력해주세요</p>
+            </c:if>
         </div>
-    </c:if>
+    </div>
 
-    <c:if test="${empty movieList}">
-        <p>검색 결과가 없습니다.</p>
-    </c:if>
-
-<<<<<<< Updated upstream
-	<form action="${pageContext.request.contextPath}/getMovie.do" method="get">
-=======
-	<form action="${pageContext.request.contextPath}/movie.do" method="get">
->>>>>>> Stashed changes
-        <input type="text" name="searchTitle" placeholder="영화 제목 입력" />
-        <input type="submit" value="검색" />
-    </form>
-    
-<%@ include file="/views/layout/footer.jsp" %>
-
-</div>
+    <%@ include file="/views/layout/footer.jsp" %>
 </body>
 </html>

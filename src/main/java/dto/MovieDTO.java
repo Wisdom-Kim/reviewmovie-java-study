@@ -1,9 +1,7 @@
 package dto;
 
-import domain.Likes;
 import domain.Movie;
 import domain.Review;
-import domain.User;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -37,6 +35,8 @@ public class MovieDTO {
     }
 
     public static MovieDTO fromEntity(Movie movie) {
+
+
         MovieDTO movieDTO = MovieDTO.builder()
                 .movieId(movie.getMovieId())
                 .movieTitle(movie.getMovieTitle())
@@ -59,11 +59,11 @@ public class MovieDTO {
         movieDTO.setReviewList(reviewDTOList);
         movieDTO.setAverageRating(numReviews > 0 ? totalRating / numReviews : 0);
 
-        List<LikesDTO> likesDTOList = new ArrayList<>();
-        for (Likes likes : movie.getLikesList()) {
-            likesDTOList.add(LikesDTO.fromEntity(likes));
-        }
-        movieDTO.setLikesList(likesDTOList);
+//        List<LikesDTO> likesDTOList = new ArrayList<>();
+//        for (Likes likes : movie.getLikesList()) {
+//            likesDTOList.add(LikesDTO.fromEntity(likes));
+//        }
+//        movieDTO.setLikesList(likesDTOList);
 
         return movieDTO;
     }
