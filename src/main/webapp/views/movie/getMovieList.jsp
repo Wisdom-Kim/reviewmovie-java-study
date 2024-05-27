@@ -90,7 +90,7 @@
                         <c:forEach items="${requestScope.movieList}" var="item" begin="${status.index}" end="${status.index + 2}" varStatus="status">
                             <div class="movie-item">
                                 <a href="${pageContext.request.contextPath}/review?movieId=${item.movieId}">
-                                    <img src="${item.moviePoster}" alt="${item.movieTitle}" class="movie-poster">
+                                    <img src="${item.moviePoster}" alt="${item.movieTitle}" class="movie-poster" onerror="this.onerror=null;this.src='../../resources/img/placeholder.png'">
                                     <div class="movie-title">${item.movieTitle}</div>
                                 </a>
                             </div>
