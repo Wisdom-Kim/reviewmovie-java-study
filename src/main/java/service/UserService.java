@@ -2,16 +2,21 @@ package service;
 
 import domain.User;
 import dto.UserDTO;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import util.JpaUtil;
+import repository.UserRepository;
 
 public class UserService {
-	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
+//	private static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
+//	private final static UserRepository userRepository = UserRepository.getInstance();
 	
 	public static boolean insertUser(UserDTO userDTO) {
-	    boolean insertResult = true;
+		User user = userDTO.toEntity();
+
+        UserRepository.save(user);
+        
+		return true;
+		
+		/*
+		boolean insertResult = true;
 	    EntityManager em = null;
 	    EntityTransaction tx = null;
 
@@ -36,9 +41,18 @@ public class UserService {
 	    }
 
 	    return insertResult;
+	    */
 	}
 
 	public static UserDTO getUser(String accountId, String passwd) {
+        User user = UserRepository.findOne(accountId, passwd);
+        
+        if (user == null) {
+            throw new NullPointerException("회원 정보가 없습니다.");
+        }
+        
+		return UserDTO.fromEntity(user);
+		/*
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
     	
@@ -67,5 +81,6 @@ public class UserService {
 	    }
 
 	    return userDTO;
+	    */
 	}
 }
