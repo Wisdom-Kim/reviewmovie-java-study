@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import dto.MovieDTO;
 import service.MovieService;
 
-@WebServlet({"/movie.do", "/movies/rating.do"})
+@WebServlet({"/movies.do", "/movie/rating.do"})
 public class MovieController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private MovieService movieService;
@@ -55,13 +55,19 @@ public class MovieController extends HttpServlet {
 
     private void searchMoviesByRating(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<MovieDTO> moviesByRating = movieService.getMoviesByRatingDesc();
-        request.setAttribute("moviesByRating", moviesByRating);
-        request.getRequestDispatcher("/views/movie/moviesByRating.jsp").forward(request, response);
+        try {
+            List<MovieDTO> moviesByRating = movieService.getMoviesByRatingDesc();
+            request.setAttribute("moviesByRating", moviesByRating);
+            request.getRequestDispatcher("/views/movie/moviesByRating.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "평점순 영화 조회 중 오류가 발생했습니다.");
+            request.getRequestDispatcher("/views/errors/error.jsp").forward(request, response);
+        }
     }
 
     @Override
     public void destroy() {
-        movieService.close();
+        // 서비스 종료 메서드 호출이 필요하지 않음
     }
 }
