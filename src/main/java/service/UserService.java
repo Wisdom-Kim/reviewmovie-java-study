@@ -22,10 +22,10 @@ public class UserService {
         return instance;
     }
 	
-	public void insertUser(UserDTO userDTO) {
+	public boolean insertUser(UserDTO userDTO) {
 		User user = userDTO.toEntity();
 
-		userRepository.save(user);
+		return userRepository.save(user);
 	}
 
 	public UserDTO getUser(String accountId, String passwd) {

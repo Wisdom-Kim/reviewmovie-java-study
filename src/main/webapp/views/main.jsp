@@ -19,7 +19,7 @@
 		</form>
 	</div>
 	<div>
-		<input type="button" id="btnList" value="평점 좋은 영화 보러가기" onclick="location.href='/movies/rating.do'">
+		<input type="button" id="btnList" value="평점 좋은 영화 보러가기" onclick="location.href='/movie/rating.do'">
 	</div>
 </div>
 
