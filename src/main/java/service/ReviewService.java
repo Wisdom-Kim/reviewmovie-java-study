@@ -12,8 +12,15 @@ import java.util.stream.Collectors;
 
 public class ReviewService {
 
+    private static final ReviewService reviewService = new ReviewService();
     private final ReviewRepository reviewRepository = ReviewRepository.getInstance();
     private final RatingRepository ratingRepository = RatingRepository.getInstance();
+
+    public static ReviewService getInstance() {
+        return reviewService;
+    }
+
+    private ReviewService(){};
 
     public void insertReview(ReviewDTO reviewDTO, RatingDTO ratingDTO) {
         // Rating을 먼저 생성하고 저장
@@ -50,5 +57,14 @@ public class ReviewService {
         if (review != null) {
             reviewRepository.delete(review);
         }
+    }
+
+    public  List<ReviewDTO> getReviewsByMovieId(int movieId) {
+    //최대 cnt개 만큼 movieId의 리뷰를 가져옴 //현재 cnt는 없앰
+        List<Review> reviews = reviewRepository.findManyByMovieId(movieId);
+        return reviews.stream()
+                .map(ReviewDTO::fromEntity)
+                .collect(Collectors.toList());
+
     }
 }

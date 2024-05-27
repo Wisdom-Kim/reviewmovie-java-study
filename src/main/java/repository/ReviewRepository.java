@@ -1,9 +1,9 @@
 package repository;
 
 import domain.Review;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
 import util.JpaUtil;
 
 import java.util.List;
@@ -75,6 +75,25 @@ public class ReviewRepository {
                             "WHERE r.reviewId = :reviewId", Review.class);
             query.setParameter("reviewId", reviewId);
             return query.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Review> findManyByMovieId(int movieId) {
+
+        //아직 개수 제한은 구현하지 못함
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Review> query = em.createQuery(
+                    "SELECT r FROM Review r " +
+                            "JOIN FETCH r.user " +
+                            "JOIN FETCH r.movie " +
+                            "LEFT JOIN FETCH r.rating " +
+                            "WHERE r.movie.movieId = :movieId"
+                            , Review.class);
+            query.setParameter("movieId", movieId);
+            return query.getResultList();
         } finally {
             em.close();
         }

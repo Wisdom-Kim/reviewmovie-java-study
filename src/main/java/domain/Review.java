@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 
 @ToString //테스트용
@@ -30,11 +30,11 @@ public class Review {
     @Temporal(TemporalType.TIMESTAMP)
     private Date reviewDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "movie_id")
     private Movie movie;
 

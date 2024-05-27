@@ -2,11 +2,13 @@ package service;
 
 import domain.User;
 import dto.UserDTO;
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 import repository.UserRepository;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+
+import util.JpaUtil;
 
 public class UserService {
 	UserRepository userRepository = UserRepository.getInstance();

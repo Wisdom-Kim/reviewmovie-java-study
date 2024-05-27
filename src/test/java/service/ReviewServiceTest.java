@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ReviewServiceTest {
 
     private final UserService userService = new UserService();
-    private final ReviewService reviewService = new ReviewService();
+    private final ReviewService reviewService = ReviewService.getInstance();
     private final MovieService movieService = new MovieService();
 
     @Test
