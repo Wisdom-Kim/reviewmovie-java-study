@@ -31,15 +31,15 @@ public class LoginSessionFilter extends HttpFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
+        HttpSession session = httpRequest.getSession(false);
+        
         String path = httpRequest.getRequestURI();
 
         if (excludedUrlList.contains(path)) {
             chain.doFilter(request, response);
             return;
         }
-
-        HttpSession session = httpRequest.getSession(false);
-
+        
         if (session == null || session.getAttribute("userId") == null) {
             if (path.startsWith("/review/create") || path.startsWith("/rating/create")) {
                 httpResponse.sendRedirect("/views/user/login.jsp");
