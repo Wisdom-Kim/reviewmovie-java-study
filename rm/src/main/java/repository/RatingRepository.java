@@ -1,17 +1,16 @@
 package repository;
 
-import java.util.List;
-
 import domain.Rating;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import util.JpaUtil;
 
-//repository 싱글톤 처리
+import java.util.List;
+
 public class RatingRepository {
 
-    private static RatingRepository ratingRepository;
     private static final EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
+    private static RatingRepository ratingRepository;
 
     private RatingRepository() {
     }
@@ -27,7 +26,11 @@ public class RatingRepository {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(rating);
+            if (rating.getRatingId() == 0) {
+                em.persist(rating);
+            } else {
+                em.merge(rating);
+            }
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -46,7 +49,7 @@ public class RatingRepository {
     public List<Rating> findAll() {
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("select r from Rating r", Rating.class).getResultList();
+            return em.createQuery("SELECT r FROM Rating r", Rating.class).getResultList();
         } finally {
             em.close();
         }
@@ -56,11 +59,10 @@ public class RatingRepository {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.remove(em.contains(rating) ? rating : em.merge(rating)); //em이 어떻게든 rating을 관리하는 상태로 만들기
+            em.remove(em.contains(rating) ? rating : em.merge(rating));
             em.getTransaction().commit();
         } finally {
             em.close();
         }
     }
-    
 }

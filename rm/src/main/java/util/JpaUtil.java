@@ -7,7 +7,7 @@ import jakarta.persistence.Persistence;
 public class JpaUtil {
 	// persistence.xml 내의 persistence-unit tag name
 	
-	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa_rm");
+	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa_config");
 
     public static EntityManagerFactory getEntityManagerFactory() {
         return emf;

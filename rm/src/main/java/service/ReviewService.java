@@ -1,29 +1,38 @@
 package service;
 
+import domain.Rating;
+import domain.Review;
+import dto.RatingDTO;
+import dto.ReviewDTO;
+import repository.ReviewRepository;
+import repository.RatingRepository;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-import domain.Review;
-import dto.ReviewDTO;
-import jakarta.persistence.EntityManagerFactory;
-import repository.RatingRepository;
-import repository.ReviewRepository;
-import util.JpaUtil;
-
 public class ReviewService {
 
-    private EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
-
+    private static final ReviewService reviewService = new ReviewService();
     private final ReviewRepository reviewRepository = ReviewRepository.getInstance();
     private final RatingRepository ratingRepository = RatingRepository.getInstance();
 
-    public void insertReview(ReviewDTO reviewDTO) {
-        Review review = reviewDTO.toEntity();
+    public static ReviewService getInstance() {
+        return reviewService;
+    }
 
-        // Rating을 먼저 저장
-        if (review.getRating() != null) {
-            ratingRepository.save(review.getRating());
-        }
+    private ReviewService(){};
+
+    public void insertReview(ReviewDTO reviewDTO, RatingDTO ratingDTO) {
+        // Rating을 먼저 생성하고 저장
+        Rating rating = ratingDTO.toEntity();
+        ratingRepository.save(rating);
+
+        // 생성된 Rating의 ID를 ReviewDTO에 설정
+        reviewDTO.setRatingId(rating.getRatingId());
+
+        // ReviewDTO를 이용해 Review를 생성하고 저장
+        Review review = reviewDTO.toEntity();
+        review.setRating(rating);  // Rating을 Review에 매핑
 
         reviewRepository.save(review);
     }
@@ -48,5 +57,14 @@ public class ReviewService {
         if (review != null) {
             reviewRepository.delete(review);
         }
+    }
+
+    public  List<ReviewDTO> getReviewsByMovieId(int movieId) {
+    //최대 cnt개 만큼 movieId의 리뷰를 가져옴 //현재 cnt는 없앰
+        List<Review> reviews = reviewRepository.findManyByMovieId(movieId);
+        return reviews.stream()
+                .map(ReviewDTO::fromEntity)
+                .collect(Collectors.toList());
+
     }
 }

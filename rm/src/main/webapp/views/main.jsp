@@ -83,7 +83,7 @@ input[type="button"]:hover {
 	<h1>무슨 영화 볼까?</h1>
 	<div>
 		<form action="/movies.do" method="GET">
-	       	<input type="search" name="q" maxlength="100" placeholder="영화 제목을 입력해보세요.">
+	       	<input type="search" name="searchTitle" maxlength="100" placeholder="영화 제목을 입력해보세요.">
 			<input type="submit" value="">
 		</form>
 	</div>

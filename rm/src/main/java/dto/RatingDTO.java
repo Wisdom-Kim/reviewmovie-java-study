@@ -18,8 +18,7 @@ public class RatingDTO {
         this.ratingScore = ratingScore;
     }
 
-    public RatingDTO fromEntity(Rating rating) {
-        //DTO로 변환
+    public static RatingDTO fromEntity(Rating rating) {
         return RatingDTO.builder()
                 .ratingId(rating.getRatingId())
                 .ratingScore(rating.getRatingScore())

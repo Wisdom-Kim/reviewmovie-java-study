@@ -1,6 +1,6 @@
 package controller; 
 
-import java.io.IOException; 
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +17,7 @@ public class LogoutController extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		
 		if(session == null) {
-			url = "login.jsp";
+			url = "/views/user/login.jsp";
 			response.sendRedirect(url);
 			return;
 		}
@@ -29,12 +29,3 @@ public class LogoutController extends HttpServlet {
 		return;
 	}
 }
-
-
-
-
-
-
-
-
-

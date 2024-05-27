@@ -49,11 +49,11 @@ public class Review {
     @Temporal(TemporalType.TIMESTAMP)
     private Date reviewDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "movie_id")
     private Movie movie;
 

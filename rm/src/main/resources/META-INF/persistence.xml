@@ -6,7 +6,7 @@
                 https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
     
-    <persistence-unit name="jpa_JPQL">
+    <persistence-unit name="jpa_config">
         <class>domain.Review</class>
         <class>domain.Movie</class>
         <class>domain.User</class>
