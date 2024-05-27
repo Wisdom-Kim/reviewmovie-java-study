@@ -1,6 +1,10 @@
 package repository;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import domain.Movie;
 import dto.MovieDTO;
@@ -32,14 +36,16 @@ public class MovieRepository {
 	     return query.getResultList();
 	 }
 
+
 	 public List<Movie> findMoviesByRatingDesc(EntityManager em) {
-	     String jpql = "SELECT m FROM Movie m "
-	             + "LEFT JOIN FETCH m.reviewList r "
-	             + "LEFT JOIN FETCH r.rating rat "
-	             + "GROUP BY m "
-	             + "ORDER BY AVG(rat.ratingScore) DESC";
-	     TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
-	     return query.getResultList();
+		    String jpql = "SELECT DISTINCT m "
+		            + "FROM Movie m "
+		            + "LEFT JOIN m.reviewList r "
+		            + "LEFT JOIN r.rating rat "
+		            + "ORDER BY (SELECT AVG(r2.rating.ratingScore) FROM Review r2 WHERE r2.movie = m) DESC";
+		    TypedQuery<Movie> query = em.createQuery(jpql, Movie.class);
+		    List<Movie> movies = query.getResultList();
+		    return movies;
 	 }
 
 	 public double getAverageRating(MovieDTO movieDTO, EntityManager em) {
