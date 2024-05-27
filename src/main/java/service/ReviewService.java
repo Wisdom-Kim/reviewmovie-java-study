@@ -51,4 +51,13 @@ public class ReviewService {
             reviewRepository.delete(review);
         }
     }
+
+    public  List<ReviewDTO> getReviewsByMovieId(int movieId) {
+    //최대 cnt개 만큼 movieId의 리뷰를 가져옴 //현재 cnt는 없앰
+        List<Review> reviews = reviewRepository.findManyByMovieId(movieId);
+        return reviews.stream()
+                .map(ReviewDTO::fromEntity)
+                .collect(Collectors.toList());
+
+    }
 }

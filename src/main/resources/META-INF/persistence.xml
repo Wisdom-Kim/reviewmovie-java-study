@@ -1,6 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
-             version="2.2">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+             https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
     <persistence-unit name="jpa_config">
         <class>domain.Review</class>
         <class>domain.Movie</class>
@@ -8,10 +10,11 @@
         <class>domain.Likes</class>
         <class>domain.Rating</class>
         <properties>
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/movie?serverTimezone=Asia/Seoul"/>
-            <property name="javax.persistence.jdbc.user" value="movie"/>
-            <property name="javax.persistence.jdbc.password" value="movie"/>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost/scott?characterEncoding=utf8"/>
+            <property name="jakarta.persistence.jdbc.user" value="movie"/>
+            <property name="jakarta.persistence.jdbc.password" value="movie"/>
 
             <property name="hibernate.hikari.poolName" value="pool"/>
             <property name="hibernate.hikari.maximumPoolSize" value="10"/>
@@ -19,10 +22,13 @@
             <property name="hibernate.hikari.connectionTimeout" value="1000"/>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-   			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
-			<property name="hibernate.use_sql_comments" value="true"/>
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.use_sql_comments" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="none" />
+            <property name="hibernate.hbm2ddl.import_files_sql_extractor"
+                      value="org.hibernate.tool.schema.internal.script.MultiLineSqlScriptExtractor" />
+
         </properties>
     </persistence-unit>
 </persistence>
