@@ -12,8 +12,15 @@ import java.util.stream.Collectors;
 
 public class ReviewService {
 
+    private static ReviewService reviewService;
     private final ReviewRepository reviewRepository = ReviewRepository.getInstance();
     private final RatingRepository ratingRepository = RatingRepository.getInstance();
+
+    public static ReviewService getInstance() {
+        return reviewService;
+    }
+
+    private ReviewService(){};
 
     public void insertReview(ReviewDTO reviewDTO, RatingDTO ratingDTO) {
         // Rating을 먼저 생성하고 저장

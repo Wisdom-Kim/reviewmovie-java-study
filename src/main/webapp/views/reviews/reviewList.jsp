@@ -68,6 +68,7 @@
                 <!-- 별점 등록 부분 -->
                 <c:forEach var="i" begin="1" end="5">
                     <div class="form-check d-flex mx-3">
+
                         <input class="form-check-input" type="radio" name="ratingScore" id="flexRadioDefault${i}" value="${i}">
                         <label class="form-check-label" for="flexRadioDefault${i}">
                             ${i} 점
@@ -77,7 +78,9 @@
             </span>
         <span>
                 <!-- 리뷰 등록 부분 -->
-                <form id="myForm" action="/insertReview.do" method="post">
+                <form id="myForm" action="/review" method="post">
+                    <input value="${requestScope.movie.movieId}" name="movieId" style="display: none"></input>
+<%--                    영화 id를 함께 보내기 위한 hidden처리--%>
                     <textarea name="reviewContent" cols="50" class="form-control" rows="3" placeholder="이 영화에 대한 리뷰를 남겨주세요!"></textarea>
                     <button type="submit" class="btn btn-primary my-4">리뷰 등록</button>
                 </form>

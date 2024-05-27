@@ -5,8 +5,15 @@ import dto.RatingDTO;
 import repository.RatingRepository;
 
 public class RatingService {
-
+    private static RatingService ratingService;
     private final RatingRepository ratingRepository = RatingRepository.getInstance();
+
+
+    public static RatingService getInstance(){
+        return ratingService;
+    }
+
+    private RatingService(){};
 
     public void insertRating(RatingDTO ratingDTO) {
         Rating rating = ratingDTO.toEntity();
