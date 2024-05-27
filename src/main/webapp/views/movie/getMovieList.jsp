@@ -1,43 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" 
-    pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<form action="${pageContext.request.contextPath}/movies.do" method="get">
+    <input type="text" name="searchTitle" placeholder="Enter movie title" />
+    <input type="submit" value="Search" />
+</form>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Movie Detail</title>
-<link href="/static/css/layout.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-
-<%@ include file="/views/layout/header.jsp" %>
-
-<div id="container">
-	 <h2>영화 검색 결과</h2>
-
+<div class="movie-list">
     <c:if test="${not empty movieList}">
-        <div class="movie-list">
-            <c:forEach var="movie" items="${movieList}">
-                <div class="movie-item">
-                    <img src="${movie.poster}" alt="${movie.title}" class="movie-poster">
-                    <h3>${movie.title}</h3>
-                </div>
-            </c:forEach>
-        </div>
+        <c:forEach items="${movieList}" var="movie" step="3">
+            <div class="row">
+                <c:forEach items="${movieList}" var="item" begin="${status.index}" end="${status.index + 2}" varStatus="status">
+                    <div class="movie-item">
+                        <a href="${pageContext.request.contextPath}/detailPage.do?movieId=${item.id}">
+                            <img src="${item.poster}" alt="${item.title}" class="movie-poster">
+                            <h3>${item.title}</h3>
+                        </a>
+                    </div>
+                </c:forEach>
+            </div>
+        </c:forEach>
     </c:if>
-
-    <c:if test="${empty movieList}">
-        <p>검색 결과가 없습니다.</p>
-    </c:if>
-
-	<form action="${pageContext.request.contextPath}/movie" method="get">
-        <input type="text" name="searchTitle" placeholder="영화 제목 입력" />
-        <input type="submit" value="검색" />
-    </form>
     
-<%@ include file="/views/layout/footer.jsp" %>
-
+    <c:if test="${empty movieList}">
+        <p>No search results found.</p>
+    </c:if>
 </div>
-</body>
-</html>
