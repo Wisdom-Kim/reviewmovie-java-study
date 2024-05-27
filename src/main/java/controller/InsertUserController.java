@@ -19,6 +19,8 @@ import service.UserService;
 public class InsertUserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	UserService userService = UserService.getInstance();
+	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String errorUrl = "/views/errors/error.jsp";
 		
@@ -31,7 +33,6 @@ public class InsertUserController extends HttpServlet {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		
 		UserDTO newUser = null;
-		boolean insertResult = false;
 		
 		if(accountId == null || accountId == "" || passwd == null || passwd == ""
 				|| username == null || username == "" || birthday == null || birthday == "") {
@@ -42,20 +43,16 @@ public class InsertUserController extends HttpServlet {
 				Date birthday_to_date = df.parse(birthday);
 
 				newUser = UserDTO.builder()
-		                 				.userAccountId(accountId)
-		                 				.userPassword(passwd)
-		                 				.userName(username)
-		                 				.userBirthday(birthday_to_date)
-		                 				.userType(type)
-		                 				.build();
+		                 			.userAccountId(accountId)
+		                 			.userPassword(passwd)
+		                 			.userName(username)
+		                 			.userBirthday(birthday_to_date)
+		                 			.userType(type)
+		                 			.build();
 				
-				insertResult = UserService.insertUser(newUser);
-				if(!insertResult) {
-					request.setAttribute("error", "회원가입 실패: 서버 오류");
-					request.getRequestDispatcher(errorUrl).forward(request, response);
-				}
-
-				response.sendRedirect("/main.do");//메인으로 이동
+				userService.insertUser(newUser);
+				
+				response.sendRedirect("/main.do");
 				
 			} catch (ParseException e) {
 				request.setAttribute("error", "회원가입 실패: 생일을 바르게 입력하세요.");
