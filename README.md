@@ -4,7 +4,8 @@ It is a project to create a site using JSP where you can search for movies and s
 
 
 ## ER Diagram of the project
-![img_2.png](src/main/webapp/resources/img/img_2.png)
+![img_2](https://github.com/Wisdom-Kim/reviewmovie-java-study/assets/58133978/7cf6db13-ccb9-4319-8970-117f1e3ab0ab)
+
 
 ## 프로젝트 구조
 View ↔ (Filter) ↔ Controller ↔ Service ↔ Repository ↔ Domain(Entity)
