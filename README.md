@@ -4,7 +4,8 @@ It is a project to create a site using JSP where you can search for movies and s
 
 
 ## ER Diagram of the project
-[img_2.png](src/main/webapp/resources/img/img_2.png)
+![img_2.png](src/main/webapp/resources/img/img_2.png)
+
 ## 프로젝트 구조
 View ↔ (Filter) ↔ Controller ↔ Service ↔ Repository ↔ Domain(Entity)
 Filter는 다수의 Container 에서 공통적으로 필요로 하는 전처리 로직을 수행한다.
